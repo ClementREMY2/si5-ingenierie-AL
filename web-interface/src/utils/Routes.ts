@@ -1,6 +1,7 @@
 export const publicRoutes = {
     all: "*",
-    login: "/login",
+    signUp: "/signUp",
+    signIn: "/signIn",
     notFound: "/notFound"
 };
 

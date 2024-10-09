@@ -1,7 +1,8 @@
 import {createBrowserRouter, Navigate} from "react-router-dom";
 import HomePage from "../pages/HomePage.tsx";
-import LoginPage from "../pages/LoginPage.tsx";
 import NotFound from "../pages/NotFoundPage.tsx";
+import SignIn from "../pages/SignIn.tsx";
+import SignUp from "../pages/SignUp.tsx";
 import {privateRoutes, publicRoutes} from "../utils/Routes.ts";
 import RouterContent from "./RouterContent.tsx";
 
@@ -13,7 +14,8 @@ export const router = createBrowserRouter([
     {
         element: <RouterContent/>,
         children: [
-            {path: publicRoutes.login, element: <LoginPage/>},
+            {path: publicRoutes.signUp, element: <SignUp/>},
+            {path: publicRoutes.signIn, element: <SignIn/>},
             {path: privateRoutes.home, element: <HomePage/>},
             {path: publicRoutes.notFound, element: <NotFound/>}
         ]
