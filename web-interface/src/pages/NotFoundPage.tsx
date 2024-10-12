@@ -2,7 +2,7 @@ import {Box, Button, Typography} from "@mui/material";
 import {Link} from "react-router-dom";
 import {privateRoutes} from "../utils/Routes.ts";
 
-export default function NotFound() {
+export default function NotFoundPage() {
     return (
         <Box display={"flex"} flexDirection={"column"} justifyContent={"center"} alignItems={"center"} height={"100%"}>
             <Typography variant={"h1"} gutterBottom>404 - Page Not Found</Typography>

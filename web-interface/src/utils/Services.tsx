@@ -1,4 +1,4 @@
-import {emailRegex, passwordRegex, phoneRegex} from "./constants.ts";
+import {emailRegex, passwordRegex, phoneRegex} from "./Constants.ts";
 
 export const isValidString = (value?: string): boolean => {
     if (!value) return false;

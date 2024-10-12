@@ -1,4 +1,4 @@
-export enum UserType {
+export enum UserRole {
     ADMIN = "Admin",
     DOCTOR = "Doctor",
     NURSE = "Nurse",
@@ -12,11 +12,19 @@ export interface User {
     lastName: string;
     phone: string;
     email: string;
-    password: string;
-    type: UserType;
+    role: UserRole;
 }
 
-export interface UserSignIn {
+export interface UserLogin {
     email?: string;
     password?: string;
+}
+
+export interface UserSignUp {
+    firstName?: string;
+    lastName?: string;
+    phone?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
 }

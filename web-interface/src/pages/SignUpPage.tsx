@@ -1,25 +1,17 @@
 import {Button, Card, Stack, TextField, Typography} from "@mui/material";
 import {ChangeEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {UserSignUp} from "../interfaces/User.ts";
 import {publicRoutes} from "../utils/Routes.ts";
 import {isValidEmail, isValidPassword, isValidPhoneNumber, isValidString} from "../utils/Services.tsx";
 
-interface SignUp {
-    firstName?: string;
-    lastName?: string;
-    phone?: string;
-    email?: string;
-    password?: string;
-    confirmPassword?: string;
-}
-
 const getErrorMessage = (label: string): string => `Please enter a valid ${label}.`;
 
-export default function SignUp() {
+export default function SignUpPage() {
     const navigate = useNavigate();
 
-    const [signUpData, setSignUpData] = useState<SignUp>({});
-    const [signUpError, setSignUpError] = useState<SignUp>({});
+    const [signUpData, setSignUpData] = useState<UserSignUp>({});
+    const [signUpError, setSignUpError] = useState<UserSignUp>({});
 
     const handleSignUpChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -148,8 +140,8 @@ export default function SignUp() {
                         </Button>
                         <Typography>
                             Already have an account?
-                            <Button variant={"text"} color={"primary"} onClick={() => navigate(publicRoutes.signIn)}>
-                                Sign in
+                            <Button variant={"text"} color={"primary"} onClick={() => navigate(publicRoutes.login)}>
+                                Log in
                             </Button>
                         </Typography>
                     </Stack>

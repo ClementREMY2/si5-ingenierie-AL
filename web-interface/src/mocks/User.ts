@@ -1,6 +1,6 @@
-import {User, UserType} from "../interfaces/User.ts";
+import {User, UserRole, UserSignUp} from "../interfaces/User.ts";
 
-export const users: User[] = [
+export const users: (User & UserSignUp)[] = [
     {
         id: "1",
         firstName: "Admin",
@@ -8,7 +8,7 @@ export const users: User[] = [
         phone: "+33606060606",
         email: "admin@example.com",
         password: "Password123",
-        type: UserType.ADMIN
+        role: UserRole.ADMIN
     },
     {
         id: "2",
@@ -17,7 +17,7 @@ export const users: User[] = [
         phone: "+33606060606",
         email: "docteur@example.com",
         password: "Password123",
-        type: UserType.DOCTOR
+        role: UserRole.DOCTOR
     },
     {
         id: "3",
@@ -26,7 +26,7 @@ export const users: User[] = [
         phone: "+33606060606",
         email: "nurse@example.com",
         password: "Password123",
-        type: UserType.NURSE
+        role: UserRole.NURSE
     },
     {
         id: "4",
@@ -35,7 +35,7 @@ export const users: User[] = [
         phone: "+33606060606",
         email: "patient@example.com",
         password: "Password123",
-        type: UserType.PATIENT
+        role: UserRole.PATIENT
     },
     {
         id: "5",
@@ -44,6 +44,6 @@ export const users: User[] = [
         phone: "+33606060606",
         email: "proche@example.com",
         password: "Password123",
-        type: UserType.FAMILY
+        role: UserRole.FAMILY
     }
 ];
