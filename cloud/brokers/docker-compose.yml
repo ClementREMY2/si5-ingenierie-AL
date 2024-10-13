@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  alert:
+    image: eclipse-mosquitto:latest
+    container_name: alert
+    ports:
+      - "2083:2083"
+    volumes:
+      - ./alert:/etc/mosquitto
+      - ./alert/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  gateway_control:
+    image: eclipse-mosquitto:latest
+    container_name: gateway_control
+    ports:
+      - "2084:2084"
+    volumes:
+      - ./gateway_control:/etc/mosquitto
+      - ./gateway_control/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  sensor_data:
+    image: eclipse-mosquitto:latest
+    container_name: sensor_data
+    ports:
+      - "2085:2085"
+    volumes:
+      - ./sensor_data:/etc/mosquitto
+      - ./sensor_data/mosquitto.conf:/mosquitto/config/mosquitto.conf

@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  controller:
+    build: ./controller
+    container_name: controller
+    environment:
+      - RECEIVER_WIFI_PORT=8085
+      - SENSOR_DATA_MQTT_BROKER_ADDRESS=host.docker.internal
+      - SENSOR_DATA_MQTT_BROKER_PORT=2085
+    ports:
+      - "8085:8085"
