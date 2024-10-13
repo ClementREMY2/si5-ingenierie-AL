@@ -20,7 +20,7 @@ export default function LoginPage() {
     const handleLoginSubmit = () => {
         const result = handleLogin(loginData);
         if (result?.error) setLoginError(result.error);
-        else navigate(privateRoutes.home);
+        else navigate(privateRoutes.dashboard);
     };
 
     return (

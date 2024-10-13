@@ -6,5 +6,5 @@ export const publicRoutes = {
 };
 
 export const privateRoutes = {
-    home: "/home"
+    dashboard: "/dashboard"
 };
