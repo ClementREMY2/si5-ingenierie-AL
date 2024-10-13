@@ -1,6 +1,6 @@
-import {User, UserRole, UserSignUp} from "../interfaces/User.ts";
+import {User, UserRegister, UserRole} from "../interfaces/User.ts";
 
-export const users: (User & UserSignUp)[] = [
+export const users: (User & UserRegister)[] = [
     {
         id: "1",
         firstName: "Admin",

@@ -19,7 +19,7 @@ export default function RouterContent() {
             <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={"fr"}>
                 <Box display={"flex"} height={"100%"}>
                     <CssBaseline/>
-                    <ToastContainer position={"top-center"} theme={"dark"} closeOnClick/>
+                    <ToastContainer position={"top-center"} theme={"colored"} closeOnClick/>
                     <PageTemplate>
                         <Outlet/> {/* This is where the child routes will be rendered */}
                     </PageTemplate>

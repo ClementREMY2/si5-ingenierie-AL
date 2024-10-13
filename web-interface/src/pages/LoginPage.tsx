@@ -52,9 +52,9 @@ export default function LoginPage() {
                             Login
                         </Button>
                         <Typography>
-                            Already have an account?
-                            <Button variant={"text"} color={"primary"} onClick={() => navigate(publicRoutes.signUp)}>
-                                Sign up
+                            Don't have an account?
+                            <Button variant={"text"} color={"primary"} onClick={() => navigate(publicRoutes.register)}>
+                                Register
                             </Button>
                         </Typography>
                     </Stack>

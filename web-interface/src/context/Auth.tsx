@@ -1,6 +1,6 @@
 import {createContext, ReactNode, useContext, useState} from "react";
-import {User, UserLogin} from "../interfaces/User.ts";
-import {getUserByLogin} from "../services/UserService.ts";
+import {User, UserLogin, UserRegister} from "../interfaces/User.ts";
+import {getUserByLogin, registerUser} from "../services/UserService.ts";
 
 interface AuthProviderProps {
     children?: ReactNode;
@@ -9,12 +9,14 @@ interface AuthProviderProps {
 interface AuthContextType {
     user: User | null;
     handleLogin: (loginData: UserLogin) => {error: UserLogin} | undefined;
+    handleRegister: (registerData: UserRegister) => {error: UserRegister} | undefined;
     handleLogout: () => void;
 }
 
 const defaultAuthContext: AuthContextType = {
     user: null,
     handleLogin: () => undefined,
+    handleRegister: () => undefined,
     handleLogout: () => {}
 };
 
@@ -35,10 +37,20 @@ export const AuthProvider = ({children}: Readonly<AuthProviderProps>) => {
         }
     };
 
+    const handleRegister = (registerData: UserRegister): {error: UserRegister} | undefined => {
+        const result = registerUser(registerData);
+
+        if (result?.user) setUser(result.user);
+        else {
+            setUser(null);
+            return result;
+        }
+    };
+
     const handleLogout = () => setUser(null);
 
     return (
-        <AuthContext.Provider value={{user, handleLogin, handleLogout}}>
+        <AuthContext.Provider value={{user, handleLogin, handleRegister, handleLogout}}>
             {children}
         </AuthContext.Provider>
     );

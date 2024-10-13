@@ -20,7 +20,7 @@ export interface UserLogin {
     password?: string;
 }
 
-export interface UserSignUp {
+export interface UserRegister {
     firstName?: string;
     lastName?: string;
     phone?: string;
