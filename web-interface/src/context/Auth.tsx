@@ -10,14 +10,14 @@ interface AuthContextType {
     user: User | null;
     handleLogin: (loginData: UserLogin) => {error: UserLogin} | undefined;
     handleRegister: (registerData: UserRegister) => {error: UserRegister} | undefined;
-    handleLogout: () => void;
+    logout: () => void;
 }
 
 const defaultAuthContext: AuthContextType = {
     user: null,
     handleLogin: () => undefined,
     handleRegister: () => undefined,
-    handleLogout: () => {}
+    logout: () => {}
 };
 
 const AuthContext = createContext<AuthContextType>(defaultAuthContext);
@@ -47,10 +47,10 @@ export const AuthProvider = ({children}: Readonly<AuthProviderProps>) => {
         }
     };
 
-    const handleLogout = () => setUser(null);
+    const logout = () => setUser(null);
 
     return (
-        <AuthContext.Provider value={{user, handleLogin, handleRegister, handleLogout}}>
+        <AuthContext.Provider value={{user, handleLogin, handleRegister, logout: logout}}>
             {children}
         </AuthContext.Provider>
     );

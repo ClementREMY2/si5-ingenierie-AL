@@ -2,7 +2,7 @@ import {ReactNode} from "react";
 import {toast} from "react-toastify";
 import {useAuth} from "../context/Auth.tsx";
 import {UserRole} from "../interfaces/User.ts";
-import {privateRoutes, publicRoutes} from "../utils/Routes.ts";
+import {publicRoutes} from "../utils/Routes.ts";
 import {getRedirection} from "./Router.tsx";
 
 interface PrivateRoutesProps {
@@ -20,7 +20,7 @@ export default function PrivateRoutes({children, roles}: Readonly<PrivateRoutesP
 
     if (roles && !roles.includes(user.role)) {
         toast.error("You don't have permission to access this page, redirecting to dashboard.");
-        return getRedirection(privateRoutes.dashboard, false, "path");
+        return getRedirection();
     }
     return children;
 }

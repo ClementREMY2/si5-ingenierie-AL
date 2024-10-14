@@ -1,7 +1,11 @@
 import {createBrowserRouter, Navigate, To} from "react-router-dom";
+import {UserRole} from "../interfaces/User.ts";
 import DashboardPage from "../pages/DashboardPage.tsx";
+import DoctorListPage from "../pages/DoctorListPage.tsx";
 import LoginPage from "../pages/LoginPage.tsx";
+import MainPage from "../pages/MainPage.tsx";
 import NotFoundPage from "../pages/NotFoundPage.tsx";
+import PatientListPage from "../pages/PatientListPage.tsx";
 import RegisterPage from "../pages/RegisterPage.tsx";
 import {privateRoutes, publicRoutes} from "../utils/Routes.ts";
 import PrivateRoutes from "./PrivateRoutes.tsx";
@@ -26,8 +30,25 @@ export const router = createBrowserRouter([
                 element: <LoginPage/>
             },
             {
-                path: privateRoutes.dashboard,
-                element: <PrivateRoutes><DashboardPage/></PrivateRoutes>
+                element: <MainPage/>,
+                children: [
+                    {
+                        path: privateRoutes.dashboard,
+                        element: <PrivateRoutes><DashboardPage/></PrivateRoutes>
+                    },
+                    {
+                        path: privateRoutes.doctorList,
+                        element: <PrivateRoutes roles={[UserRole.ADMIN]}><DoctorListPage/></PrivateRoutes>
+                    },
+                    {
+                        path: privateRoutes.patientList,
+                        element: <PrivateRoutes roles={[UserRole.DOCTOR]}><PatientListPage/></PrivateRoutes>
+                    }
+                ]
+            },
+            {
+                path: "/",
+                element: getRedirection(publicRoutes.login)
             },
             {
                 path: publicRoutes.notFound,

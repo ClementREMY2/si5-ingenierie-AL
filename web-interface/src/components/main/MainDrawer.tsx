@@ -1,5 +1,7 @@
-import {Dashboard} from "@mui/icons-material";
+import {Dashboard, Elderly, MedicalServices} from "@mui/icons-material";
 import {Divider, Drawer, List, SxProps, Toolbar} from "@mui/material";
+import {UserRole} from "../../interfaces/User.ts";
+import {privateRoutes} from "../../utils/Routes.ts";
 import MainDrawerItem from "./MainDrawerItem.tsx";
 
 interface DrawerProps {
@@ -19,15 +21,11 @@ export default function MainDrawer({open}: Readonly<DrawerProps>) {
             <Toolbar/>
             <Divider/>
             <List>
-                <MainDrawerItem icon={<Dashboard/>} title={"Dashboard"} open={open}/>
-                <MainDrawerItem icon={<Dashboard/>} title={"Dashboard"} open={open}/>
-                <MainDrawerItem icon={<Dashboard/>} title={"Dashboard"} open={open}/>
-            </List>
-            <Divider/>
-            <List>
-                <MainDrawerItem icon={<Dashboard/>} title={"Dashboard"} open={open}/>
-                <MainDrawerItem icon={<Dashboard/>} title={"Dashboard"} open={open}/>
-                <MainDrawerItem icon={<Dashboard/>} title={"Dashboard"} open={open}/>
+                <MainDrawerItem to={privateRoutes.dashboard} icon={<Dashboard/>} title={"Dashboard"} open={open}/>
+                <MainDrawerItem to={privateRoutes.doctorList} icon={<MedicalServices/>} title={"Doctor list"}
+                                open={open} roles={[UserRole.ADMIN]}/>
+                <MainDrawerItem to={privateRoutes.patientList} icon={<Elderly/>} title={"Patient list"} open={open}
+                                roles={[UserRole.DOCTOR]}/>
             </List>
         </Drawer>
     );
