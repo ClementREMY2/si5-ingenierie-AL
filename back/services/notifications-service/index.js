@@ -1,9 +1,9 @@
 const express = require("express")
 const app = express()
-const port = 3003
+const port = process.env.PORT | 3000
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+app.get('/notifications', (req, res) => {
+  res.send('notifications')
 })
 
 app.listen(port, () => {

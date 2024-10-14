@@ -1,0 +1,95 @@
+http:
+  port: 8080
+
+admin:
+  port: 9876
+  host: localhost
+
+apiEndpoints:
+  devices-api:
+    paths: "/devices"
+  feedbacks-api:
+    paths: "/feedbacks"
+  healthchecks-api:
+    paths: "/healthchecks"
+  notifications-api:
+    paths: "/notifications"
+  users-api:
+    paths: "/users"
+
+serviceEndpoints:
+  devices:
+    url: "http://devices-service:3000"
+  feedbacks:
+    url: "http://feedbacks-service:3000"
+  healthchecks:
+    url: "http://healthchecks-service:3000"
+  notifications:
+    url: "http://notifications-service:3000"
+  users:
+    url: "http://users-service:3000"
+
+policies:
+  - log
+  - proxy
+
+pipelines:
+  devices-pipelines:
+    apiEndpoints:
+      - devices-api
+    policies:
+      - log:
+          action:
+            message: "Requête vers /devices"
+      - proxy:
+          action:
+            serviceEndpoint: devices
+            changeOrigin: true
+
+  feedbacks-pipelines:
+    apiEndpoints:
+      - feedbacks-api
+    policies:
+      - log:
+          action:
+            message: "Requête vers /feedbacks"
+      - proxy:
+          action:
+            serviceEndpoint: feedbacks
+            changeOrigin: true
+
+  healthchecks-pipelines:
+    apiEndpoints:
+      - healthchecks-api
+    policies:
+      - log:
+          action:
+            message: "Requête vers /healthchecks"
+      - proxy:
+          action:
+            serviceEndpoint: healthchecks
+            changeOrigin: true
+
+  notifications-pipelines:
+    apiEndpoints:
+      - notifications-api
+    policies:
+      - log:
+          action:
+            message: "Requête vers /notifications"
+      - proxy:
+          action:
+            serviceEndpoint: notifications
+            changeOrigin: true
+
+  users-pipelines:
+    apiEndpoints:
+      - users-api
+    policies:
+      - log:
+          action:
+            message: "Requête vers /users"
+      - proxy:
+          action:
+            serviceEndpoint: users
+            changeOrigin: true

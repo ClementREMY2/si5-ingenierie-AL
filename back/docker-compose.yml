@@ -1,0 +1,64 @@
+version: '3'
+services:
+  devices-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: devices-service
+    container_name: devices-service
+    networks:
+      - app-network
+
+  users-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: users-service
+    container_name: users-service
+    networks:
+      - app-network
+
+  healthchecks-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: healthchecks-service
+    container_name: healthchecks-service
+    networks:
+      - app-network
+
+  notifications-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: notifications-service
+    container_name: notifications-service
+    networks:
+      - app-network     
+
+  feedbacks-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SERVICE_NAME: feedbacks-service
+    container_name: feedbacks-service
+    networks:
+      - app-network
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"  # L'API Gateway sera accessible sur le port 3000
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
