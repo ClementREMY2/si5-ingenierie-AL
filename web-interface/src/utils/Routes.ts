@@ -6,6 +6,7 @@ export const publicRoutes = {
 };
 
 export const privateRoutes = {
+    profile: "/profile",
     dashboard: "/dashboard",
     doctorList: "/doctorList",
     patientList: "/patientList"

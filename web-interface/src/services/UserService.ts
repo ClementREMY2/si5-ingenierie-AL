@@ -1,6 +1,6 @@
 import {User, UserLogin, UserRegister, UserRole} from "../interfaces/User.ts";
 import {users} from "../mocks/User.ts";
-import {isValidEmail, isValidPassword, isValidPhoneNumber, isValidString} from "../utils/Services.tsx";
+import {isValidEmail, isValidPassword, isValidPhoneNumber, isValidString} from "../utils/Services.ts";
 
 const getRegisterErrorMessage = (label: string): string => `Please enter a valid ${label}.`;
 

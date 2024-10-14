@@ -6,6 +6,7 @@ import LoginPage from "../pages/LoginPage.tsx";
 import MainPage from "../pages/MainPage.tsx";
 import NotFoundPage from "../pages/NotFoundPage.tsx";
 import PatientListPage from "../pages/PatientListPage.tsx";
+import ProfilePage from "../pages/ProfilePage.tsx";
 import RegisterPage from "../pages/RegisterPage.tsx";
 import {privateRoutes, publicRoutes} from "../utils/Routes.ts";
 import PrivateRoutes from "./PrivateRoutes.tsx";
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
             {
                 element: <MainPage/>,
                 children: [
+                    {
+                        path: privateRoutes.profile,
+                        element: <PrivateRoutes><ProfilePage/></PrivateRoutes>
+                    },
                     {
                         path: privateRoutes.dashboard,
                         element: <PrivateRoutes><DashboardPage/></PrivateRoutes>
