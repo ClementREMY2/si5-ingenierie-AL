@@ -12,10 +12,10 @@ export const users: (User & UserRegister)[] = [
     },
     {
         id: "2",
-        firstName: "Docteur",
-        lastName: "DocteurName",
+        firstName: "Doctor",
+        lastName: "DoctorName",
         phone: "+33606060606",
-        email: "docteur@example.com",
+        email: "doctor@example.com",
         password: "Password123",
         role: UserRole.DOCTOR
     },
@@ -39,10 +39,10 @@ export const users: (User & UserRegister)[] = [
     },
     {
         id: "5",
-        firstName: "Proche",
-        lastName: "ProcheName",
+        firstName: "Family",
+        lastName: "FamilyName",
         phone: "+33606060606",
-        email: "proche@example.com",
+        email: "family@example.com",
         password: "Password123",
         role: UserRole.FAMILY
     }

@@ -22,13 +22,13 @@ export default function MainAppBar({openDrawer, setOpenDrawer = () => {}}: Reado
     };
 
     return (
-        <AppBar position={"fixed"} variant={"outlined"} color={"inherit"}
+        <AppBar position={"fixed"} variant={"outlined"} elevation={0} color={"inherit"}
                 sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}>
             <Toolbar disableGutters>
                 <IconButton
                     size={"large"}
                     color={"inherit"}
-                    onClick={() => setOpenDrawer(!open)}
+                    onClick={() => setOpenDrawer(!openDrawer)}
                     sx={{ml: 0.5, mr: 1.5}}>
                     {openDrawer ? <MenuOpen/> : <MenuIcon/>}
                 </IconButton>
