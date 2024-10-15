@@ -1,6 +1,6 @@
 import {ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {ReactNode} from "react";
-import {To, useNavigate} from "react-router-dom";
+import {To, useMatch, useNavigate} from "react-router-dom";
 import {useAuth} from "../../context/Auth.tsx";
 import {UserRole} from "../../interfaces/User.ts";
 import WithTooltipGeneric from "../generics/WithTooltipGeneric.tsx";
@@ -15,6 +15,7 @@ interface DrawerItemProps {
 
 export default function MainDrawerItem({open, icon, title, to, roles}: Readonly<DrawerItemProps>) {
     const navigate = useNavigate();
+    const active = !!useMatch(to.toString());
     const {user} = useAuth();
 
     if (roles && user && !roles.includes(user.role)) {
@@ -23,7 +24,7 @@ export default function MainDrawerItem({open, icon, title, to, roles}: Readonly<
 
     return (
         <ListItem disablePadding>
-            <ListItemButton onClick={() => navigate(to)}>
+            <ListItemButton selected={active} onClick={() => navigate(to)}>
                 {icon &&
                     <WithTooltipGeneric hasTooltip={!open} title={title} placement={"right"}>
                         <ListItemIcon sx={{minWidth: 0, justifyContent: "center"}}>{icon}</ListItemIcon>

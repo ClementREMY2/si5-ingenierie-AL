@@ -21,11 +21,23 @@ export default function MainDrawer({open}: Readonly<DrawerProps>) {
             <Toolbar/>
             <Divider/>
             <List>
-                <MainDrawerItem to={privateRoutes.dashboard} icon={<Dashboard/>} title={"Dashboard"} open={open}/>
-                <MainDrawerItem to={privateRoutes.doctorList} icon={<MedicalServices/>} title={"Doctor list"}
-                                open={open} roles={[UserRole.ADMIN]}/>
-                <MainDrawerItem to={privateRoutes.patientList} icon={<Elderly/>} title={"Patient list"} open={open}
-                                roles={[UserRole.DOCTOR]}/>
+                <MainDrawerItem
+                    title={"Dashboard"}
+                    icon={<Dashboard/>}
+                    to={privateRoutes.dashboard}
+                    open={open}/>
+                <MainDrawerItem
+                    title={"Doctor list"}
+                    icon={<MedicalServices/>}
+                    to={privateRoutes.doctorList}
+                    roles={[UserRole.ADMIN]}
+                    open={open}/>
+                <MainDrawerItem
+                    title={"Patient list"}
+                    icon={<Elderly/>}
+                    to={privateRoutes.patientList}
+                    roles={[UserRole.DOCTOR]}
+                    open={open}/>
                 {/*
                 <MainDrawerItem to={privateRoutes.dashboard} icon={<ManageAccounts/>} title={"Manage users"}
                                 open={open}/>
