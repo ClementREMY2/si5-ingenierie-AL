@@ -1,4 +1,7 @@
 import {emailRegex, passwordRegex, phoneRegex} from "./Constants.ts";
+import {publicRoutes} from "./Routes.ts";
+
+export const isPublicRoute = (route: string): boolean => Object.values(publicRoutes).includes(route);
 
 export const isValidString = (value?: string): boolean => {
     if (!value) return false;

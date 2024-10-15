@@ -24,15 +24,34 @@ const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
 export const useAuth = () => useContext(AuthContext);
 
+const getUserFromLocalStorage = () => {
+    const userString = localStorage.getItem("user");
+    if (userString) {
+        return JSON.parse(userString) as User;
+    }
+    return null;
+};
+
+const changeUserInLocalStorage = (user: User) => {
+    const userString = JSON.stringify(user);
+    localStorage.setItem("user", userString);
+};
+
+const removeUserFromLocalStorage = () => {
+    localStorage.removeItem("user");
+};
+
 export const AuthProvider = ({children}: Readonly<AuthProviderProps>) => {
-    const [user, setUser] = useState(defaultAuthContext.user);
+    const [user, setUser] = useState(getUserFromLocalStorage());
 
     const handleLogin = (loginData: UserLogin): {error: UserLogin} | undefined => {
         const result = getUserByLogin(loginData);
 
-        if (result?.user) setUser(result.user);
-        else {
-            setUser(null);
+        if (result?.user) {
+            setUser(result.user);
+            changeUserInLocalStorage(result.user);
+        } else {
+            logout();
             return result;
         }
     };
@@ -40,17 +59,22 @@ export const AuthProvider = ({children}: Readonly<AuthProviderProps>) => {
     const handleRegister = (registerData: UserRegister): {error: UserRegister} | undefined => {
         const result = registerUser(registerData);
 
-        if (result?.user) setUser(result.user);
-        else {
-            setUser(null);
+        if (result?.user) {
+            setUser(result.user);
+            changeUserInLocalStorage(result.user);
+        } else {
+            logout();
             return result;
         }
     };
 
-    const logout = () => setUser(null);
+    const logout = () => {
+        setUser(null);
+        removeUserFromLocalStorage();
+    };
 
     return (
-        <AuthContext.Provider value={{user, handleLogin, handleRegister, logout: logout}}>
+        <AuthContext.Provider value={{user, handleLogin, handleRegister, logout}}>
             {children}
         </AuthContext.Provider>
     );
