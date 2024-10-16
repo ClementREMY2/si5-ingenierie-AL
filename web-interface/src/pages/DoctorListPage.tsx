@@ -3,15 +3,15 @@ import {useEffect, useState} from "react";
 import {generatePath} from "react-router-dom";
 import ListPageGeneric from "../components/generics/ListPageGeneric.tsx";
 import {TableHeadCell} from "../interfaces/Generics.ts";
-import {User, UserRole} from "../interfaces/User.ts";
+import {Doctor, UserRole} from "../interfaces/User.ts";
 import {getUsersWithRole} from "../services/UserService.ts";
 import {privateRoutes} from "../utils/Routes.ts";
 
 export default function DoctorListPage() {
-    const [doctors, setDoctors] = useState<User[]>([]);
+    const [doctors, setDoctors] = useState<Doctor[]>([]);
 
     useEffect(() => {
-        setDoctors(getUsersWithRole(UserRole.DOCTOR));
+        setDoctors(getUsersWithRole(UserRole.DOCTOR) as Doctor[]);
     }, []);
 
     const tableHeadCells: TableHeadCell[] = [
@@ -32,17 +32,22 @@ export default function DoctorListPage() {
             content: "Phone number"
         },
         {
+            id: "specialty",
+            content: "Specialty"
+        },
+        {
             id: "actions",
             content: "Actions"
         }
     ];
 
-    const renderTableRow = (row: User) => (
+    const renderTableRow = (row: Doctor) => (
         <TableRow key={row.id}>
             <TableCell>{row.id}</TableCell>
             <TableCell>{row.firstName} {row.lastName}</TableCell>
             <TableCell>{row.email}</TableCell>
             <TableCell>{row.phone}</TableCell>
+            <TableCell>{row.specialty}</TableCell>
             <TableCell>Edit / Delete</TableCell>
         </TableRow>
     );
