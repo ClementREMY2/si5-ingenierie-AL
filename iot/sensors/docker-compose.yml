@@ -1,17 +1,17 @@
 version: '3.8'
 
 services:
-  heart_rate_sensor:
+  heart_rate:
     build: .
-    container_name: heart_rate_sensor
+    container_name: heart_rate
     environment:
       SENSOR_MIN_VALUE: 60
       SENSOR_MAX_VALUE: 100
       SENSOR_FREQUENCY_PER_MINUTE: 30
       SENSOR_STD_DEV: 20
       HTTP_ENDPOINT: http://host.docker.internal:8085
-      SENSOR_ID: "1"
-      SENSOR_TYPE: "heart-rate"
+      SENSOR_ID: "1902"
+      SENSOR_TYPE: "heart_rate"
 
   pulse_oximeter:
     build: .
@@ -22,29 +22,29 @@ services:
       SENSOR_FREQUENCY_PER_MINUTE: 30
       SENSOR_STD_DEV: 2
       HTTP_ENDPOINT: http://host.docker.internal:8085
-      SENSOR_ID: "2"
-      SENSOR_TYPE: "pulse-oximeter"
+      SENSOR_ID: "2192"
+      SENSOR_TYPE: "pulse_oximeter"
 
-  glucose_sensor:
+  glycemia:
     build: .
-    container_name: glucose_sensor
+    container_name: glycemia
     environment:
       SENSOR_MIN_VALUE: 70
       SENSOR_MAX_VALUE: 180
       SENSOR_FREQUENCY_PER_MINUTE: 30
       SENSOR_STD_DEV: 10
       HTTP_ENDPOINT: http://host.docker.internal:8085
-      SENSOR_ID: "3"
-      SENSOR_TYPE: "glucose"
+      SENSOR_ID: "33984"
+      SENSOR_TYPE: "glycemia"
 
-  blood_pressure_sensor:
+  blood_pressure:
     build: .
-    container_name: blood_pressure_sensor
+    container_name: blood_pressure
     environment:
       SENSOR_MIN_VALUE: 80
       SENSOR_MAX_VALUE: 120
       SENSOR_FREQUENCY_PER_MINUTE: 30
       SENSOR_STD_DEV: 10
       HTTP_ENDPOINT: http://host.docker.internal:8085
-      SENSOR_ID: "4"
-      SENSOR_TYPE: "blood-pressure"
+      SENSOR_ID: "4392"
+      SENSOR_TYPE: "blood_pressure"

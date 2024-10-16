@@ -3,6 +3,12 @@ import time
 import random
 import requests
 import sys
+from datetime import datetime, timezone
+
+def get_current_time_iso():
+    current_time = datetime.now(timezone.utc)
+    formatted_time = current_time.strftime("%Y-%m-%dT%H:%M:%SZ")
+    return formatted_time
 
 # Lire les variables d'environnement
 
@@ -29,7 +35,7 @@ while True:
     print('Sending value:', value)
     sys.stdout.flush()
     # Contruct data as JSON object with id, type and value
-    data = {'id': sensor_id, 'type': sensor_type, 'value': value}
+    data = {'id': sensor_id, 'type': sensor_type, 'value': value, 'timestamp': get_current_time_iso()}
     try:
         response = requests.post(http_endpoint, json=data)
         response.raise_for_status()
