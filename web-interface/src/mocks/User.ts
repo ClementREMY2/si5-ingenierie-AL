@@ -1,6 +1,6 @@
-import {User, UserRegister, UserRole} from "../interfaces/User.ts";
+import {Admin, Doctor, Family, Nurse, Patient, UserRegister, UserRole} from "../interfaces/User.ts";
 
-export const users: (User & UserRegister)[] = [
+export const users = [
     {
         id: "1",
         firstName: "Admin",
@@ -9,7 +9,7 @@ export const users: (User & UserRegister)[] = [
         email: "admin@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    },
+    } as Admin & UserRegister,
     {
         id: "2",
         firstName: "Doctor",
@@ -17,8 +17,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "doctor@example.com",
         password: "Password123",
-        role: UserRole.DOCTOR
-    },
+        role: UserRole.DOCTOR,
+        specialty: "Specialty"
+    } as Doctor & UserRegister,
     {
         id: "3",
         firstName: "Nurse",
@@ -26,8 +27,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "nurse@example.com",
         password: "Password123",
-        role: UserRole.NURSE
-    },
+        role: UserRole.NURSE,
+        specialty: "Specialty"
+    } as Nurse & UserRegister,
     {
         id: "4",
         firstName: "Patient",
@@ -35,8 +37,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "patient@example.com",
         password: "Password123",
-        role: UserRole.PATIENT
-    },
+        role: UserRole.PATIENT,
+        medicalRecord: "MedicalRecord"
+    } as Patient & UserRegister,
     {
         id: "5",
         firstName: "Family",
@@ -45,7 +48,8 @@ export const users: (User & UserRegister)[] = [
         email: "family@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    }, {
+    } as Family & UserRegister,
+    {
         id: "6",
         firstName: "Admin2",
         lastName: "AdminName",
@@ -53,7 +57,7 @@ export const users: (User & UserRegister)[] = [
         email: "admin2@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    },
+    } as Admin & UserRegister,
     {
         id: "7",
         firstName: "Doctor2",
@@ -61,8 +65,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "doctor2@example.com",
         password: "Password123",
-        role: UserRole.DOCTOR
-    },
+        role: UserRole.DOCTOR,
+        specialty: "Specialty"
+    } as Doctor & UserRegister,
     {
         id: "8",
         firstName: "Nurse2",
@@ -70,8 +75,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "nurse2@example.com",
         password: "Password123",
-        role: UserRole.NURSE
-    },
+        role: UserRole.NURSE,
+        specialty: "Specialty"
+    } as Nurse & UserRegister,
     {
         id: "9",
         firstName: "Patient2",
@@ -79,8 +85,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "patient2@example.com",
         password: "Password123",
-        role: UserRole.PATIENT
-    },
+        role: UserRole.PATIENT,
+        medicalRecord: "MedicalRecord"
+    } as Patient & UserRegister,
     {
         id: "10",
         firstName: "Family2",
@@ -89,7 +96,7 @@ export const users: (User & UserRegister)[] = [
         email: "family2@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    },
+    } as Family & UserRegister,
     {
         id: "11",
         firstName: "Admin3",
@@ -98,7 +105,7 @@ export const users: (User & UserRegister)[] = [
         email: "admin3@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    },
+    } as Admin & UserRegister,
     {
         id: "12",
         firstName: "Doctor3",
@@ -106,8 +113,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "doctor3@example.com",
         password: "Password123",
-        role: UserRole.DOCTOR
-    },
+        role: UserRole.DOCTOR,
+        specialty: "Specialty"
+    } as Doctor & UserRegister,
     {
         id: "13",
         firstName: "Nurse3",
@@ -115,8 +123,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "nurse3@example.com",
         password: "Password123",
-        role: UserRole.NURSE
-    },
+        role: UserRole.NURSE,
+        specialty: "Specialty"
+    } as Nurse & UserRegister,
     {
         id: "14",
         firstName: "Patient3",
@@ -124,8 +133,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "patient3@example.com",
         password: "Password123",
-        role: UserRole.PATIENT
-    },
+        role: UserRole.PATIENT,
+        medicalRecord: "MedicalRecord"
+    } as Patient & UserRegister,
     {
         id: "15",
         firstName: "Family3",
@@ -134,7 +144,8 @@ export const users: (User & UserRegister)[] = [
         email: "family3@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    }, {
+    } as Family & UserRegister,
+    {
         id: "16",
         firstName: "Admin4",
         lastName: "AdminName",
@@ -142,7 +153,7 @@ export const users: (User & UserRegister)[] = [
         email: "admin4@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    },
+    } as Admin & UserRegister,
     {
         id: "17",
         firstName: "Doctor4",
@@ -150,8 +161,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "doctor4@example.com",
         password: "Password123",
-        role: UserRole.DOCTOR
-    },
+        role: UserRole.DOCTOR,
+        specialty: "Specialty"
+    } as Doctor & UserRegister,
     {
         id: "18",
         firstName: "Nurse4",
@@ -159,8 +171,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "nurse4@example.com",
         password: "Password123",
-        role: UserRole.NURSE
-    },
+        role: UserRole.NURSE,
+        specialty: "Specialty"
+    } as Nurse & UserRegister,
     {
         id: "19",
         firstName: "Patient4",
@@ -168,8 +181,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "patient4@example.com",
         password: "Password123",
-        role: UserRole.PATIENT
-    },
+        role: UserRole.PATIENT,
+        medicalRecord: "MedicalRecord"
+    } as Patient & UserRegister,
     {
         id: "20",
         firstName: "Family4",
@@ -178,7 +192,7 @@ export const users: (User & UserRegister)[] = [
         email: "family4@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    },
+    } as Family & UserRegister,
     {
         id: "21",
         firstName: "Admin5",
@@ -187,7 +201,7 @@ export const users: (User & UserRegister)[] = [
         email: "admin5@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    },
+    } as Admin & UserRegister,
     {
         id: "22",
         firstName: "Doctor5",
@@ -195,8 +209,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "doctor5@example.com",
         password: "Password123",
-        role: UserRole.DOCTOR
-    },
+        role: UserRole.DOCTOR,
+        specialty: "Specialty"
+    } as Doctor & UserRegister,
     {
         id: "23",
         firstName: "Nurse5",
@@ -204,8 +219,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "nurse5@example.com",
         password: "Password123",
-        role: UserRole.NURSE
-    },
+        role: UserRole.NURSE,
+        specialty: "Specialty"
+    } as Nurse & UserRegister,
     {
         id: "24",
         firstName: "Patient5",
@@ -213,8 +229,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "patient5@example.com",
         password: "Password123",
-        role: UserRole.PATIENT
-    },
+        role: UserRole.PATIENT,
+        medicalRecord: "MedicalRecord"
+    } as Patient & UserRegister,
     {
         id: "25",
         firstName: "Family5",
@@ -223,7 +240,8 @@ export const users: (User & UserRegister)[] = [
         email: "family5@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    }, {
+    } as Family & UserRegister,
+    {
         id: "26",
         firstName: "Admin6",
         lastName: "AdminName",
@@ -231,7 +249,7 @@ export const users: (User & UserRegister)[] = [
         email: "admin6@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    },
+    } as Admin & UserRegister,
     {
         id: "27",
         firstName: "Doctor6",
@@ -239,8 +257,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "doctor6@example.com",
         password: "Password123",
-        role: UserRole.DOCTOR
-    },
+        role: UserRole.DOCTOR,
+        specialty: "Specialty"
+    } as Doctor & UserRegister,
     {
         id: "28",
         firstName: "Nurse6",
@@ -248,8 +267,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "nurse6@example.com",
         password: "Password123",
-        role: UserRole.NURSE
-    },
+        role: UserRole.NURSE,
+        specialty: "Specialty"
+    } as Nurse & UserRegister,
     {
         id: "29",
         firstName: "Patient6",
@@ -257,8 +277,9 @@ export const users: (User & UserRegister)[] = [
         phone: "+33606060606",
         email: "patient6@example.com",
         password: "Password123",
-        role: UserRole.PATIENT
-    },
+        role: UserRole.PATIENT,
+        medicalRecord: "MedicalRecord"
+    } as Patient & UserRegister,
     {
         id: "30",
         firstName: "Family6",
@@ -267,5 +288,5 @@ export const users: (User & UserRegister)[] = [
         email: "family6@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    }
+    } as Family & UserRegister
 ];
