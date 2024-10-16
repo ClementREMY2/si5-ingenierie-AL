@@ -71,3 +71,7 @@ export const getUserByLogin = (loginData: UserLogin) => {
         } as User
     };
 };
+
+export const getUsersWithRole = (role: UserRole): User[] => {
+    return users.filter(user => user.role === role);
+};
