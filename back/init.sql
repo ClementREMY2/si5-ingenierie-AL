@@ -72,27 +72,28 @@ CREATE TABLE devices (
     type VARCHAR(100)
 );
 
+
+
+-- Creating device stock
+CREATE TABLE device_stock (
+    id SERIAL PRIMARY KEY,
+    device_id INTEGER REFERENCES devices(id),
+);
+
 -- Many-to-Many relationship between reports and devices
 CREATE TABLE reports_devices (
     report_id INTEGER REFERENCES reports(id),
-    device_id INTEGER REFERENCES devices(id),
+    device_id INTEGER REFERENCES device_stock(id),
     observation TEXT,
     PRIMARY KEY (report_id, device_id)
 );
-
--- Creating equipment
-CREATE TABLE equipment (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    total_quantity INTEGER
-);
-
 -- Many-to-Many relationship between patients and equipment
-CREATE TABLE patients_equipment (
+CREATE TABLE patients_device (
     patient_id INTEGER REFERENCES patients(id),
-    equipment_id INTEGER REFERENCES equipment(id),
-    quantity_used INTEGER,
-    PRIMARY KEY (patient_id, equipment_id)
+    device_id INTEGER UNIQUE REFERENCES device_stock(id),
+    PRIMARY KEY (patient_id, device_id),
+    start_date DATE,
+    end_date DATE
 );
 
 -- Creating notifications
@@ -150,8 +151,6 @@ VALUES (2, 5);
 -- Inserting test data for devices
 INSERT INTO devices (name, type) VALUES ('ECG', 'Monitor'), ('Thermometer', 'Care');
 
--- Inserting test data for equipment
-INSERT INTO equipment (name, total_quantity) VALUES ('Medical Bed', 10), ('Wheelchair', 5);
 
 -- Inserting test data for notifications
 INSERT INTO notifications (user_id, message) 
