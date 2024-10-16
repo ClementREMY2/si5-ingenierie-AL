@@ -1,11 +1,12 @@
-const express = require("express")
-const app = express()
-const port = process.env.PORT | 3000
+require('dotenv').config();
 
-app.get('/devices', (req, res) => {
-  res.send('devices service' + process.env.PORT)
-})
+const express = require("express");
+const devicesController = require('./controllers/devicesController');
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get('/devices', devicesController.getDevices);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Devices service listening on port ${port}`);
+});

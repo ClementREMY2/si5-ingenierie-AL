@@ -1,11 +1,12 @@
-const express = require("express")
-const app = express()
-const port = process.env.PORT | 3000
+require('dotenv').config();
 
-app.get('/feedbacks', (req, res) => {
-  res.send('feedbacks')
-})
+const express = require("express");
+const feedbacksController = require('./controllers/feedbacksController');
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get('/feedbacks', feedbacksController.getFeedbacks);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Feedbacks service listening on port ${port}`);
+});

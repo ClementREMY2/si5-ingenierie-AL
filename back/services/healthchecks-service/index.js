@@ -1,11 +1,12 @@
-const express = require("express")
-const app = express()
-const port = process.env.PORT | 3000
+require('dotenv').config();
 
-app.get('/healthchecks', (req, res) => {
-  res.send('healthchecks')
-})
+const express = require("express");
+const healthchecksController = require('./controllers/healthchecksController');
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get('/healthchecks', healthchecksController.getHealthchecks);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Healthchecks service listening on port ${port}`);
+});

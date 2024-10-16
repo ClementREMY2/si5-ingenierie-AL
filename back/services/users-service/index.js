@@ -1,11 +1,12 @@
-const express = require("express")
-const app = express()
-const port = process.env.PORT | 3000
+require('dotenv').config();
 
-app.get('/users', (req, res) => {
-  res.send('users')
-})
+const express = require("express");
+const usersController = require('./controllers/usersController');
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.get('/users', usersController.getUsers);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Users service listening on port ${port}`);
+});
