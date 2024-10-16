@@ -26,6 +26,7 @@ def store(data):
 
     topic = "sensor/data"
     message = json.dumps(data)
+    print(f"Data to be sent to MQTT broker: {message}")
     # Send the data to the MQTT broker as json
     mqtt_client.publish(topic, message)
     print(f"Data sent to MQTT broker: {message}")
