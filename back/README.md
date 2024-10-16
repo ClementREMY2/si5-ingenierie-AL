@@ -32,6 +32,21 @@ The API Gateway listens on port `8080` and routes requests based on the path. Fo
 - **Yarn or npm**
 - **Docker** and **Docker Compose**
 
+## Configuration
+
+Avant de démarrer le projet, assurez-vous de configurer le fichier `.env`.
+
+1. Copiez le fichier `.env.example` et renommez-le en `.env` :
+
+   ```sh
+   cp .env.example .env
+
+   ```
+
+2. Modifiez le fichier .env avec vos propres valeurs.
+
+3. Sauvegardez le fichier .env
+
 ## Installation
 
 <pre lang="md">npm install 
