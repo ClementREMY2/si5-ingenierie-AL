@@ -11,11 +11,12 @@ interface DrawerItemProps {
     title: string;
     to: To;
     roles?: UserRole[];
+    baseRoute?: string;
 }
 
-export default function MainDrawerItem({open, icon, title, to, roles}: Readonly<DrawerItemProps>) {
+export default function MainDrawerItem({open, icon, title, to, roles, baseRoute}: Readonly<DrawerItemProps>) {
     const navigate = useNavigate();
-    const active = !!useMatch(to.toString());
+    const active = !!useMatch(baseRoute ?? to.toString());
     const {user} = useAuth();
 
     if (roles && user && !roles.includes(user.role)) {

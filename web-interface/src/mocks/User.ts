@@ -50,7 +50,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Admin2",
         lastName: "AdminName",
         phone: "+33606060606",
-        email: "admin@example.com",
+        email: "admin2@example.com",
         password: "Password123",
         role: UserRole.ADMIN
     },
@@ -59,7 +59,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Doctor2",
         lastName: "DoctorName",
         phone: "+33606060606",
-        email: "doctor@example.com",
+        email: "doctor2@example.com",
         password: "Password123",
         role: UserRole.DOCTOR
     },
@@ -68,7 +68,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Nurse2",
         lastName: "NurseName",
         phone: "+33606060606",
-        email: "nurse@example.com",
+        email: "nurse2@example.com",
         password: "Password123",
         role: UserRole.NURSE
     },
@@ -77,7 +77,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Patient2",
         lastName: "PatientName",
         phone: "+33606060606",
-        email: "patient@example.com",
+        email: "patient2@example.com",
         password: "Password123",
         role: UserRole.PATIENT
     },
@@ -86,18 +86,16 @@ export const users: (User & UserRegister)[] = [
         firstName: "Family2",
         lastName: "FamilyName",
         phone: "+33606060606",
-        email: "family@example.com",
+        email: "family2@example.com",
         password: "Password123",
         role: UserRole.FAMILY
     },
-
-
     {
         id: "11",
         firstName: "Admin3",
         lastName: "AdminName",
         phone: "+33606060606",
-        email: "admin@example.com",
+        email: "admin3@example.com",
         password: "Password123",
         role: UserRole.ADMIN
     },
@@ -106,7 +104,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Doctor3",
         lastName: "DoctorName",
         phone: "+33606060606",
-        email: "doctor@example.com",
+        email: "doctor3@example.com",
         password: "Password123",
         role: UserRole.DOCTOR
     },
@@ -115,7 +113,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Nurse3",
         lastName: "NurseName",
         phone: "+33606060606",
-        email: "nurse@example.com",
+        email: "nurse3@example.com",
         password: "Password123",
         role: UserRole.NURSE
     },
@@ -124,7 +122,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Patient3",
         lastName: "PatientName",
         phone: "+33606060606",
-        email: "patient@example.com",
+        email: "patient3@example.com",
         password: "Password123",
         role: UserRole.PATIENT
     },
@@ -133,7 +131,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Family3",
         lastName: "FamilyName",
         phone: "+33606060606",
-        email: "family@example.com",
+        email: "family3@example.com",
         password: "Password123",
         role: UserRole.FAMILY
     }, {
@@ -141,7 +139,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Admin4",
         lastName: "AdminName",
         phone: "+33606060606",
-        email: "admin@example.com",
+        email: "admin4@example.com",
         password: "Password123",
         role: UserRole.ADMIN
     },
@@ -150,7 +148,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Doctor4",
         lastName: "DoctorName",
         phone: "+33606060606",
-        email: "doctor@example.com",
+        email: "doctor4@example.com",
         password: "Password123",
         role: UserRole.DOCTOR
     },
@@ -159,7 +157,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Nurse4",
         lastName: "NurseName",
         phone: "+33606060606",
-        email: "nurse@example.com",
+        email: "nurse4@example.com",
         password: "Password123",
         role: UserRole.NURSE
     },
@@ -168,7 +166,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Patient4",
         lastName: "PatientName",
         phone: "+33606060606",
-        email: "patient@example.com",
+        email: "patient4@example.com",
         password: "Password123",
         role: UserRole.PATIENT
     },
@@ -177,18 +175,16 @@ export const users: (User & UserRegister)[] = [
         firstName: "Family4",
         lastName: "FamilyName",
         phone: "+33606060606",
-        email: "family@example.com",
+        email: "family4@example.com",
         password: "Password123",
         role: UserRole.FAMILY
     },
-
-
     {
         id: "21",
         firstName: "Admin5",
         lastName: "AdminName",
         phone: "+33606060606",
-        email: "admin@example.com",
+        email: "admin5@example.com",
         password: "Password123",
         role: UserRole.ADMIN
     },
@@ -197,7 +193,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Doctor5",
         lastName: "DoctorName",
         phone: "+33606060606",
-        email: "doctor@example.com",
+        email: "doctor5@example.com",
         password: "Password123",
         role: UserRole.DOCTOR
     },
@@ -206,7 +202,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Nurse5",
         lastName: "NurseName",
         phone: "+33606060606",
-        email: "nurse@example.com",
+        email: "nurse5@example.com",
         password: "Password123",
         role: UserRole.NURSE
     },
@@ -215,7 +211,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Patient5",
         lastName: "PatientName",
         phone: "+33606060606",
-        email: "patient@example.com",
+        email: "patient5@example.com",
         password: "Password123",
         role: UserRole.PATIENT
     },
@@ -224,7 +220,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Family5",
         lastName: "FamilyName",
         phone: "+33606060606",
-        email: "family@example.com",
+        email: "family5@example.com",
         password: "Password123",
         role: UserRole.FAMILY
     }, {
@@ -232,7 +228,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Admin6",
         lastName: "AdminName",
         phone: "+33606060606",
-        email: "admin@example.com",
+        email: "admin6@example.com",
         password: "Password123",
         role: UserRole.ADMIN
     },
@@ -241,7 +237,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Doctor6",
         lastName: "DoctorName",
         phone: "+33606060606",
-        email: "doctor@example.com",
+        email: "doctor6@example.com",
         password: "Password123",
         role: UserRole.DOCTOR
     },
@@ -250,7 +246,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Nurse6",
         lastName: "NurseName",
         phone: "+33606060606",
-        email: "nurse@example.com",
+        email: "nurse6@example.com",
         password: "Password123",
         role: UserRole.NURSE
     },
@@ -259,7 +255,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Patient6",
         lastName: "PatientName",
         phone: "+33606060606",
-        email: "patient@example.com",
+        email: "patient6@example.com",
         password: "Password123",
         role: UserRole.PATIENT
     },
@@ -268,7 +264,7 @@ export const users: (User & UserRegister)[] = [
         firstName: "Family6",
         lastName: "FamilyName",
         phone: "+33606060606",
-        email: "family@example.com",
+        email: "family6@example.com",
         password: "Password123",
         role: UserRole.FAMILY
     }
