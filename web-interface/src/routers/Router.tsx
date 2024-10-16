@@ -41,12 +41,24 @@ export const router = createBrowserRouter([
                         path: privateRoutes.dashboard,
                         element: <PrivateRoutes><DashboardPage/></PrivateRoutes>
                     },
+                    // Doctors
                     {
-                        path: privateRoutes.doctorList,
-                        element: <PrivateRoutes roles={[UserRole.ADMIN]}><DoctorListPage/></PrivateRoutes>
+                        path: privateRoutes.doctors.base,
+                        element: <PrivateRoutes roles={[UserRole.ADMIN]}/>,
+                        children: [
+                            {
+                                path: privateRoutes.doctors.list,
+                                element: <DoctorListPage/>
+                            },
+                            {
+                                path: privateRoutes.doctors.create,
+                                element: <DoctorListPage/>
+                            }
+                        ]
                     },
+                    // Patients
                     {
-                        path: privateRoutes.patientList,
+                        path: privateRoutes.patients,
                         element: <PrivateRoutes roles={[UserRole.DOCTOR]}><PatientListPage/></PrivateRoutes>
                     }
                 ]

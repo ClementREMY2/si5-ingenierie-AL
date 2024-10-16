@@ -8,6 +8,12 @@ export const publicRoutes = {
 export const privateRoutes = {
     profile: "/profile",
     dashboard: "/dashboard",
-    doctorList: "/doctorList",
-    patientList: "/patientList"
+    doctors: {
+        base: "/doctors/*",
+        list: "list",
+        create: "create",
+        view: ":id",
+        edit: ":id/edit"
+    },
+    patients: "/patients"
 };
