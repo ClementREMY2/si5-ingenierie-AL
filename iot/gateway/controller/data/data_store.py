@@ -22,15 +22,22 @@ mqtt_client = None  # Global variable to store the MQTT client
 influxdb_client = None  # Global variable to store the InfluxDB client
 write_api = None  # Global variable to store the write_api client
 
-data_queue = []  # Queue to store data to be sent
+data_queue = []  # Queue to store data to be sent (in case of problem when storing)
+data_queue_lock = threading.Lock()
 data_process_timer = None  # Timer to process data in the queue
 
 def process_waiting_data():
+    print("Processing waiting data")
     global data_queue
-    temp_queue = data_queue
-    data_queue = []
+    temp_queue = []
 
-    if (len(temp_queue) > 0):
+    with data_queue_lock:
+        temp_queue = data_queue
+        data_queue = []
+
+    if len(temp_queue) == 0:
+        return
+    else:
         print(f"Processing {len(temp_queue)} data in the queue")
         if REALTIME_ACTIVATED:
             for data in temp_queue:
@@ -84,11 +91,19 @@ def store(data):
     except Exception as e:
         print(f"Error storing data in InfluxDB: {e}")
         sys.stdout.flush()
-        data_queue.append(data)
+        
+        with data_queue_lock:
+            data_queue.append(data)
+
+        # Process the data in the queue
+        global data_process_timer
+        with data_queue_lock:
+            if data_process_timer is not None:
+                data_process_timer.cancel()
+            data_process_timer = threading.Timer(10, process_waiting_data)
+            data_process_timer.start()
+
         return
 
     print(f"Data stored in InfluxDB: {data}")
     sys.stdout.flush()
-
-# Process the data in the queue if any every 5 seconds
-data_process_timer = threading.Timer(5, process_waiting_data)
