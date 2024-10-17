@@ -16,6 +16,8 @@ apiEndpoints:
     paths: "/notifications"
   users-api:
     paths: "/users"
+  auth-api:
+    paths: "/auth/*"
 
 serviceEndpoints:
   devices:
@@ -28,19 +30,27 @@ serviceEndpoints:
     url: "http://notifications-service:3000"
   users:
     url: "http://users-service:3000"
+  auth:
+    url: "http://auth-service:3000"
 
 policies:
   - log
   - proxy
+  - auth
 
 pipelines:
   devices-pipelines:
     apiEndpoints:
       - devices-api
     policies:
+      - auth:
+          action:
+            roles: [1, 2]
       - log:
           action:
             message: "Requête vers /devices"
+            checkCredentialExistence: false
+
       - proxy:
           action:
             serviceEndpoint: devices
@@ -92,4 +102,16 @@ pipelines:
       - proxy:
           action:
             serviceEndpoint: users
+            changeOrigin: true
+
+  auth-pipelines:
+    apiEndpoints:
+      - auth-api
+    policies:
+      - log:
+          action:
+            message: "Requête vers /auth"
+      - proxy:
+          action:
+            serviceEndpoint: auth
             changeOrigin: true
