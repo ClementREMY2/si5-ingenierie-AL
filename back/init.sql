@@ -7,25 +7,24 @@ CREATE TABLE role (
 -- Creating users
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     role_id INTEGER REFERENCES role(id),
-    contact VARCHAR(100)
+    phone VARCHAR(15) NOT NULL
 );
 
 -- Creating doctors (specific)
 CREATE TABLE doctors (
     user_id INTEGER PRIMARY KEY REFERENCES users(id),
-    specialty VARCHAR(100),
-    office VARCHAR(100)
+    specialty VARCHAR(100)
 );
 
 -- Creating nurses (specific)
 CREATE TABLE nurses (
     user_id INTEGER PRIMARY KEY REFERENCES users(id),
-    experience INTEGER
+    specialty VARCHAR(100)
 );
 
 -- Creating patients
@@ -77,7 +76,7 @@ CREATE TABLE devices (
 -- Creating device stock
 CREATE TABLE device_stock (
     id SERIAL PRIMARY KEY,
-    device_id INTEGER REFERENCES devices(id),
+    device_id INTEGER REFERENCES devices(id)
 );
 
 -- Many-to-Many relationship between reports and devices
