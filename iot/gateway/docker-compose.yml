@@ -31,6 +31,19 @@ services:
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=alm_gateway_local_token
     volumes:
       - influxdb_data:/var/lib/influxdb
+    
+  data_cloud_persister:
+    build: ./data_cloud_persister
+    container_name: data_cloud_persister
+    environment:
+      - SENSOR_DATA_MQTT_BROKER_ADDRESS=host.docker.internal
+      - SENSOR_DATA_MQTT_BROKER_PORT=2085
+      - INFLUXDB_ADMIN_USER=alm-admin
+      - INFLUXDB_ADMIN_PASSWORD=alm-adminpassword
+      - INFLUXDB_URL=http://influxdb:8086
+      - INFLUXDB_ORG=alm-org
+      - INFLUXDB_BUCKET=alm-bucket
+      - INFLUXDB_TOKEN=alm_gateway_local_token
 
 volumes:
   influxdb_data:
