@@ -5,6 +5,8 @@ const app = express()
 const port = process.env.PORT | 3000
 const notificationsController = require('./controllers/notificationsController')
 
+app.use(express.json());
+
 app.get('/notifications', notificationsController.getNotifications);
 
 app.get('/notifications', (req, res) => {

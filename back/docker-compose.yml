@@ -8,6 +8,9 @@ services:
         SERVICE_NAME: devices-service
     env_file:
       - .env
+    environment:
+      - GATEWAY_CONTROL_MQTT_BROKER_ADDRESS=host.docker.internal
+      - GATEWAY_CONTROL_MQTT_BROKER_PORT=2084
     container_name: devices-service
     networks:
       - app-network

@@ -130,10 +130,14 @@ CREATE TABLE feedbacks_devices (
 INSERT INTO role (name) VALUES ('Admin'), ('Doctor'), ('Nurse'), ('Patient');
 
 -- Inserting test data for users
+-- PASSWORDS :
+-- john : password1
+-- jane : password2
+-- paul : password3
 INSERT INTO users (email, password, last_name, first_name, role_id, phone) 
-VALUES ('john.smith@example.com', 'password1', 'Smith', 'John', 2, '+33653784926'),
-       ('jane.doe@example.com', 'password2', 'Doe', 'Jane', 3, '+33653734926'),
-       ('paul.brown@example.com', 'password3', 'Brown', 'Paul', 4, '+33753784926');
+VALUES ('john.smith@example.com', '$2b$10$mkrzekg7GWayR6EBZYw0.uAIaD72LkH484cMkAZ43QjO4doXCpWbi', 'Smith', 'John', 2, '+33653784926'),
+       ('jane.doe@example.com', '$2b$10$z6qOQz7Qyw.A./pzyOfpfuvawECtQ0nTt1THvFZoO5mGOU3Pqb4pC', 'Doe', 'Jane', 3, '+33653734926'),
+       ('paul.brown@example.com', '$2b$10$z6rh9W23toLnCIIp4uPrzewJVvW4ZDL9TTd6GJsY4ptCb7VmPnkSi', 'Brown', 'Paul', 4, '+33753784926');
 
 -- Inserting test data for doctors
 INSERT INTO doctors (user_id, specialty) 

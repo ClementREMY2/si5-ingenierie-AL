@@ -52,6 +52,15 @@ services:
       - PATIENT_ID=324
     depends_on:
       - influxdb
+    
+  gateway_controller:
+    build: ./gateway_controller
+    container_name: gateway_controller
+    environment:
+      - GATEWAY_CONTROL_MQTT_BROKER_ADDRESS=host.docker.internal
+      - GATEWAY_CONTROL_MQTT_BROKER_PORT=2084
+      - PATIENT_ID=324
+      - GATEWAY_ID=1
 
 volumes:
   influxdb_data:

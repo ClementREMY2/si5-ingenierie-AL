@@ -7,15 +7,25 @@ admin:
 
 apiEndpoints:
   devices-api:
-    paths: "/devices"
+    paths:
+    - "/devices"
+    - "/devices/*"
   feedbacks-api:
-    paths: "/feedbacks"
+    paths:
+    - "/feedbacks"
+    - "/feedbacks/*"
   healthchecks-api:
-    paths: "/healthchecks"
+    paths:
+    - "/healthchecks"
+    - "/healthchecks/*"
   notifications-api:
-    paths: "/notifications"
+    paths:
+    - "/notifications"
+    - "/notifications/*"
   users-api:
-    paths: "/users"
+    paths:
+    - "/users"
+    - "/users/*"
   auth-api:
     paths: "/auth/*"
 
