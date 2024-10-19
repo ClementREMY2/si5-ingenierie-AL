@@ -130,22 +130,22 @@ CREATE TABLE feedbacks_devices (
 INSERT INTO role (name) VALUES ('Admin'), ('Doctor'), ('Nurse'), ('Patient');
 
 -- Inserting test data for users
-INSERT INTO users (username, password, last_name, first_name, role_id, contact) 
-VALUES ('user1', 'password1', 'Smith', 'John', 2, 'john.smith@example.com'),
-       ('user2', 'password2', 'Doe', 'Jane', 3, 'jane.doe@example.com'),
-       ('user3', 'password3', 'Brown', 'Paul', 4, 'paul.brown@example.com');
+INSERT INTO users (email, password, last_name, first_name, role_id, phone) 
+VALUES ('john.smith@example.com', 'password1', 'Smith', 'John', 2, '+33653784926'),
+       ('jane.doe@example.com', 'password2', 'Doe', 'Jane', 3, '+33653734926'),
+       ('paul.brown@example.com', 'password3', 'Brown', 'Paul', 4, '+33753784926');
 
 -- Inserting test data for doctors
-INSERT INTO doctors (user_id, specialty, office) 
-VALUES (1, 'Cardiology', 'Cardiology Office Nice');
+INSERT INTO doctors (user_id, specialty) 
+VALUES (1, 'Cardiology');
 
 -- Inserting test data for patients
 INSERT INTO patients (user_id, doctor_id, medical_record) 
 VALUES (3, 1, 'Complete medical record');
 
 -- Inserting test data for nurses
-INSERT INTO nurses (user_id, experience) 
-VALUES (2, 5);
+INSERT INTO nurses (user_id, specialty) 
+VALUES (2, 'Cardiology (nurse)');
 
 -- Inserting test data for devices
 INSERT INTO devices (name, type) VALUES ('ECG', 'Monitor'), ('Thermometer', 'Care');
