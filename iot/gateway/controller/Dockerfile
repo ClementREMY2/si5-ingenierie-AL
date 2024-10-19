@@ -11,7 +11,6 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY main.py .
-COPY controller/ controller/
 COPY data/ data/
 COPY receivers/ receivers/
 

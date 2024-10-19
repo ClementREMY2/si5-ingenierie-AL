@@ -1,10 +1,12 @@
-from influxdb_client import InfluxDBClient
-import paho.mqtt.client as mqtt
-import os
-import json
-import sys
-import time
 import datetime
+import json
+import os
+import sys
+import threading
+import time
+
+import paho.mqtt.client as mqtt
+from influxdb_client import InfluxDBClient
 
 # In minutes
 SCHEDULE_INTERVAL_MINUTES = 0.1
@@ -30,29 +32,35 @@ def get_current_time_iso(time):
 
 DELETE_API_START_DATE = get_current_time_iso(datetime.date.fromtimestamp(0))
 
+connection_lock = threading.Lock()
+
 mqtt_connection = None  # Global variable to store the MQTT client
 def get_mqtt_client():
-    global mqtt_connection
-    if mqtt_connection is None:
-        mqtt_connection = mqtt.Client()
-        mqtt_connection.connect(MQTT_BROKER_ADDRESS, MQTT_BROKER_PORT, 60)
-        mqtt_connection.loop_start()
-        print(f"MQTT client initialized and connected to {MQTT_BROKER_ADDRESS}:{MQTT_BROKER_PORT}")
+    with connection_lock:
+        global mqtt_connection
+        if mqtt_connection is None:
+            mqtt_connection = mqtt.Client()
+            mqtt_connection.connect(MQTT_BROKER_ADDRESS, MQTT_BROKER_PORT, 60)
+            mqtt_connection.loop_start()
+            print(f"[MQTT] Client initialized and connected to {MQTT_BROKER_ADDRESS}:{MQTT_BROKER_PORT}")
+            sys.stdout.flush()
 
-    return mqtt_connection
+        return mqtt_connection
 
 influxdb_connection = None  # Global variable to store the InfluxDB client
 def get_influxdb_client():
-    global influxdb_connection
-    if influxdb_connection is None:
-        influxdb_connection = InfluxDBClient(token=INFLUXDB_TOKEN,
-            url=INFLUXDB_URL,
-            org=INFLUXDB_ORG,
-            username=INFLUXDB_USER,
-            password=INFLUXDB_PASSWORD)
-        print(f"InfluxDB client initialized and connected to {INFLUXDB_URL}")
+    with connection_lock:
+        global influxdb_connection
+        if influxdb_connection is None:
+            influxdb_connection = InfluxDBClient(token=INFLUXDB_TOKEN,
+                url=INFLUXDB_URL,
+                org=INFLUXDB_ORG,
+                username=INFLUXDB_USER,
+                password=INFLUXDB_PASSWORD)
+            print(f"[INFLUXDB] Client initialized and connected to {INFLUXDB_URL}")
+            sys.stdout.flush()
 
-    return influxdb_connection
+        return influxdb_connection
 
 def send_to_cloud(data_array, sensor):
     mqtt_client = get_mqtt_client()
@@ -67,10 +75,10 @@ def send_to_cloud(data_array, sensor):
             mqtt_client.publish(topic, message)
             last_message_sent = data
         except Exception as e:
-            print(f"Error sending data to MQTT broker: {e}")
+            print(f"[MQTT] Error sending data to MQTT broker: {e}")
             sys.stdout.flush()
             return last_message_sent
-    print(f"Data sent to cloud for sensor {sensor} ({len(data_array)} records)")
+    print(f"[PERSISTER] Data sent to cloud for sensor {sensor} ({len(data_array)} records)")
     sys.stdout.flush()
     return last_message_sent
 
@@ -81,10 +89,12 @@ def delete_data(sensor, max_date_iso):
     # Delete data from the local database
     delete_api.delete(start=DELETE_API_START_DATE, stop=max_date_iso, bucket=INFLUXDB_BUCKET, org=INFLUXDB_ORG, predicate=f'_measurement="sensors" AND type="{sensor}"')
 
-    print(f"Data deleted from local database for sensor {sensor} until {max_date_iso}")
+    print(f"[PERSISTER] Data deleted from local database for sensor {sensor} until {max_date_iso}")
+    sys.stdout.flush()
 
 def read_from_local_db():
-    print("Reading data from local database")
+    print("[PERSISTER] Reading data from local database")
+    sys.stdout.flush()
 
     # Initialize the InfluxDB client if it hasn't been initialized yet
     mqtt_client = get_influxdb_client()
@@ -98,7 +108,7 @@ def read_from_local_db():
         try:
             result = query_api.query(org=INFLUXDB_ORG ,query=query)
         except Exception as e:
-            print(f"Error querying data from InfluxDB: {e}")
+            print(f"[INFLUXDB] Error querying data from InfluxDB: {e}")
             sys.stdout.flush()
             continue
 
