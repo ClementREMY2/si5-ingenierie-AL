@@ -14,6 +14,7 @@ services:
       - INFLUXDB_ORG=alm-org
       - INFLUXDB_BUCKET=alm-bucket
       - INFLUXDB_TOKEN=alm_gateway_local_token
+      - PATIENT_ID=324
     ports:
       - "8085:8085"
     depends_on:
@@ -46,6 +47,7 @@ services:
       - INFLUXDB_ORG=alm-org
       - INFLUXDB_BUCKET=alm-bucket
       - INFLUXDB_TOKEN=alm_gateway_local_token
+      - PATIENT_ID=324
     depends_on:
       - influxdb
 

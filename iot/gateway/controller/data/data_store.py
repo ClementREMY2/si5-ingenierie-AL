@@ -16,6 +16,8 @@ INFLUXDB_ORG = os.getenv('INFLUXDB_ORG', '')
 INFLUXDB_BUCKET = os.getenv('INFLUXDB_BUCKET', '')
 INFLUXDB_TOKEN = os.getenv('INFLUXDB_TOKEN', '')
 
+PATIENT_ID = os.getenv('PATIENT_ID', '')
+
 REALTIME_ACTIVATED = False
 
 data_queue = []  # Queue to store data to be sent (in case of problem when storing)
@@ -75,7 +77,7 @@ def get_influxdb_client():
 def send_realtime(data):
     mqtt_client = get_mqtt_client()
 
-    topic = "sensor/data"
+    topic = "patient/" + PATIENT_ID + "/sensor/" + data['type']
     message = json.dumps(data)
 
     # Send the data to the MQTT broker as json
@@ -88,7 +90,7 @@ def send_realtime(data):
         put_local_queue(data)
         return
 
-    print(f"[PROCESSING] Data sent to MQTT broker: {message}")
+    print(f"[PROCESSING] Data sent to MQTT broker on topic '{topic}': {message}")
     sys.stdout.flush()
 
 def store(data):

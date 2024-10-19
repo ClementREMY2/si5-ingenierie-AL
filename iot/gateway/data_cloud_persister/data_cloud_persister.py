@@ -23,6 +23,8 @@ INFLUXDB_ORG = os.getenv('INFLUXDB_ORG', '')
 INFLUXDB_BUCKET = os.getenv('INFLUXDB_BUCKET', '')
 INFLUXDB_TOKEN = os.getenv('INFLUXDB_TOKEN', '')
 
+PATIENT_ID = os.getenv('PATIENT_ID', '')
+
 # TODO : faire que dès qu'on passe à True, envoyer les données restantes dans la DB locale
 REALTIME_ACTIVATED = False
 
@@ -65,7 +67,7 @@ def get_influxdb_client():
 
 def send_to_cloud(data_array, sensor):
     mqtt_client = get_mqtt_client()
-    topic = "sensor/data"
+    topic = "patient/" + PATIENT_ID + "/sensor/" + sensor
 
     last_message_sent = None
 
@@ -79,7 +81,7 @@ def send_to_cloud(data_array, sensor):
             print(f"[MQTT] Error sending data to MQTT broker: {e}")
             sys.stdout.flush()
             return last_message_sent
-    print(f"[PERSISTER] Data sent to cloud for sensor {sensor} ({len(data_array)} records)")
+    print(f"[PERSISTER] Data sent to cloud for sensor {sensor} ({len(data_array)} records on topic '{topic}')")
     sys.stdout.flush()
     return last_message_sent
 
