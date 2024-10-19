@@ -23,6 +23,7 @@ INFLUXDB_ORG = os.getenv('INFLUXDB_ORG', '')
 INFLUXDB_BUCKET = os.getenv('INFLUXDB_BUCKET', '')
 INFLUXDB_TOKEN = os.getenv('INFLUXDB_TOKEN', '')
 
+# TODO : faire que dès qu'on passe à True, envoyer les données restantes dans la DB locale
 REALTIME_ACTIVATED = False
 
 # IMPORTANT: At timezone UTC
@@ -125,6 +126,10 @@ def read_from_local_db():
                     "value": values.get("_value"),
                     "timestamp": get_current_time_iso(values.get("_time"))
                 })
+
+        #  If there is no data, continue to the next sensor
+        if (len(json_result) == 0):
+            continue
 
         # Data are in timestamp order, so we can get the last date to know until which date we have sent data (and delete it)
         last_message_sent = send_to_cloud(json_result, sensor)
