@@ -16,6 +16,8 @@ services:
       - INFLUXDB_TOKEN=alm_gateway_local_token
     ports:
       - "8085:8085"
+    depends_on:
+      - influxdb
 
   influxdb:
     image: influxdb:2.7.10
@@ -44,6 +46,8 @@ services:
       - INFLUXDB_ORG=alm-org
       - INFLUXDB_BUCKET=alm-bucket
       - INFLUXDB_TOKEN=alm_gateway_local_token
+    depends_on:
+      - influxdb
 
 volumes:
   influxdb_data:
