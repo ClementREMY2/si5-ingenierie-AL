@@ -1,3 +1,5 @@
+import sys
+
 # Map for each sensor the min and max acceptable values
 SENSOR_RANGES = {
     'heart_rate': (60, 100),
@@ -10,6 +12,7 @@ def filter(data):
     # Check if data.type is in SENSOR_RANGES
     if data['type'] not in SENSOR_RANGES:
         print(f"[FILTER] Data type {data['type']} is not in the acceptable types")
+        sys.stdout.flush()
         return None
     
     # Check if value is in the acceptable range

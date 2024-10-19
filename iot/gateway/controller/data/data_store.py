@@ -6,8 +6,8 @@ import json
 import sys
 import threading
 
-MQTT_BROKER_ADDRESS = os.getenv('SENSOR_DATA_MQTT_BROKER_ADDRESS', 'localhost')
-MQTT_BROKER_PORT = int(os.getenv('SENSOR_DATA_MQTT_BROKER_PORT', '2085'))
+MQTT_BROKER_ADDRESS = os.getenv('SENSOR_DATA_MQTT_BROKER_ADDRESS', '')
+MQTT_BROKER_PORT = int(os.getenv('SENSOR_DATA_MQTT_BROKER_PORT', ''))
 
 INFLUXDB_USER = os.getenv('INFLUXDB_ADMIN_USER', '')
 INFLUXDB_PASSWORD = os.getenv('INFLUXDB_ADMIN_PASSWORD', '')

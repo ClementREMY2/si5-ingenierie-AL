@@ -6,6 +6,8 @@ services:
     container_name: controller
     environment:
       - RECEIVER_WIFI_PORT=8085
+      - ALERT_MQTT_BROKER_ADDRESS=host.docker.internal
+      - ALERT_MQTT_BROKER_PORT=2083
       - SENSOR_DATA_MQTT_BROKER_ADDRESS=host.docker.internal
       - SENSOR_DATA_MQTT_BROKER_PORT=2085
       - INFLUXDB_ADMIN_USER=alm-admin

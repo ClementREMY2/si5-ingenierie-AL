@@ -13,7 +13,7 @@ def process(data):
     # Check alert
     alert = alert_checker.check_alert(filtered_data)
     if alert is not None:
-        alert_checker.send_alert(alert)
+        alert_checker.send_alert(filtered_data, alert)
 
     # If realtime, send to broker, else store in database
     if REALTIME_ACTIVATED:
