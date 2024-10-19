@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  controller:
-    build: ./controller
-    container_name: controller
+  data_processing:
+    build: ./data_processing
+    container_name: data_processing
     environment:
       - RECEIVER_WIFI_PORT=8085
       - ALERT_MQTT_BROKER_ADDRESS=host.docker.internal

@@ -1,7 +1,7 @@
 from flask import Flask, request
 import sys
 import os
-import data.processor as processor
+import processors.processor as processor
 
 PORT = int(os.getenv('RECEIVER_WIFI_PORT', 8080))
 

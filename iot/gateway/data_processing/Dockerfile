@@ -11,7 +11,7 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY main.py .
-COPY data/ data/
+COPY processors/ processors/
 COPY receivers/ receivers/
 
 # Set the entry point to run the script

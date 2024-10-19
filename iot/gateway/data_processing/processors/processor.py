@@ -1,6 +1,6 @@
-import data.filterer as filterer
-import data.alert_checker as alert_checker
-import data.data_store as data_store
+import processors.filterer as filterer
+import processors.alert_checker as alert_checker
+import processors.data_store as data_store
 
 REALTIME_ACTIVATED = False
 
