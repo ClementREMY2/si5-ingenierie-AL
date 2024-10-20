@@ -1,0 +1,33 @@
+export const publicRoutes = {
+    all: "*",
+    register: "/register",
+    login: "/login",
+    notFound: "/notFound"
+};
+
+export const privateRoutes = {
+    profile: "/profile",
+    dashboard: "/dashboard",
+    doctors: {
+        base: "/doctors/*",
+        list: "list",
+        create: "create",
+        view: ":id",
+        edit: ":id/edit"
+    },
+    patients: "/patients"
+};
+
+const getFullRouteWithBase = (baseRoute: string, endRoute: string): string => (
+    baseRoute.slice(0, -1) + endRoute
+);
+
+export const privateFullRoutes = {
+    ...privateRoutes,
+    doctors: {
+        list: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.list),
+        create: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.create),
+        view: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.view),
+        edit: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.edit)
+    }
+};
