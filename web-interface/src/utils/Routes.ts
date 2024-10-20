@@ -17,3 +17,17 @@ export const privateRoutes = {
     },
     patients: "/patients"
 };
+
+const getFullRouteWithBase = (baseRoute: string, endRoute: string): string => (
+    baseRoute.slice(0, -1) + endRoute
+);
+
+export const privateFullRoutes = {
+    ...privateRoutes,
+    doctors: {
+        list: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.list),
+        create: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.create),
+        view: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.view),
+        edit: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.edit)
+    }
+};
