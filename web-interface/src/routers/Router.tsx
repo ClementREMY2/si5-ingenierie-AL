@@ -1,7 +1,8 @@
 import {createBrowserRouter, Navigate, To} from "react-router-dom";
 import {UserRole} from "../interfaces/User.ts";
 import DashboardPage from "../pages/DashboardPage.tsx";
-import DoctorListPage from "../pages/DoctorListPage.tsx";
+import DoctorEditPage from "../pages/doctor/DoctorEditPage.tsx";
+import DoctorListPage from "../pages/doctor/DoctorListPage.tsx";
 import LoginPage from "../pages/LoginPage.tsx";
 import MainPage from "../pages/MainPage.tsx";
 import NotFoundPage from "../pages/NotFoundPage.tsx";
@@ -52,7 +53,15 @@ export const router = createBrowserRouter([
                             },
                             {
                                 path: privateRoutes.doctors.create,
-                                element: <DoctorListPage/>
+                                element: <DoctorEditPage edit/>
+                            },
+                            {
+                                path: privateRoutes.doctors.view,
+                                element: <DoctorEditPage/>
+                            },
+                            {
+                                path: privateRoutes.doctors.edit,
+                                element: <DoctorEditPage edit/>
                             }
                         ]
                     },

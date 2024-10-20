@@ -3,22 +3,22 @@ import {IconButton, Stack, TableCell, TableRow} from "@mui/material";
 import {useEffect, useState} from "react";
 import {generatePath, useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
-import ListPageGeneric from "../components/generics/ListPageGeneric.tsx";
-import {TableHeadCell} from "../interfaces/Generics.ts";
-import {Doctor, UserRole} from "../interfaces/User.ts";
-import {getUsersWithRole} from "../services/UserService.ts";
-import {privateRoutes} from "../utils/Routes.ts";
+import ListPageGeneric from "../../components/generics/ListPageGeneric.tsx";
+import {TableHeadCell} from "../../interfaces/Generics.ts";
+import {Doctor} from "../../interfaces/User.ts";
+import {getDoctors} from "../../services/DoctorService.tsx";
+import {privateFullRoutes} from "../../utils/Routes.ts";
 
 export default function DoctorListPage() {
     const navigate = useNavigate();
     const [doctors, setDoctors] = useState<Doctor[]>([]);
 
     useEffect(() => {
-        setDoctors(getUsersWithRole(UserRole.DOCTOR) as Doctor[]);
+        setDoctors(getDoctors);
     }, []);
 
-    const handleView = () => navigate(generatePath(privateRoutes.doctors.base, {"*": privateRoutes.doctors.view}));
-    const handleEdit = () => navigate(generatePath(privateRoutes.doctors.base, {"*": privateRoutes.doctors.edit}));
+    const handleView = (id: number) => navigate(generatePath(privateFullRoutes.doctors.view, {id}));
+    const handleEdit = (id: number) => navigate(generatePath(privateFullRoutes.doctors.edit, {id}));
     const handleDelete = (id: number) => toast.success(`Doctor ${id} deleted`);
 
     const tableHeadCells: TableHeadCell[] = [
@@ -51,13 +51,13 @@ export default function DoctorListPage() {
     const renderTableRow = (row: Doctor) => (
         <TableRow key={row.id}>
             <TableCell>{row.id}</TableCell>
-            <TableCell>{row.firstName} {row.lastName}</TableCell>
+            <TableCell>{row.firstname} {row.lastname}</TableCell>
             <TableCell>{row.email}</TableCell>
             <TableCell>{row.phone}</TableCell>
             <TableCell>{row.specialty}</TableCell>
             <TableCell><Stack direction={"row"} spacing={1}>
-                <IconButton color={"success"} onClick={handleView}><Visibility/></IconButton>
-                <IconButton color={"info"} onClick={handleEdit}><Edit/></IconButton>
+                <IconButton color={"success"} onClick={() => handleView(row.id)}><Visibility/></IconButton>
+                <IconButton color={"info"} onClick={() => handleEdit(row.id)}><Edit/></IconButton>
                 <IconButton color={"error"} onClick={() => handleDelete(row.id)}><Delete/></IconButton>
             </Stack></TableCell>
         </TableRow>
@@ -66,7 +66,7 @@ export default function DoctorListPage() {
     return <ListPageGeneric
         title={"Doctor list page"}
         addLabel={"Add doctor"}
-        addRoute={generatePath(privateRoutes.doctors.base, {"*": privateRoutes.doctors.create})}
+        addRoute={privateFullRoutes.doctors.create}
         tableHeadCells={tableHeadCells} rows={doctors} renderTableRow={renderTableRow}
     />;
 }
