@@ -1,7 +1,7 @@
 import {Dashboard, Elderly, MedicalServices} from "@mui/icons-material";
 import {Divider, Drawer, List, SxProps, Toolbar} from "@mui/material";
 import {generatePath} from "react-router-dom";
-import {UserRole} from "../../interfaces/User.ts";
+import {UserRole} from "../../interfaces/model/User.ts";
 import {privateRoutes} from "../../utils/Routes.ts";
 import MainDrawerItem from "./MainDrawerItem.tsx";
 

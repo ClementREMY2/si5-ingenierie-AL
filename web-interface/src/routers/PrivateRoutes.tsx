@@ -2,7 +2,7 @@ import {ReactNode} from "react";
 import {Outlet} from "react-router-dom";
 import {toast} from "react-toastify";
 import {useAuth} from "../context/Auth.tsx";
-import {UserRole} from "../interfaces/User.ts";
+import {UserRole} from "../interfaces/model/User.ts";
 import {publicRoutes} from "../utils/Routes.ts";
 import {getRedirection} from "./Router.tsx";
 

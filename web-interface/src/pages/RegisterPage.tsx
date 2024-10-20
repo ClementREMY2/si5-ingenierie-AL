@@ -1,16 +1,19 @@
 import {Button, Card, Stack, TextField, Typography} from "@mui/material";
 import {ChangeEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 import {useAuth} from "../context/Auth.tsx";
-import {UserRegister} from "../interfaces/User.ts";
+import {UserRegister} from "../interfaces/model/User.ts";
+import {emptyUserRegister} from "../mocks/User.ts";
+import {checkRegisterUser} from "../services/UserService.ts";
 import {privateRoutes, publicRoutes} from "../utils/Routes.ts";
 
 export default function RegisterPage() {
     const navigate = useNavigate();
     const {handleRegister} = useAuth();
 
-    const [registerData, setRegisterData] = useState<UserRegister>({});
-    const [registerError, setRegisterError] = useState<UserRegister>({});
+    const [registerData, setRegisterData] = useState<UserRegister>({...emptyUserRegister});
+    const [registerError, setRegisterError] = useState<UserRegister>({...emptyUserRegister});
 
     const handleRegisterChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -18,9 +21,14 @@ export default function RegisterPage() {
     };
 
     const handleRegisterSubmit = () => {
-        const result = handleRegister(registerData);
+        const result = checkRegisterUser(registerData);
         if (result?.error) setRegisterError(result.error);
-        else navigate(privateRoutes.dashboard);
+        else {
+            handleRegister(registerData).then(result => {
+                if (result?.error) toast.error(result.error);
+                else navigate(privateRoutes.dashboard);
+            });
+        }
     };
 
     return (

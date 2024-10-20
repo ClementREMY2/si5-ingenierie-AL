@@ -4,9 +4,9 @@ import {generatePath, useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import EditActionsGeneric from "../../components/generics/editPage/EditActionsGeneric.tsx";
 import EditViewGeneric from "../../components/generics/editPage/EditViewGeneric.tsx";
-import {Doctor} from "../../interfaces/User.ts";
+import {Doctor} from "../../interfaces/model/User.ts";
 import {emptyDoctor} from "../../mocks/User.ts";
-import {getDoctorById} from "../../services/DoctorService.tsx";
+import {getDoctorById} from "../../services/DoctorService.ts";
 import {privateFullRoutes} from "../../utils/Routes.ts";
 
 interface DoctorEditPageProps {
@@ -16,7 +16,7 @@ interface DoctorEditPageProps {
 export default function DoctorEditPage({edit}: Readonly<DoctorEditPageProps>) {
     const navigate = useNavigate();
     const {id} = useParams();
-    const [doctor, setDoctor] = useState<Doctor>(emptyDoctor);
+    const [doctor, setDoctor] = useState<Doctor>({...emptyDoctor});
 
     useEffect(() => {
         if (id) {

@@ -1,12 +1,12 @@
-import {User, UserLogin, UserRegister, UserRole} from "../interfaces/User.ts";
-import {users} from "../mocks/User.ts";
+import {User, UserLogin, UserRegister, UserRole} from "../interfaces/model/User.ts";
+import {emptyUserRegister, users} from "../mocks/User.ts";
 import {isValidEmail, isValidPassword, isValidPhoneNumber, isValidString} from "../utils/Services.ts";
 
 const getRegisterErrorMessage = (label: string): string => `Please enter a valid ${label}.`;
 
-export const registerUser = (registerData: UserRegister) => {
+export const checkRegisterUser = (registerData: UserRegister) => {
     let isValid = true;
-    const error: UserRegister = {};
+    let error = {...emptyUserRegister};
 
     if (!isValidString(registerData.firstname)) {
         error.firstname = getRegisterErrorMessage("first name");
@@ -33,22 +33,29 @@ export const registerUser = (registerData: UserRegister) => {
         isValid = false;
     }
 
-    if (!registerData.confirmPassword || registerData.confirmPassword !== registerData.password) {
+    if (registerData.confirmPassword !== registerData.password) {
         error.confirmPassword = "Passwords do not match";
         isValid = false;
     }
 
-    if (isValid) return {
+    if (!isValid) return {error};
+};
+
+export const getUserById = (id: number) => {
+    const user = users.find(user => user.id === id);
+    if (!user) {
+        return {error: `User not found by id ${id}`};
+    }
+    return {
         user: {
-            id: 0,
-            firstname: registerData.firstname,
-            lastname: registerData.lastname,
-            phone: registerData.phone,
-            email: registerData.email,
-            role: UserRole.FAMILY
+            id: user.id,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            phone: user.phone,
+            email: user.email,
+            role: user.role
         } as User
     };
-    else return {error};
 };
 
 export const getUserByLogin = (loginData: UserLogin) => {

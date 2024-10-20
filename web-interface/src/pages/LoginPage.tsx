@@ -2,7 +2,7 @@ import {Button, Card, Stack, TextField, Typography} from "@mui/material";
 import {ChangeEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../context/Auth.tsx";
-import {UserLogin} from "../interfaces/User.ts";
+import {UserLogin} from "../interfaces/model/User.ts";
 import {privateRoutes, publicRoutes} from "../utils/Routes.ts";
 
 export default function LoginPage() {
