@@ -4,6 +4,8 @@ import os
 import sys
 import threading
 import time
+import settings.settings as settings
+import receivers.wifi as wifi
 
 import paho.mqtt.client as mqtt
 from influxdb_client import InfluxDBClient
@@ -146,4 +148,15 @@ def read_from_local_db_scheduler():
         time.sleep(SCHEDULE_INTERVAL_MINUTES * 60)
 
 if __name__ == '__main__':
-    read_from_local_db_scheduler()
+    # Load settings
+    settings.init()
+
+    # Launched scheduler & wifi receiver in separate threads
+    wifi_thread = threading.Thread(target=wifi.init)
+    db_reader_thread = threading.Thread(target=read_from_local_db_scheduler)
+
+    wifi_thread.start()
+    db_reader_thread.start()
+
+    wifi_thread.join()
+    db_reader_thread.join()

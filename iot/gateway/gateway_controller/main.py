@@ -4,6 +4,7 @@ import os
 import sys
 import threading
 import sqlite3
+import requests
 
 MQTT_BROKER_ADDRESS = os.getenv('GATEWAY_CONTROL_MQTT_BROKER_ADDRESS', '')
 MQTT_BROKER_PORT = int(os.getenv('GATEWAY_CONTROL_MQTT_BROKER_PORT', ''))
@@ -11,17 +12,16 @@ MQTT_BROKER_PORT = int(os.getenv('GATEWAY_CONTROL_MQTT_BROKER_PORT', ''))
 PATIENT_ID = os.getenv('PATIENT_ID', '')
 GATEWAY_ID = os.getenv('GATEWAY_ID', '')
 
-# IMPORTANT: At timezone UTC
-def get_current_time_iso(time):
-    formatted_time = time.strftime("%Y-%m-%dT%H:%M:%SZ")
-    return formatted_time
-
-
+DATA_PROCESSING_ADDRESS = os.getenv('DATA_PROCESSING_ADDRESS', '')
+DATA_CLOUD_PERSISTER_ADDRESS = os.getenv('DATA_CLOUD_PERSISTER_ADDRESS', '')
 
 def get_sqlite_connection():
-    return sqlite3.connect('gateway.db')
+    return sqlite3.connect('/data/gateway.db')
     
 def init_sqlite_connection():
+    print("[SQLITE] Initializing SQLite connection")
+    sys.stdout.flush()
+
     con = get_sqlite_connection()
 
     # Check if the table exists
@@ -36,8 +36,11 @@ def init_sqlite_connection():
         cursor.execute("INSERT INTO settings (realtime_enabled) VALUES (0)")
         con.commit()
 
-        print("[SQLITE] Table settings created with default values")
+        print("[SQLITE - SETTINGS] Table settings created with default values")
         sys.stdout.flush()
+
+    print("[SQLITE] SQLite connection initialized")
+    sys.stdout.flush()
     
 connection_lock = threading.Lock()
 mqtt_connection = None  # Global variable to store the MQTT client
@@ -83,8 +86,16 @@ def update_realtime(data):
     cursor.execute("UPDATE settings SET realtime_enabled = ?", (new_realtime))
     con.commit()
 
-    print(f"[SQLITE] Realtime updated ({'enabled' if new_realtime == '1' else 'disabled'})")
+    # Notify other services to reload the settings
+    notify_other_services()
+
+    print(f"[SQLITE - SETTINGS] Realtime updated ({'enabled' if new_realtime == '1' else 'disabled'})")
     sys.stdout.flush()
+
+def notify_other_services():
+    # Make a POST request to the data processing settings API to reload the settings
+    requests.post(f'http://{DATA_PROCESSING_ADDRESS}/settings/reload')
+    requests.post(f'http://{DATA_CLOUD_PERSISTER_ADDRESS}/settings/reload')
 
 if __name__ == '__main__':
     init_sqlite_connection()

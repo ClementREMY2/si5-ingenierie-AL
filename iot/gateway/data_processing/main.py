@@ -1,4 +1,6 @@
-import receivers.data_receiver as data_receiver
+import receivers.receivers as receivers
+import settings.settings as settings
 
 if __name__ == '__main__':
-    data_receiver.init()
+    settings.init()
+    receivers.init()

@@ -11,6 +11,8 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY data_cloud_persister.py .
+COPY receivers/ receivers/
+COPY settings/ settings/
 
 # Set the entry point to run the script
 ENTRYPOINT ["python", "data_cloud_persister.py"]

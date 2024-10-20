@@ -5,6 +5,7 @@ import os
 import json
 import sys
 import threading
+import settings.settings as settings
 
 MQTT_BROKER_ADDRESS = os.getenv('SENSOR_DATA_MQTT_BROKER_ADDRESS', '')
 MQTT_BROKER_PORT = int(os.getenv('SENSOR_DATA_MQTT_BROKER_PORT', ''))
@@ -17,8 +18,6 @@ INFLUXDB_BUCKET = os.getenv('INFLUXDB_BUCKET', '')
 INFLUXDB_TOKEN = os.getenv('INFLUXDB_TOKEN', '')
 
 PATIENT_ID = os.getenv('PATIENT_ID', '')
-
-REALTIME_ACTIVATED = False
 
 data_queue = []  # Queue to store data to be sent (in case of problem when storing)
 data_queue_lock = threading.Lock()
@@ -37,7 +36,7 @@ def process_waiting_data():
     else:
         print(f"[PROCESSING] Processing {len(temp_queue)} data in the local queue")
         sys.stdout.flush()
-        if REALTIME_ACTIVATED:
+        if settings.get('realtime_enabled') == 1:
             for data in temp_queue:
                 send_realtime(data)
         else:

@@ -1,19 +1,11 @@
 from flask import Flask, request
 import sys
 import os
-import processors.processor as processor
 import settings.settings as settings
 
-PORT = int(os.getenv('RECEIVER_WIFI_PORT', 8080))
+PORT = int(os.getenv('RECEIVER_WIFI_PORT', ''))
 
 app = Flask(__name__ + '_wifi')
-
-@app.route('/', methods=['POST'])
-def index():
-    if request.method == 'POST':
-        data = request.get_json()
-        processor.process(data)
-    return "OK"
 
 @app.route('/settings/reload', methods=['POST'])
 def settings_reload():
