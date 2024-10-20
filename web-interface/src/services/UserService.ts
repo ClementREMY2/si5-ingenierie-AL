@@ -8,13 +8,13 @@ export const registerUser = (registerData: UserRegister) => {
     let isValid = true;
     const error: UserRegister = {};
 
-    if (!isValidString(registerData.firstName)) {
-        error.firstName = getRegisterErrorMessage("first name");
+    if (!isValidString(registerData.firstname)) {
+        error.firstname = getRegisterErrorMessage("first name");
         isValid = false;
     }
 
-    if (!isValidString(registerData.lastName)) {
-        error.lastName = getRegisterErrorMessage("last name");
+    if (!isValidString(registerData.lastname)) {
+        error.lastname = getRegisterErrorMessage("last name");
         isValid = false;
     }
 
@@ -40,9 +40,9 @@ export const registerUser = (registerData: UserRegister) => {
 
     if (isValid) return {
         user: {
-            id: "0",
-            firstName: registerData.firstName,
-            lastName: registerData.lastName,
+            id: 0,
+            firstname: registerData.firstname,
+            lastname: registerData.lastname,
             phone: registerData.phone,
             email: registerData.email,
             role: UserRole.FAMILY
@@ -63,8 +63,8 @@ export const getUserByLogin = (loginData: UserLogin) => {
     return {
         user: {
             id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            firstname: user.firstname,
+            lastname: user.lastname,
             phone: user.phone,
             email: user.email,
             role: user.role

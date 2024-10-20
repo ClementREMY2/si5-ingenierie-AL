@@ -4,8 +4,8 @@ export interface UserLogin {
 }
 
 export interface UserRegister {
-    firstName?: string;
-    lastName?: string;
+    firstname?: string;
+    lastname?: string;
     phone?: string;
     email?: string;
     password?: string;
@@ -22,8 +22,8 @@ export enum UserRole {
 
 export interface User {
     id: number;
-    firstName: string;
-    lastName: string;
+    firstname: string;
+    lastname: string;
     phone: string;
     email: string;
     role: UserRole;

@@ -29,22 +29,22 @@ export default function RegisterPage() {
                 <Typography component={"h1"} variant={"h2"}>Register</Typography>
                 <Stack spacing={2}>
                     <TextField
-                        label={"First Name"}
-                        name={"firstName"}
-                        value={registerData.firstName ?? ""}
+                        label={"Firstname"}
+                        name={"firstname"}
+                        value={registerData.firstname ?? ""}
                         onChange={handleRegisterChange}
-                        error={!!registerError.firstName}
-                        helperText={registerError.firstName ?? ""}
-                        color={registerError.firstName ? "error" : "primary"}
+                        error={!!registerError.firstname}
+                        helperText={registerError.firstname ?? ""}
+                        color={registerError.firstname ? "error" : "primary"}
                         required fullWidth/>
                     <TextField
-                        label={"Last Name"}
-                        name={"lastName"}
-                        value={registerData.lastName ?? ""}
+                        label={"Lastname"}
+                        name={"lastname"}
+                        value={registerData.lastname ?? ""}
                         onChange={handleRegisterChange}
-                        error={!!registerError.lastName}
-                        helperText={registerError.lastName ?? ""}
-                        color={registerError.lastName ? "error" : "primary"}
+                        error={!!registerError.lastname}
+                        helperText={registerError.lastname ?? ""}
+                        color={registerError.lastname ? "error" : "primary"}
                         required fullWidth/>
                     <TextField
                         label={"Phone number"}
@@ -75,7 +75,7 @@ export default function RegisterPage() {
                         color={registerError.password ? "error" : "primary"}
                         required fullWidth/>
                     <TextField
-                        label={"Confirm Password"}
+                        label={"Confirm password"}
                         name={"confirmPassword"}
                         type={"password"}
                         value={registerData.confirmPassword ?? ""}

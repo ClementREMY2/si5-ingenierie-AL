@@ -24,7 +24,7 @@ export default function RouterContent() {
 
     useEffect(() => {
         if (user && isPublicRoute(location.pathname)) {
-            toast.info(`Bienvenue ${user.firstName} ${user.lastName}!`);
+            toast.info(`Bienvenue ${user.firstname} ${user.lastname}!`);
             return navigate(privateRoutes.dashboard);
         }
     }, []);

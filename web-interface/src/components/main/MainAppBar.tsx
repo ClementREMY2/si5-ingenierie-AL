@@ -18,7 +18,7 @@ export default function MainAppBar({openDrawer, setOpenDrawer = () => {}}: Reado
         fontSize: "0.875rem",
         height: 30,
         width: 30,
-        bgcolor: stringToColor(`${user?.firstName} ${user?.lastName}`)
+        bgcolor: stringToColor(`${user?.firstname} ${user?.lastname}`)
     };
 
     return (
@@ -38,9 +38,9 @@ export default function MainAppBar({openDrawer, setOpenDrawer = () => {}}: Reado
                 <Stack component={Button} variant={"text"} textTransform={"none"} color={"inherit"}
                        direction={"row"} spacing={1} sx={{mr: 1}} onClick={() => navigate(privateRoutes.profile)}>
                     <Avatar sx={avatarSx}>
-                        {user?.firstName.charAt(0).toUpperCase()}{user?.lastName.charAt(0).toUpperCase()}
+                        {user?.firstname?.charAt(0).toUpperCase()}{user?.lastname?.charAt(0).toUpperCase()}
                     </Avatar>
-                    <Typography>{user?.firstName} {user?.lastName}</Typography>
+                    <Typography>{user?.firstname} {user?.lastname}</Typography>
                 </Stack>
             </Toolbar>
         </AppBar>

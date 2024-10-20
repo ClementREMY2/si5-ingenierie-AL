@@ -15,7 +15,7 @@ export default function TableGeneric<T>({
     tableHeadCells,
     rows,
     renderTableRow,
-    pagination,
+    pagination = true,
     rowsPerPageOptions = [5, 10, 25]
 }: Readonly<TableGenericProps<T>>) {
     const [page, setPage] = useState<number>(0);
