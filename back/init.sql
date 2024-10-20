@@ -64,35 +64,41 @@ CREATE TABLE reports (
     global_observation TEXT
 );
 
--- Creating devices
-CREATE TABLE devices (
+-- Creating device_models (gateway V1, heart rate sensor, etc.)
+CREATE TABLE device_models (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
+    brand VARCHAR(100),
     type VARCHAR(100)
 );
 
-
-
--- Creating device stock
-CREATE TABLE device_stock (
+-- Creating devices unit (one row per device, X gateways + Y sensors = X+Y rows)
+CREATE TABLE devices (
     id SERIAL PRIMARY KEY,
-    device_id INTEGER REFERENCES devices(id)
+    name VARCHAR(100),
+    model_id INTEGER REFERENCES device_models(id)
+);
+
+-- Creating gateways devices
+CREATE TABLE gateway_devices (
+    device_id INTEGER REFERENCES devices(id) PRIMARY KEY,
+    realtime_enabled BOOLEAN DEFAULT FALSE
 );
 
 -- Many-to-Many relationship between reports and devices
 CREATE TABLE reports_devices (
     report_id INTEGER REFERENCES reports(id),
-    device_id INTEGER REFERENCES device_stock(id),
+    device_id INTEGER REFERENCES devices(id),
     observation TEXT,
     PRIMARY KEY (report_id, device_id)
 );
 -- Many-to-Many relationship between patients and equipment
 CREATE TABLE patients_device (
     patient_id INTEGER REFERENCES patients(id),
-    device_id INTEGER UNIQUE REFERENCES device_stock(id),
+    device_id INTEGER UNIQUE REFERENCES devices(id),
     PRIMARY KEY (patient_id, device_id),
     start_date DATE,
-    end_date DATE
+    end_date DATE DEFAULT NULL
 );
 
 -- Creating notifications
@@ -151,8 +157,17 @@ VALUES (3, 1, 'Complete medical record');
 INSERT INTO nurses (user_id, specialty) 
 VALUES (2, 'Cardiology (nurse)');
 
+-- Devices models
+INSERT INTO device_models (name, brand, type) VALUES ('Gateway V1', 'ALM', 'Gateway');
+
 -- Inserting test data for devices
-INSERT INTO devices (name, type) VALUES ('ECG', 'Monitor'), ('Thermometer', 'Care');
+INSERT INTO devices (name, model_id) VALUES ('Gateway 1', 1);
+
+-- Inserting test data for gateways devices
+INSERT INTO gateway_devices (device_id, realtime_enabled) VALUES (1, FALSE);
+
+-- Assigning devices to patients
+INSERT INTO patients_device (patient_id, device_id, start_date) VALUES (1, 1, '2021-01-01');
 
 
 -- Inserting test data for notifications

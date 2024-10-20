@@ -3,6 +3,11 @@ exports.wr = (fn) => async (req, res, next) => {
         await fn(req, res, next);
     } catch (err) {
         console.error(err);
-        res.status(500).send('Erreur du serveur');
+        if (err.isBoom) {
+            const { payload } = err.output
+            res.status(payload.statusCode).send(payload.message);
+        } else {
+            res.status(500).send('Erreur du serveur');
+        }
     }
 };
