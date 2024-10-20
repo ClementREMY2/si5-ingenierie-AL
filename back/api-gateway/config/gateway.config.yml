@@ -8,24 +8,24 @@ admin:
 apiEndpoints:
   devices-api:
     paths:
-    - "/devices"
-    - "/devices/*"
+      - "/devices"
+      - "/devices/*"
   feedbacks-api:
     paths:
-    - "/feedbacks"
-    - "/feedbacks/*"
+      - "/feedbacks"
+      - "/feedbacks/*"
   healthchecks-api:
     paths:
-    - "/healthchecks"
-    - "/healthchecks/*"
+      - "/healthchecks"
+      - "/healthchecks/*"
   notifications-api:
     paths:
-    - "/notifications"
-    - "/notifications/*"
+      - "/notifications"
+      - "/notifications/*"
   users-api:
     paths:
-    - "/users"
-    - "/users/*"
+      - "/users"
+      - "/users/*"
   auth-api:
     paths: "/auth/*"
 
@@ -47,15 +47,22 @@ policies:
   - log
   - proxy
   - auth
+  - cors
 
 pipelines:
   devices-pipelines:
     apiEndpoints:
       - devices-api
     policies:
+      - cors:
+          action:
+            origin: "*"
+            methods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+            headers: [ "Content-Type", "Authorization" ]
+            credentials: true
       - auth:
           action:
-            roles: [1, 2]
+            roles: [ 1, 2 ]
       - log:
           action:
             message: "Requête vers /devices"
@@ -70,6 +77,12 @@ pipelines:
     apiEndpoints:
       - feedbacks-api
     policies:
+      - cors:
+          action:
+            origin: "*"
+            methods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+            headers: [ "Content-Type", "Authorization" ]
+            credentials: true
       - log:
           action:
             message: "Requête vers /feedbacks"
@@ -82,6 +95,12 @@ pipelines:
     apiEndpoints:
       - healthchecks-api
     policies:
+      - cors:
+          action:
+            origin: "*"
+            methods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+            headers: [ "Content-Type", "Authorization" ]
+            credentials: true
       - log:
           action:
             message: "Requête vers /healthchecks"
@@ -94,6 +113,12 @@ pipelines:
     apiEndpoints:
       - notifications-api
     policies:
+      - cors:
+          action:
+            origin: "*"
+            methods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+            headers: [ "Content-Type", "Authorization" ]
+            credentials: true
       - log:
           action:
             message: "Requête vers /notifications"
@@ -106,6 +131,12 @@ pipelines:
     apiEndpoints:
       - users-api
     policies:
+      - cors:
+          action:
+            origin: "*"
+            methods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+            headers: [ "Content-Type", "Authorization" ]
+            credentials: true
       - log:
           action:
             message: "Requête vers /users"
@@ -118,6 +149,12 @@ pipelines:
     apiEndpoints:
       - auth-api
     policies:
+      - cors:
+          action:
+            origin: "*"
+            methods: [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+            headers: [ "Content-Type", "Authorization" ]
+            credentials: true
       - log:
           action:
             message: "Requête vers /auth"
