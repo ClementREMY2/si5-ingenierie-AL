@@ -10,9 +10,7 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY main.py .
-COPY data/ data/
-COPY receivers/ receivers/
+COPY data_cloud_persister.py .
 
 # Set the entry point to run the script
-ENTRYPOINT ["python", "main.py"]
+ENTRYPOINT ["python", "data_cloud_persister.py"]

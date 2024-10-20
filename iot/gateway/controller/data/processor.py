@@ -2,7 +2,7 @@ import data.filterer as filterer
 import data.alert_checker as alert_checker
 import data.data_store as data_store
 
-REALTIME_ACTIVATED = True
+REALTIME_ACTIVATED = False
 
 def process(data):
     # Filter data
@@ -13,13 +13,14 @@ def process(data):
     # Check alert
     alert = alert_checker.check_alert(filtered_data)
     if alert is not None:
-        alert_checker.send_alert(alert)
+        alert_checker.send_alert(filtered_data, alert)
 
     # If realtime, send to broker, else store in database
     if REALTIME_ACTIVATED:
         # Send to broker
-        data_store.store(filtered_data)
+        data_store.send_realtime(filtered_data)
         pass
     else:
         # Store in database
+        data_store.store(filtered_data)
         pass
