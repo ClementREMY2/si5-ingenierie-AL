@@ -1,9 +1,22 @@
 version: '3.8'
 
 services:
-  controller:
-    build: ./controller
-    container_name: controller
+  gateway_controller:
+    build: ./gateway_controller
+    container_name: gateway_controller
+    environment:
+      - GATEWAY_CONTROL_MQTT_BROKER_ADDRESS=host.docker.internal
+      - GATEWAY_CONTROL_MQTT_BROKER_PORT=2084
+      - PATIENT_ID=324
+      - GATEWAY_ID=1
+      - DATA_PROCESSING_ADDRESS=data_processing:8085
+      - DATA_CLOUD_PERSISTER_ADDRESS=data_cloud_persister:8085
+    volumes:
+      - sqlite_data:/data 
+
+  data_processing:
+    build: ./data_processing
+    container_name: data_processing
     environment:
       - RECEIVER_WIFI_PORT=8085
       - ALERT_MQTT_BROKER_ADDRESS=host.docker.internal
@@ -21,6 +34,29 @@ services:
       - "8085:8085"
     depends_on:
       - influxdb
+      - gateway_controller
+    volumes:
+      - sqlite_data:/data 
+    
+  data_cloud_persister:
+    build: ./data_cloud_persister
+    container_name: data_cloud_persister
+    environment:
+      - RECEIVER_WIFI_PORT=8085
+      - SENSOR_DATA_MQTT_BROKER_ADDRESS=host.docker.internal
+      - SENSOR_DATA_MQTT_BROKER_PORT=2085
+      - INFLUXDB_ADMIN_USER=alm-admin
+      - INFLUXDB_ADMIN_PASSWORD=alm-adminpassword
+      - INFLUXDB_URL=http://influxdb:8086
+      - INFLUXDB_ORG=alm-org
+      - INFLUXDB_BUCKET=alm-bucket
+      - INFLUXDB_TOKEN=alm_gateway_local_token
+      - PATIENT_ID=324
+    depends_on:
+      - influxdb
+      - gateway_controller
+    volumes:
+      - sqlite_data:/data 
 
   influxdb:
     image: influxdb:2.7.10
@@ -36,22 +72,7 @@ services:
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=alm_gateway_local_token
     volumes:
       - influxdb_data:/var/lib/influxdb
-    
-  data_cloud_persister:
-    build: ./data_cloud_persister
-    container_name: data_cloud_persister
-    environment:
-      - SENSOR_DATA_MQTT_BROKER_ADDRESS=host.docker.internal
-      - SENSOR_DATA_MQTT_BROKER_PORT=2085
-      - INFLUXDB_ADMIN_USER=alm-admin
-      - INFLUXDB_ADMIN_PASSWORD=alm-adminpassword
-      - INFLUXDB_URL=http://influxdb:8086
-      - INFLUXDB_ORG=alm-org
-      - INFLUXDB_BUCKET=alm-bucket
-      - INFLUXDB_TOKEN=alm_gateway_local_token
-      - PATIENT_ID=324
-    depends_on:
-      - influxdb
 
 volumes:
   influxdb_data:
+  sqlite_data:

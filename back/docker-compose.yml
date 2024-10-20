@@ -8,6 +8,9 @@ services:
         SERVICE_NAME: devices-service
     env_file:
       - .env
+    environment:
+      - GATEWAY_CONTROL_MQTT_BROKER_ADDRESS=host.docker.internal
+      - GATEWAY_CONTROL_MQTT_BROKER_PORT=2084
     container_name: devices-service
     networks:
       - app-network
@@ -93,7 +96,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data  
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql

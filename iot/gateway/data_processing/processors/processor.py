@@ -1,8 +1,7 @@
-import data.filterer as filterer
-import data.alert_checker as alert_checker
-import data.data_store as data_store
-
-REALTIME_ACTIVATED = False
+import processors.filterer as filterer
+import processors.alert_checker as alert_checker
+import processors.data_store as data_store
+import settings.settings as settings
 
 def process(data):
     # Filter data
@@ -16,7 +15,7 @@ def process(data):
         alert_checker.send_alert(filtered_data, alert)
 
     # If realtime, send to broker, else store in database
-    if REALTIME_ACTIVATED:
+    if settings.get('realtime_enabled') == 1:
         # Send to broker
         data_store.send_realtime(filtered_data)
         pass

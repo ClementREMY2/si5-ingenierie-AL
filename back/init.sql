@@ -64,35 +64,41 @@ CREATE TABLE reports (
     global_observation TEXT
 );
 
--- Creating devices
-CREATE TABLE devices (
+-- Creating device_models (gateway V1, heart rate sensor, etc.)
+CREATE TABLE device_models (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
+    brand VARCHAR(100),
     type VARCHAR(100)
 );
 
-
-
--- Creating device stock
-CREATE TABLE device_stock (
+-- Creating devices unit (one row per device, X gateways + Y sensors = X+Y rows)
+CREATE TABLE devices (
     id SERIAL PRIMARY KEY,
-    device_id INTEGER REFERENCES devices(id)
+    name VARCHAR(100),
+    model_id INTEGER REFERENCES device_models(id)
+);
+
+-- Creating gateways devices
+CREATE TABLE gateway_devices (
+    device_id INTEGER REFERENCES devices(id) PRIMARY KEY,
+    realtime_enabled BOOLEAN DEFAULT FALSE
 );
 
 -- Many-to-Many relationship between reports and devices
 CREATE TABLE reports_devices (
     report_id INTEGER REFERENCES reports(id),
-    device_id INTEGER REFERENCES device_stock(id),
+    device_id INTEGER REFERENCES devices(id),
     observation TEXT,
     PRIMARY KEY (report_id, device_id)
 );
 -- Many-to-Many relationship between patients and equipment
 CREATE TABLE patients_device (
     patient_id INTEGER REFERENCES patients(id),
-    device_id INTEGER UNIQUE REFERENCES device_stock(id),
+    device_id INTEGER UNIQUE REFERENCES devices(id),
     PRIMARY KEY (patient_id, device_id),
     start_date DATE,
-    end_date DATE
+    end_date DATE DEFAULT NULL
 );
 
 -- Creating notifications
@@ -130,25 +136,38 @@ CREATE TABLE feedbacks_devices (
 INSERT INTO role (name) VALUES ('Admin'), ('Doctor'), ('Nurse'), ('Patient');
 
 -- Inserting test data for users
-INSERT INTO users (username, password, last_name, first_name, role_id, contact) 
-VALUES ('user1', 'password1', 'Smith', 'John', 2, 'john.smith@example.com'),
-       ('user2', 'password2', 'Doe', 'Jane', 3, 'jane.doe@example.com'),
-       ('user3', 'password3', 'Brown', 'Paul', 4, 'paul.brown@example.com');
+-- PASSWORDS :
+-- john : password1
+-- jane : password2
+-- paul : password3
+INSERT INTO users (email, password, last_name, first_name, role_id, phone) 
+VALUES ('john.smith@example.com', '$2b$10$mkrzekg7GWayR6EBZYw0.uAIaD72LkH484cMkAZ43QjO4doXCpWbi', 'Smith', 'John', 2, '+33653784926'),
+       ('jane.doe@example.com', '$2b$10$z6qOQz7Qyw.A./pzyOfpfuvawECtQ0nTt1THvFZoO5mGOU3Pqb4pC', 'Doe', 'Jane', 3, '+33653734926'),
+       ('paul.brown@example.com', '$2b$10$z6rh9W23toLnCIIp4uPrzewJVvW4ZDL9TTd6GJsY4ptCb7VmPnkSi', 'Brown', 'Paul', 4, '+33753784926');
 
 -- Inserting test data for doctors
-INSERT INTO doctors (user_id, specialty, office) 
-VALUES (1, 'Cardiology', 'Cardiology Office Nice');
+INSERT INTO doctors (user_id, specialty) 
+VALUES (1, 'Cardiology');
 
 -- Inserting test data for patients
 INSERT INTO patients (user_id, doctor_id, medical_record) 
 VALUES (3, 1, 'Complete medical record');
 
 -- Inserting test data for nurses
-INSERT INTO nurses (user_id, experience) 
-VALUES (2, 5);
+INSERT INTO nurses (user_id, specialty) 
+VALUES (2, 'Cardiology (nurse)');
+
+-- Devices models
+INSERT INTO device_models (name, brand, type) VALUES ('Gateway V1', 'ALM', 'Gateway');
 
 -- Inserting test data for devices
-INSERT INTO devices (name, type) VALUES ('ECG', 'Monitor'), ('Thermometer', 'Care');
+INSERT INTO devices (name, model_id) VALUES ('Gateway 1', 1);
+
+-- Inserting test data for gateways devices
+INSERT INTO gateway_devices (device_id, realtime_enabled) VALUES (1, FALSE);
+
+-- Assigning devices to patients
+INSERT INTO patients_device (patient_id, device_id, start_date) VALUES (1, 1, '2021-01-01');
 
 
 -- Inserting test data for notifications
