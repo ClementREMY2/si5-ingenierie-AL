@@ -1,4 +1,5 @@
 import {Dashboard, Elderly, MedicalServices} from "@mui/icons-material";
+import RouterIcon from '@mui/icons-material/Router';
 import {Divider, Drawer, List, SxProps, Toolbar} from "@mui/material";
 import {generatePath} from "react-router-dom";
 import {UserRole} from "../../interfaces/User.ts";
@@ -34,6 +35,14 @@ export default function MainDrawer({open}: Readonly<DrawerProps>) {
                     roles={[UserRole.ADMIN]}
                     open={open}
                     baseRoute={privateRoutes.doctors.base}
+                />
+                <MainDrawerItem
+                    title={"Gateway list"}
+                    icon={<RouterIcon/>}
+                    to={generatePath(privateRoutes.gateways.base, {"*": privateRoutes.gateways.list})}
+                    roles={[UserRole.ADMIN]}
+                    open={open}
+                    baseRoute={privateRoutes.gateways.base}
                 />
                 <MainDrawerItem
                     title={"Patient list"}

@@ -3,6 +3,8 @@ import {UserRole} from "../interfaces/User.ts";
 import DashboardPage from "../pages/DashboardPage.tsx";
 import DoctorEditPage from "../pages/doctor/DoctorEditPage.tsx";
 import DoctorListPage from "../pages/doctor/DoctorListPage.tsx";
+import GatewayListPage from "../pages/gateway/GatewayListPage.tsx";
+import GatewayEditPage from "../pages/gateway/GatewayEditPage.tsx";
 import LoginPage from "../pages/LoginPage.tsx";
 import MainPage from "../pages/MainPage.tsx";
 import NotFoundPage from "../pages/NotFoundPage.tsx";
@@ -62,6 +64,29 @@ export const router = createBrowserRouter([
                             {
                                 path: privateRoutes.doctors.edit,
                                 element: <DoctorEditPage edit/>
+                            }
+                        ]
+                    },
+                    // Gateways
+                    {
+                        path: privateRoutes.gateways.base,
+                        element: <PrivateRoutes roles={[UserRole.ADMIN]}/>,
+                        children: [
+                            {
+                                path: privateRoutes.gateways.list,
+                                element: <GatewayListPage/>
+                            },
+                            {
+                                path: privateRoutes.gateways.create,
+                                element: <GatewayEditPage edit/>
+                            },
+                            {
+                                path: privateRoutes.gateways.view,
+                                element: <GatewayEditPage/>
+                            },
+                            {
+                                path: privateRoutes.gateways.edit,
+                                element: <GatewayEditPage edit/>
                             }
                         ]
                     },
