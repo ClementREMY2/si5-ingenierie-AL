@@ -15,6 +15,13 @@ export const privateRoutes = {
         view: ":id",
         edit: ":id/edit"
     },
+    gateways: {
+        base: "/gateways/*",
+        list: "list",
+        create: "create",
+        view: ":id",
+        edit: ":id/edit"
+    },
     patients: "/patients"
 };
 
@@ -29,5 +36,11 @@ export const privateFullRoutes = {
         create: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.create),
         view: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.view),
         edit: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.edit)
+    },
+    gateways: {
+        list: getFullRouteWithBase(privateRoutes.gateways.base, privateRoutes.gateways.list),
+        create: getFullRouteWithBase(privateRoutes.gateways.base, privateRoutes.gateways.create),
+        view: getFullRouteWithBase(privateRoutes.gateways.base, privateRoutes.gateways.view),
+        edit: getFullRouteWithBase(privateRoutes.gateways.base, privateRoutes.gateways.edit)
     }
 };
