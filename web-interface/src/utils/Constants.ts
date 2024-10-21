@@ -7,6 +7,7 @@ const apiServices = {
 
 export const apiUrls = {
     auth: {
+        login: `${apiServices.auth}/login`,
         register: `${apiServices.auth}/register`
     }
 };

@@ -1,8 +1,8 @@
-import {jwtDecode} from "jwt-decode";
+import {jwtDecode, JwtPayload} from "jwt-decode";
 import {createContext, ReactNode, useContext, useState} from "react";
 import {User, UserLogin, UserRegister} from "../interfaces/model/User.ts";
-import {registerUser} from "../services/api/UserApiService.ts";
-import {getUserById, getUserByLogin} from "../services/UserService.ts";
+import {loginUser, registerUser} from "../services/api/UserApiService.ts";
+import {getUserById} from "../services/UserService.ts";
 
 interface AuthProviderProps {
     children?: ReactNode;
@@ -12,7 +12,7 @@ interface AuthContextType {
     token: string | null;
     user: User | null;
     handleLoginByToken: (token: string) => {error: string} | undefined;
-    handleLogin: (loginData: UserLogin) => {error: UserLogin} | undefined;
+    handleLogin: (loginData: UserLogin) => Promise<{error: string} | undefined>;
     handleRegister: (registerData: UserRegister) => Promise<{error: string} | undefined>;
     logout: () => void;
 }
@@ -21,7 +21,7 @@ const defaultAuthContext: AuthContextType = {
     token: null,
     user: null,
     handleLoginByToken: () => undefined,
-    handleLogin: () => undefined,
+    handleLogin: async () => undefined,
     handleRegister: async () => undefined,
     logout: () => {}
 };
@@ -63,13 +63,15 @@ export const AuthProvider = ({children}: Readonly<AuthProviderProps>) => {
     const [token, setToken] = useState(getTokenFromLocalStorage());
     const [user, setUser] = useState(getUserFromLocalStorage());
 
-    const handleLoginByToken = (token: string): {error: string} | undefined => {
-        const decoded = jwtDecode(token);
-        const result = getUserById(1);
+    const handleLoginByToken = (newToken: string): {error: string} | undefined => {
+        const decoded = jwtDecode<JwtPayload & {id: number}>(newToken);
+        console.log("Decoded token:", decoded);
+        if (token === newToken && user && decoded.id === user.id) return undefined;
 
+        const result = getUserById(1); // TODO: Get user from database, using decodedToken.id
         if (result?.user) {
-            setToken(token);
-            changeTokenInLocalStorage(token);
+            setToken(newToken);
+            changeTokenInLocalStorage(newToken);
             setUser(result.user);
             changeUserInLocalStorage(result.user);
         } else {
@@ -78,16 +80,11 @@ export const AuthProvider = ({children}: Readonly<AuthProviderProps>) => {
         }
     };
 
-    const handleLogin = (loginData: UserLogin): {error: UserLogin} | undefined => {
-        const result = getUserByLogin(loginData);
+    const handleLogin = async (loginData: UserLogin) => {
+        const result: {token?: string, error?: string} = await loginUser(loginData);
 
-        if (result?.user) {
-            setUser(result.user);
-            changeUserInLocalStorage(result.user);
-        } else {
-            logout();
-            return result;
-        }
+        if (result?.token) handleLoginByToken(result.token);
+        else return {error: result.error ?? "Cannot log in user"};
     };
 
     const handleRegister = async (registerData: UserRegister) => {

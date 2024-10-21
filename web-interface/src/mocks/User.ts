@@ -1,4 +1,9 @@
-import {Admin, Doctor, Family, Nurse, Patient, UserRegister, UserRole} from "../interfaces/model/User.ts";
+import {Admin, Doctor, Family, Nurse, Patient, UserLogin, UserRegister, UserRole} from "../interfaces/model/User.ts";
+
+export const emptyUserLogin: UserLogin = {
+    email: "",
+    password: ""
+};
 
 export const emptyUserRegister: UserRegister = {
     firstname: "",

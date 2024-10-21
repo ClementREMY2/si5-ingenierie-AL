@@ -1,5 +1,16 @@
-import {UserRegisterDto} from "../interfaces/dto/User.ts";
-import {UserRegister, UserRole} from "../interfaces/model/User.ts";
+import {UserLoginDto, UserRegisterDto} from "../interfaces/dto/User.ts";
+import {UserLogin, UserRegister, UserRole} from "../interfaces/model/User.ts";
+
+export const userLoginToUserLoginDto = (source: UserLogin): UserLoginDto => {
+    if (!source) {
+        throw new Error("Invalid user login object");
+    }
+
+    return {
+        email: source.email,
+        password: source.password
+    };
+};
 
 const getRoleIdFromRole = (role: UserRole): number => {
     switch (role) {

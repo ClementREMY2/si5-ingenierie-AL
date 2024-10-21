@@ -12,9 +12,10 @@ interface PrivateRoutesProps {
 }
 
 export default function PrivateRoutes({children, roles}: Readonly<PrivateRoutesProps>) {
-    const {user} = useAuth();
+    const {token, user, logout} = useAuth();
 
-    if (!user) {
+    if (!token || !user) {
+        logout();
         toast.error("You must be logged in to use this page, redirecting to login page.");
         return getRedirection(publicRoutes.login);
     }
