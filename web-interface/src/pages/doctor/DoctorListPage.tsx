@@ -6,7 +6,7 @@ import {toast} from "react-toastify";
 import ListPageGeneric from "../../components/generics/ListPageGeneric.tsx";
 import {TableHeadCell} from "../../interfaces/Generics.ts";
 import {Doctor} from "../../interfaces/User.ts";
-import {getDoctors} from "../../services/DoctorService.tsx";
+import {getDoctors} from "../../services/DoctorService.ts";
 import {privateFullRoutes} from "../../utils/Routes.ts";
 
 export default function DoctorListPage() {

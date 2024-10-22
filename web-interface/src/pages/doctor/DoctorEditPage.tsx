@@ -6,7 +6,7 @@ import EditActionsGeneric from "../../components/generics/editPage/EditActionsGe
 import EditViewGeneric from "../../components/generics/editPage/EditViewGeneric.tsx";
 import {Doctor} from "../../interfaces/User.ts";
 import {emptyDoctor} from "../../mocks/User.ts";
-import {getDoctorById} from "../../services/DoctorService.tsx";
+import {getDoctorById} from "../../services/DoctorService.ts";
 import {privateFullRoutes} from "../../utils/Routes.ts";
 
 interface DoctorEditPageProps {

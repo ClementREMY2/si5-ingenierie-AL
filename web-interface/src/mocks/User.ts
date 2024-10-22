@@ -48,6 +48,7 @@ export const users = [
         email: "patient@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
     } as Patient & UserRegister,
     {
@@ -96,6 +97,7 @@ export const users = [
         email: "patient2@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
     } as Patient & UserRegister,
     {
@@ -144,6 +146,7 @@ export const users = [
         email: "patient3@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
     } as Patient & UserRegister,
     {
@@ -192,6 +195,7 @@ export const users = [
         email: "patient4@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
     } as Patient & UserRegister,
     {
@@ -240,6 +244,7 @@ export const users = [
         email: "patient5@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
     } as Patient & UserRegister,
     {
@@ -288,6 +293,7 @@ export const users = [
         email: "patient6@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
     } as Patient & UserRegister,
     {

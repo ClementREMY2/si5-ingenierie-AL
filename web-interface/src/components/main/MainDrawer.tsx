@@ -1,7 +1,7 @@
 import {Dashboard, Elderly, MedicalServices, Router as RouterIcon} from "@mui/icons-material";
 import {Divider, Drawer, List, SxProps, Toolbar} from "@mui/material";
 import {UserRole} from "../../interfaces/User.ts";
-import {privateFullRoutes, privateRoutes} from "../../utils/Routes.ts";
+import {privateFullRoutes} from "../../utils/Routes.ts";
 import MainDrawerItem from "./MainDrawerItem.tsx";
 
 interface DrawerProps {
@@ -32,7 +32,7 @@ export default function MainDrawer({open}: Readonly<DrawerProps>) {
                     to={privateFullRoutes.doctors.list}
                     roles={[UserRole.ADMIN]}
                     open={open}
-                    baseRoute={privateRoutes.doctors.base}
+                    baseRoute={privateFullRoutes.doctors.base}
                 />
                 <MainDrawerItem
                     title={"Gateway list"}
@@ -40,7 +40,7 @@ export default function MainDrawer({open}: Readonly<DrawerProps>) {
                     to={privateFullRoutes.gateways.list}
                     roles={[UserRole.ADMIN]}
                     open={open}
-                    baseRoute={privateRoutes.gateways.base}
+                    baseRoute={privateFullRoutes.gateways.base}
                 />
                 <MainDrawerItem
                     title={"Patient list"}

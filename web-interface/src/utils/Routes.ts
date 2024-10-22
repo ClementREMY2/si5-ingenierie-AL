@@ -32,12 +32,14 @@ const getFullRouteWithBase = (baseRoute: string, endRoute: string): string => (
 export const privateFullRoutes = {
     ...privateRoutes,
     doctors: {
+        ...privateRoutes.doctors,
         list: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.list),
         create: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.create),
         view: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.view),
         edit: getFullRouteWithBase(privateRoutes.doctors.base, privateRoutes.doctors.edit)
     },
     gateways: {
+        ...privateRoutes.gateways,
         list: getFullRouteWithBase(privateRoutes.gateways.base, privateRoutes.gateways.list),
         create: getFullRouteWithBase(privateRoutes.gateways.base, privateRoutes.gateways.create),
         view: getFullRouteWithBase(privateRoutes.gateways.base, privateRoutes.gateways.view),

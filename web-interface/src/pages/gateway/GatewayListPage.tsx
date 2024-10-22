@@ -4,9 +4,9 @@ import {useEffect, useState} from "react";
 import {generatePath, useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import ListPageGeneric from "../../components/generics/ListPageGeneric.tsx";
-import {TableHeadCell} from "../../interfaces/Generics.ts";
 import {Gateway} from "../../interfaces/Device.ts";
-import {getGateways} from "../../services/GatewayService.tsx";
+import {TableHeadCell} from "../../interfaces/Generics.ts";
+import {getGateways} from "../../services/GatewayService.ts";
 import {privateFullRoutes} from "../../utils/Routes.ts";
 
 export default function GatewayListPage() {
@@ -44,7 +44,7 @@ export default function GatewayListPage() {
         <TableRow key={row.id}>
             <TableCell>{row.id}</TableCell>
             <TableCell>{row.name}</TableCell>
-            <TableCell>{row.realtimeEnabled ? 'Activé' : 'Désactivé'}</TableCell>
+            <TableCell>{row.realtimeEnabled ? "Activé" : "Désactivé"}</TableCell>
             <TableCell><Stack direction={"row"} spacing={1}>
                 <IconButton color={"success"} onClick={() => handleView(row.id)}><Visibility/></IconButton>
                 <IconButton color={"info"} onClick={() => handleEdit(row.id)}><Edit/></IconButton>
