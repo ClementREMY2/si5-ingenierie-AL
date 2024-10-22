@@ -10,6 +10,17 @@ export const emptyDoctor: Doctor = {
     specialty: ""
 };
 
+export const emptyPatient: Patient = {
+    id: 0,
+    firstname: "",
+    lastname: "",
+    phone: "",
+    email: "",
+    role: UserRole.PATIENT,
+    nurses: [],
+    medicalRecord: ""
+};
+
 export const users = [
     {
         id: 1,

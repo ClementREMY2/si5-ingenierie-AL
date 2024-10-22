@@ -2,6 +2,9 @@ import {User, UserLogin, UserRegister, UserRole} from "../interfaces/User.ts";
 import {users} from "../mocks/User.ts";
 import {isValidEmail, isValidPassword, isValidPhoneNumber, isValidString} from "../utils/Services.ts";
 
+export const getUserName = (user?: User, defaultValue: string = ""): string =>
+    user ? `${user.firstname} ${user.lastname}` : defaultValue;
+
 const getRegisterErrorMessage = (label: string): string => `Please enter a valid ${label}.`;
 
 export const registerUser = (registerData: UserRegister) => {

@@ -22,7 +22,13 @@ export const privateRoutes = {
         view: ":id",
         edit: ":id/edit"
     },
-    patients: "/patients"
+    patients: {
+        base: "/patients/*",
+        list: "list",
+        create: "create",
+        view: ":id",
+        edit: ":id/edit"
+    }
 };
 
 const getFullRouteWithBase = (baseRoute: string, endRoute: string): string => (
@@ -44,5 +50,12 @@ export const privateFullRoutes = {
         create: getFullRouteWithBase(privateRoutes.gateways.base, privateRoutes.gateways.create),
         view: getFullRouteWithBase(privateRoutes.gateways.base, privateRoutes.gateways.view),
         edit: getFullRouteWithBase(privateRoutes.gateways.base, privateRoutes.gateways.edit)
+    },
+    patients: {
+        ...privateRoutes.patients,
+        list: getFullRouteWithBase(privateRoutes.patients.base, privateRoutes.patients.list),
+        create: getFullRouteWithBase(privateRoutes.patients.base, privateRoutes.patients.create),
+        view: getFullRouteWithBase(privateRoutes.patients.base, privateRoutes.patients.view),
+        edit: getFullRouteWithBase(privateRoutes.patients.base, privateRoutes.patients.edit)
     }
 };

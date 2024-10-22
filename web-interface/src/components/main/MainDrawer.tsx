@@ -45,9 +45,10 @@ export default function MainDrawer({open}: Readonly<DrawerProps>) {
                 <MainDrawerItem
                     title={"Patient list"}
                     icon={<Elderly/>}
-                    to={privateFullRoutes.patients}
+                    to={privateFullRoutes.patients.list}
                     roles={[UserRole.DOCTOR]}
-                    open={open}/>
+                    open={open}
+                    baseRoute={privateFullRoutes.patients.base}/>
                 {/*
                 <MainDrawerItem to={privateRoutes.dashboard} icon={<ManageAccounts/>} title={"Manage users"}
                                 open={open}/>
