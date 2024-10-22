@@ -1,9 +1,7 @@
-import {Dashboard, Elderly, MedicalServices} from "@mui/icons-material";
-import RouterIcon from '@mui/icons-material/Router';
+import {Dashboard, Elderly, MedicalServices, Router as RouterIcon} from "@mui/icons-material";
 import {Divider, Drawer, List, SxProps, Toolbar} from "@mui/material";
-import {generatePath} from "react-router-dom";
 import {UserRole} from "../../interfaces/User.ts";
-import {privateRoutes} from "../../utils/Routes.ts";
+import {privateFullRoutes, privateRoutes} from "../../utils/Routes.ts";
 import MainDrawerItem from "./MainDrawerItem.tsx";
 
 interface DrawerProps {
@@ -26,12 +24,12 @@ export default function MainDrawer({open}: Readonly<DrawerProps>) {
                 <MainDrawerItem
                     title={"Dashboard"}
                     icon={<Dashboard/>}
-                    to={privateRoutes.dashboard}
+                    to={privateFullRoutes.dashboard}
                     open={open}/>
                 <MainDrawerItem
                     title={"Doctor list"}
                     icon={<MedicalServices/>}
-                    to={generatePath(privateRoutes.doctors.base, {"*": privateRoutes.doctors.list})}
+                    to={privateFullRoutes.doctors.list}
                     roles={[UserRole.ADMIN]}
                     open={open}
                     baseRoute={privateRoutes.doctors.base}
@@ -39,7 +37,7 @@ export default function MainDrawer({open}: Readonly<DrawerProps>) {
                 <MainDrawerItem
                     title={"Gateway list"}
                     icon={<RouterIcon/>}
-                    to={generatePath(privateRoutes.gateways.base, {"*": privateRoutes.gateways.list})}
+                    to={privateFullRoutes.gateways.list}
                     roles={[UserRole.ADMIN]}
                     open={open}
                     baseRoute={privateRoutes.gateways.base}
@@ -47,7 +45,7 @@ export default function MainDrawer({open}: Readonly<DrawerProps>) {
                 <MainDrawerItem
                     title={"Patient list"}
                     icon={<Elderly/>}
-                    to={privateRoutes.patients}
+                    to={privateFullRoutes.patients}
                     roles={[UserRole.DOCTOR]}
                     open={open}/>
                 {/*
