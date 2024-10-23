@@ -20,7 +20,7 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=adminpassword
       - DOCKER_INFLUXDB_INIT_ORG=alm-org
       - DOCKER_INFLUXDB_INIT_BUCKET=alm-sensors
-      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=alm_gateway_local_token
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=alm_cloud_local_token
     # volumes:
     #   - ./influxdb/data:/var/lib/influxdb
     volumes:
@@ -50,12 +50,26 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
       - ./grafana/data:/var/lib/grafana
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     # networks:
 #       - telegraf_network
 
 # networks:
 #   telegraf_network:
 #     driver: bridge
+
+  create_api_key:
+    image: curlimages/curl:latest
+    container_name: create_api_key
+    depends_on:
+      - influxdbcloud
+      - grafana
+    volumes:
+      - ./create_api_key.sh:/create_api_key.sh
+    entrypoint: ["sh", "/create_api_key.sh"]
+    restart: "no"
 
 volumes:
   influxdb_data:
