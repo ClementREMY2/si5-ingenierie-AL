@@ -1,28 +1,45 @@
+import {jwtDecode, JwtPayload} from "jwt-decode";
 import {createContext, ReactNode, useContext, useState} from "react";
-import {User, UserLogin, UserRegister} from "../interfaces/User.ts";
-import {getUserByLogin, registerUser} from "../services/UserService.ts";
+import {User, UserLogin, UserRegister} from "../interfaces/model/User.ts";
+import {getUserById, loginUser, registerUser} from "../services/api/UserApiService.ts";
 
 interface AuthProviderProps {
     children?: ReactNode;
 }
 
 interface AuthContextType {
+    token: string | null;
     user: User | null;
-    handleLogin: (loginData: UserLogin) => {error: UserLogin} | undefined;
-    handleRegister: (registerData: UserRegister) => {error: UserRegister} | undefined;
+    handleLoginByToken: (token: string) => Promise<{error: string} | undefined>;
+    handleLogin: (loginData: UserLogin) => Promise<{error: string} | undefined>;
+    handleRegister: (registerData: UserRegister) => Promise<{error: string} | undefined>;
     logout: () => void;
 }
 
 const defaultAuthContext: AuthContextType = {
+    token: null,
     user: null,
-    handleLogin: () => undefined,
-    handleRegister: () => undefined,
+    handleLoginByToken: async () => undefined,
+    handleLogin: async () => undefined,
+    handleRegister: async () => undefined,
     logout: () => {}
 };
 
 const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
 export const useAuth = () => useContext(AuthContext);
+
+export const getTokenFromLocalStorage = () => {
+    return localStorage.getItem("token");
+};
+
+const changeTokenInLocalStorage = (token: string) => {
+    localStorage.setItem("token", token);
+};
+
+const removeTokenFromLocalStorage = () => {
+    localStorage.removeItem("token");
+};
 
 const getUserFromLocalStorage = () => {
     const userString = localStorage.getItem("user");
@@ -42,39 +59,50 @@ const removeUserFromLocalStorage = () => {
 };
 
 export const AuthProvider = ({children}: Readonly<AuthProviderProps>) => {
+    const [token, setToken] = useState(getTokenFromLocalStorage());
     const [user, setUser] = useState(getUserFromLocalStorage());
 
-    const handleLogin = (loginData: UserLogin): {error: UserLogin} | undefined => {
-        const result = getUserByLogin(loginData);
+    const handleLoginByToken = async (newToken: string): Promise<{error: string} | undefined> => {
+        const decoded = jwtDecode<JwtPayload & {id: number}>(newToken);
+        console.log("Decoded token:", decoded);
+        if (token === newToken && user && decoded.id === user.id) return undefined;
 
+        const result: {user?: User, error?: string} = await getUserById(decoded.id);
+        console.log("getUserById:", result);
         if (result?.user) {
+            setToken(newToken);
+            changeTokenInLocalStorage(newToken);
             setUser(result.user);
             changeUserInLocalStorage(result.user);
         } else {
             logout();
-            return result;
+            return {error: result.error ?? "Cannot log in user using token"};
         }
     };
 
-    const handleRegister = (registerData: UserRegister): {error: UserRegister} | undefined => {
-        const result = registerUser(registerData);
+    const handleLogin = async (loginData: UserLogin) => {
+        const result: {token?: string, error?: string} = await loginUser(loginData);
 
-        if (result?.user) {
-            setUser(result.user);
-            changeUserInLocalStorage(result.user);
-        } else {
-            logout();
-            return result;
-        }
+        if (result?.token) await handleLoginByToken(result.token);
+        else return {error: result.error ?? "Cannot log in user"};
+    };
+
+    const handleRegister = async (registerData: UserRegister) => {
+        const result: {token?: string, error?: string} = await registerUser(registerData);
+
+        if (result?.token) await handleLoginByToken(result.token);
+        else return {error: result.error ?? "Cannot register user"};
     };
 
     const logout = () => {
+        setToken(null);
+        removeTokenFromLocalStorage();
         setUser(null);
         removeUserFromLocalStorage();
     };
 
     return (
-        <AuthContext.Provider value={{user, handleLogin, handleRegister, logout}}>
+        <AuthContext.Provider value={{token, user, handleLoginByToken, handleLogin, handleRegister, logout}}>
             {children}
         </AuthContext.Provider>
     );

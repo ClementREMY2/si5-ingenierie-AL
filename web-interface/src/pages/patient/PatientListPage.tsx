@@ -5,7 +5,7 @@ import {generatePath, useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import ListPageGeneric from "../../components/generics/ListPageGeneric.tsx";
 import {TableHeadCell} from "../../interfaces/Generics.ts";
-import {Patient} from "../../interfaces/User.ts";
+import {Patient} from "../../interfaces/model/User.ts";
 import {getPatients} from "../../services/PatientService.ts";
 import {getUserName} from "../../services/UserService.ts";
 import {privateFullRoutes} from "../../utils/Routes.ts";

@@ -1,6 +1,6 @@
 import {Dashboard, Elderly, MedicalServices, Router as RouterIcon} from "@mui/icons-material";
 import {Divider, Drawer, List, SxProps, Toolbar} from "@mui/material";
-import {UserRole} from "../../interfaces/User.ts";
+import {UserRole} from "../../interfaces/model/User.ts";
 import {privateFullRoutes} from "../../utils/Routes.ts";
 import MainDrawerItem from "./MainDrawerItem.tsx";
 
@@ -46,7 +46,7 @@ export default function MainDrawer({open}: Readonly<DrawerProps>) {
                     title={"Patient list"}
                     icon={<Elderly/>}
                     to={privateFullRoutes.patients.list}
-                    roles={[UserRole.DOCTOR]}
+                    roles={[UserRole.ADMIN]}
                     open={open}
                     baseRoute={privateFullRoutes.patients.base}/>
                 {/*

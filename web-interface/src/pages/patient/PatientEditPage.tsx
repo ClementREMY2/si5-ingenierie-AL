@@ -4,7 +4,7 @@ import {generatePath, useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import EditActionsGeneric from "../../components/generics/editPage/EditActionsGeneric.tsx";
 import EditViewGeneric from "../../components/generics/editPage/EditViewGeneric.tsx";
-import {Patient} from "../../interfaces/User.ts";
+import {Patient} from "../../interfaces/model/User.ts";
 import {emptyPatient} from "../../mocks/User.ts";
 import {getDoctorById, getDoctors} from "../../services/DoctorService.ts";
 import {getPatientById} from "../../services/PatientService.ts";

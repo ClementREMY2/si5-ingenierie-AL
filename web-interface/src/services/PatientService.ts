@@ -1,4 +1,4 @@
-import {Patient, UserRole} from "../interfaces/User.ts";
+import {Patient, UserRole} from "../interfaces/model/User.ts";
 import {getUsersWithRole} from "./UserService.ts";
 
 export const getPatients = (): Patient[] => getUsersWithRole(UserRole.PATIENT) as Patient[];

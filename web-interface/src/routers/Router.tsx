@@ -1,5 +1,5 @@
 import {createBrowserRouter, Navigate, To} from "react-router-dom";
-import {UserRole} from "../interfaces/User.ts";
+import {UserRole} from "../interfaces/model/User.ts";
 import DashboardPage from "../pages/DashboardPage.tsx";
 import DoctorEditPage from "../pages/doctor/DoctorEditPage.tsx";
 import DoctorListPage from "../pages/doctor/DoctorListPage.tsx";
@@ -94,7 +94,7 @@ export const router = createBrowserRouter([
                     // Patients
                     {
                         path: privateRoutes.patients.base,
-                        element: <PrivateRoutes roles={[UserRole.DOCTOR]}/>,
+                        element: <PrivateRoutes roles={[UserRole.ADMIN]}/>,
                         children: [
                             {
                                 path: privateRoutes.patients.list,

@@ -1,15 +1,16 @@
 export interface UserLogin {
-    email?: string;
-    password?: string;
+    email: string;
+    password: string;
 }
 
 export interface UserRegister {
-    firstname?: string;
-    lastname?: string;
-    phone?: string;
-    email?: string;
-    password?: string;
-    confirmPassword?: string;
+    firstname: string;
+    lastname: string;
+    phone: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    role: UserRole;
 }
 
 export enum UserRole {
