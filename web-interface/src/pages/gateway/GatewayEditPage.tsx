@@ -14,7 +14,7 @@ import {generatePath, useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import EditActionsGeneric from "../../components/generics/editPage/EditActionsGeneric.tsx";
 import EditViewGeneric from "../../components/generics/editPage/EditViewGeneric.tsx";
-import {Gateway} from "../../interfaces/Device.ts";
+import {Gateway} from "../../interfaces/model/Device.ts";
 import {emptyGateway} from "../../mocks/Device.ts";
 import {getGatewayById} from "../../services/GatewayService.ts";
 import {privateFullRoutes} from "../../utils/Routes.ts";
@@ -83,7 +83,8 @@ export default function GatewayEditPage({edit}: Readonly<GatewayEditPageProps>) 
                             <Typography variant="h6">Paramètres</Typography>
                             <Grid2 container spacing={2}>
                                 <Grid2 size={{xs: 12, md: 6, xl: 4}}>
-                                    <EditViewGeneric edit={edit} viewText={`Reatime enabled: ${gateway.realtimeEnabled}`}>
+                                    <EditViewGeneric edit={edit}
+                                                     viewText={`Reatime enabled: ${gateway.realtimeEnabled}`}>
                                         <FormControlLabel
                                             control={
                                                 <Checkbox

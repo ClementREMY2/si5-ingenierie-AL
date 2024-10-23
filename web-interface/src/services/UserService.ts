@@ -61,44 +61,6 @@ export const checkRegisterUser = (registerData: UserRegister) => {
     if (!isValid) return {error};
 };
 
-export const getUserById = (id: number) => {
-    const user = users.find(user => user.id === id);
-    if (!user) {
-        return {error: `User not found by id ${id}`};
-    }
-    return {
-        user: {
-            id: user.id,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            phone: user.phone,
-            email: user.email,
-            role: user.role
-        } as User
-    };
-};
-
-export const getUserByLogin = (loginData: UserLogin) => {
-    const user = users.find(user => user.email === loginData.email);
-
-    if (!user) {
-        return {error: {email: "Cannot find user by email."} as UserLogin};
-    }
-    if (user.password !== loginData.password) {
-        return {error: {password: "Wrong credentials."} as UserLogin};
-    }
-    return {
-        user: {
-            id: user.id,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            phone: user.phone,
-            email: user.email,
-            role: user.role
-        } as User
-    };
-};
-
 export const getUsersWithRole = (role: UserRole) => {
     return users.filter(user => user.role === role);
 };

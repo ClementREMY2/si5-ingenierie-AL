@@ -4,8 +4,8 @@ import {useEffect, useState} from "react";
 import {generatePath, useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import ListPageGeneric from "../../components/generics/ListPageGeneric.tsx";
-import {Gateway} from "../../interfaces/Device.ts";
 import {TableHeadCell} from "../../interfaces/Generics.ts";
+import {Gateway} from "../../interfaces/model/Device.ts";
 import {getGateways} from "../../services/GatewayService.ts";
 import {privateFullRoutes} from "../../utils/Routes.ts";
 

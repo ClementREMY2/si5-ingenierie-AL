@@ -1,5 +1,5 @@
-import {UserLoginDto, UserRegisterDto} from "../interfaces/dto/User.ts";
-import {UserLogin, UserRegister, UserRole} from "../interfaces/model/User.ts";
+import {UserDto, UserLoginDto, UserRegisterDto} from "../interfaces/dto/User.ts";
+import {User, UserLogin, UserRegister, UserRole} from "../interfaces/model/User.ts";
 
 export const userLoginToUserLoginDto = (source: UserLogin): UserLoginDto => {
     if (!source) {
@@ -41,5 +41,20 @@ export const userRegisterToUserRegisterDto = (source: UserRegister): UserRegiste
         last_name: source.lastname,
         phone: source.phone,
         role_id: getRoleIdFromRole(source.role)
+    };
+};
+
+export const userDtoToUser = (source: UserDto): User => {
+    if (!source) {
+        throw new Error("Invalid user object");
+    }
+
+    return {
+        id: source.id,
+        email: source.email,
+        firstname: source.first_name,
+        lastname: source.last_name,
+        phone: source.phone,
+        role: source.role
     };
 };

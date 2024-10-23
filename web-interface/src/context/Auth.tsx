@@ -1,8 +1,7 @@
 import {jwtDecode, JwtPayload} from "jwt-decode";
 import {createContext, ReactNode, useContext, useState} from "react";
 import {User, UserLogin, UserRegister} from "../interfaces/model/User.ts";
-import {loginUser, registerUser} from "../services/api/UserApiService.ts";
-import {getUserById} from "../services/UserService.ts";
+import {getUserById, loginUser, registerUser} from "../services/api/UserApiService.ts";
 
 interface AuthProviderProps {
     children?: ReactNode;
@@ -11,7 +10,7 @@ interface AuthProviderProps {
 interface AuthContextType {
     token: string | null;
     user: User | null;
-    handleLoginByToken: (token: string) => {error: string} | undefined;
+    handleLoginByToken: (token: string) => Promise<{error: string} | undefined>;
     handleLogin: (loginData: UserLogin) => Promise<{error: string} | undefined>;
     handleRegister: (registerData: UserRegister) => Promise<{error: string} | undefined>;
     logout: () => void;
@@ -20,7 +19,7 @@ interface AuthContextType {
 const defaultAuthContext: AuthContextType = {
     token: null,
     user: null,
-    handleLoginByToken: () => undefined,
+    handleLoginByToken: async () => undefined,
     handleLogin: async () => undefined,
     handleRegister: async () => undefined,
     logout: () => {}
@@ -30,7 +29,7 @@ const AuthContext = createContext<AuthContextType>(defaultAuthContext);
 
 export const useAuth = () => useContext(AuthContext);
 
-const getTokenFromLocalStorage = () => {
+export const getTokenFromLocalStorage = () => {
     return localStorage.getItem("token");
 };
 
@@ -63,12 +62,13 @@ export const AuthProvider = ({children}: Readonly<AuthProviderProps>) => {
     const [token, setToken] = useState(getTokenFromLocalStorage());
     const [user, setUser] = useState(getUserFromLocalStorage());
 
-    const handleLoginByToken = (newToken: string): {error: string} | undefined => {
+    const handleLoginByToken = async (newToken: string): Promise<{error: string} | undefined> => {
         const decoded = jwtDecode<JwtPayload & {id: number}>(newToken);
         console.log("Decoded token:", decoded);
         if (token === newToken && user && decoded.id === user.id) return undefined;
 
-        const result = getUserById(1); // TODO: Get user from database, using decodedToken.id
+        const result: {user?: User, error?: string} = await getUserById(decoded.id);
+        console.log("getUserById:", result);
         if (result?.user) {
             setToken(newToken);
             changeTokenInLocalStorage(newToken);
@@ -76,21 +76,21 @@ export const AuthProvider = ({children}: Readonly<AuthProviderProps>) => {
             changeUserInLocalStorage(result.user);
         } else {
             logout();
-            return result;
+            return {error: result.error ?? "Cannot log in user using token"};
         }
     };
 
     const handleLogin = async (loginData: UserLogin) => {
         const result: {token?: string, error?: string} = await loginUser(loginData);
 
-        if (result?.token) handleLoginByToken(result.token);
+        if (result?.token) await handleLoginByToken(result.token);
         else return {error: result.error ?? "Cannot log in user"};
     };
 
     const handleRegister = async (registerData: UserRegister) => {
         const result: {token?: string, error?: string} = await registerUser(registerData);
 
-        if (result?.token) handleLoginByToken(result.token);
+        if (result?.token) await handleLoginByToken(result.token);
         else return {error: result.error ?? "Cannot register user"};
     };
 

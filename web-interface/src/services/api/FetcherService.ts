@@ -1,9 +1,14 @@
+import {getTokenFromLocalStorage} from "../../context/Auth.tsx";
+
 const request = async <TResponse>(url: string, config?: RequestInit): Promise<TResponse | {error: string}> => {
+    const token = getTokenFromLocalStorage();
+
     const response = await fetch(url, {
         ...config,
         headers: {
             ...config?.headers,
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": token ? `Bearer ${token}` : ""
         }
     });
     const body = await response.json();
