@@ -29,8 +29,7 @@ CREATE TABLE nurses (
 
 -- Creating patients
 CREATE TABLE patients (
-    id SERIAL PRIMARY KEY,
-    user_id INTEGER NOT NULL REFERENCES users(id),
+    user_id INTEGER NOT NULL UNIQUE REFERENCES users(id),
     doctor_id INTEGER REFERENCES doctors(user_id),
     medical_record TEXT
 );
@@ -38,13 +37,13 @@ CREATE TABLE patients (
 -- Many-to-Many relationship between nurses and patients
 CREATE TABLE nurses_patients (
     nurse_id INTEGER REFERENCES nurses(user_id),
-    patient_id INTEGER REFERENCES patients(id),
+    patient_id INTEGER REFERENCES patients(user_id),
     PRIMARY KEY (nurse_id, patient_id)
 );
 
 -- Creating relatives
 CREATE TABLE relatives (
-    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL UNIQUE REFERENCES users(id),
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     contact VARCHAR(100)
@@ -52,15 +51,15 @@ CREATE TABLE relatives (
 
 -- Many-to-Many relationship between relatives and patients
 CREATE TABLE relatives_patients (
-    relative_id INTEGER REFERENCES relatives(id),
-    patient_id INTEGER REFERENCES patients(id),
+    relative_id INTEGER REFERENCES relatives(user_id),
+    patient_id INTEGER REFERENCES patients(user_id),
     PRIMARY KEY (relative_id, patient_id)
 );
 
 -- Creating medical reports
 CREATE TABLE reports (
     id SERIAL PRIMARY KEY,
-    patient_id INTEGER REFERENCES patients(id),
+    patient_id INTEGER REFERENCES patients(user_id),
     global_observation TEXT
 );
 
@@ -94,7 +93,7 @@ CREATE TABLE reports_devices (
 );
 -- Many-to-Many relationship between patients and equipment
 CREATE TABLE patients_device (
-    patient_id INTEGER REFERENCES patients(id),
+    patient_id INTEGER REFERENCES patients(user_id),
     device_id INTEGER UNIQUE REFERENCES devices(id),
     PRIMARY KEY (patient_id, device_id),
     start_date DATE,
@@ -119,7 +118,7 @@ CREATE TABLE notification_preferences (
 -- Creating feedbacks
 CREATE TABLE feedbacks (
     id SERIAL PRIMARY KEY,
-    patient_id INTEGER REFERENCES patients(id),
+    patient_id INTEGER REFERENCES patients(user_id),
     feedback_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     global_observation TEXT
 );
@@ -167,7 +166,7 @@ INSERT INTO devices (name, model_id) VALUES ('Gateway 1', 1);
 INSERT INTO gateway_devices (device_id, realtime_enabled) VALUES (1, FALSE);
 
 -- Assigning devices to patients
-INSERT INTO patients_device (patient_id, device_id, start_date) VALUES (1, 1, '2021-01-01');
+-- INSERT INTO patients_device (patient_id, device_id, start_date) VALUES (1, 1, '2021-01-01');
 
 
 -- Inserting test data for notifications

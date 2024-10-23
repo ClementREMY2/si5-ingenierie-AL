@@ -11,10 +11,10 @@ const pool = new Pool({
 const getAllUsersQuery = `
     SELECT 
         u.id AS user_id,
-        u.username,
+        u.email,
         u.last_name,
         u.first_name,
-        u.contact,
+        u.phone,
         r.name AS role
 
     FROM 
@@ -28,3 +28,24 @@ exports.getAllUsers = async () => {
   const result = await pool.query(getAllUsersQuery);
   return result.rows;
 };
+
+exports.getUserById = async (id) => {
+  const result = await pool.query(
+    `
+    SELECT 
+        u.id AS user_id,
+        u.email,
+        u.last_name,
+        u.first_name,
+        u.phone,
+        r.name AS role
+
+    FROM 
+        users u
+    LEFT JOIN role r ON u.role_id = r.id
+    WHERE u.id = $1;
+    `,
+    [id]
+  );
+  return result.rows[0];
+} 
