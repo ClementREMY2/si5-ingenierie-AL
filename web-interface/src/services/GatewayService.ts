@@ -1,4 +1,4 @@
-import {Gateway} from "../interfaces/Device.ts";
+import {Gateway} from "../interfaces/model/Device.ts";
 import {gateways} from "../mocks/Device.ts";
 
 export const getGateways = (): Gateway[] => gateways;

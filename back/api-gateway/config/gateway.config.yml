@@ -61,7 +61,7 @@ pipelines:
             headers: ["Authorization", "Content-Type"]
       - auth:
           action:
-            roles: [1, 2]
+            roles: [ 1, 2 ]
       - log:
           action:
             message: "Requête vers /devices"

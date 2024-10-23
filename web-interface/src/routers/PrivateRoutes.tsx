@@ -2,7 +2,7 @@ import {ReactNode} from "react";
 import {Outlet} from "react-router-dom";
 import {toast} from "react-toastify";
 import {useAuth} from "../context/Auth.tsx";
-import {UserRole} from "../interfaces/User.ts";
+import {UserRole} from "../interfaces/model/User.ts";
 import {publicRoutes} from "../utils/Routes.ts";
 import {getRedirection} from "./Router.tsx";
 
@@ -12,9 +12,10 @@ interface PrivateRoutesProps {
 }
 
 export default function PrivateRoutes({children, roles}: Readonly<PrivateRoutesProps>) {
-    const {user} = useAuth();
+    const {token, user, logout} = useAuth();
 
-    if (!user) {
+    if (!token || !user) {
+        logout();
         toast.error("You must be logged in to use this page, redirecting to login page.");
         return getRedirection(publicRoutes.login);
     }

@@ -1,16 +1,19 @@
 import {Button, Card, Stack, TextField, Typography} from "@mui/material";
 import {ChangeEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 import {useAuth} from "../context/Auth.tsx";
-import {UserLogin} from "../interfaces/User.ts";
+import {UserLogin} from "../interfaces/model/User.ts";
+import {emptyUserLogin} from "../mocks/User.ts";
+import {checkLoginUser} from "../services/UserService.ts";
 import {privateRoutes, publicRoutes} from "../utils/Routes.ts";
 
 export default function LoginPage() {
     const navigate = useNavigate();
     const {handleLogin} = useAuth();
 
-    const [loginData, setLoginData] = useState<UserLogin>({});
-    const [loginError, setLoginError] = useState<UserLogin>({});
+    const [loginData, setLoginData] = useState<UserLogin>({...emptyUserLogin});
+    const [loginError, setLoginError] = useState<UserLogin>({...emptyUserLogin});
 
     const handleLoginChange = (event: ChangeEvent<HTMLInputElement>) => {
         const {name, value} = event.target;
@@ -18,9 +21,14 @@ export default function LoginPage() {
     };
 
     const handleLoginSubmit = () => {
-        const result = handleLogin(loginData);
+        const result = checkLoginUser(loginData);
         if (result?.error) setLoginError(result.error);
-        else navigate(privateRoutes.dashboard);
+        else {
+            handleLogin(loginData).then(result => {
+                if (result?.error) toast.error(result.error);
+                else navigate(privateRoutes.dashboard);
+            });
+        }
     };
 
     return (

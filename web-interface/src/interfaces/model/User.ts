@@ -1,15 +1,16 @@
 export interface UserLogin {
-    email?: string;
-    password?: string;
+    email: string;
+    password: string;
 }
 
 export interface UserRegister {
-    firstname?: string;
-    lastname?: string;
-    phone?: string;
-    email?: string;
-    password?: string;
-    confirmPassword?: string;
+    firstname: string;
+    lastname: string;
+    phone: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    role: UserRole;
 }
 
 export enum UserRole {
@@ -46,7 +47,7 @@ export interface Nurse extends User {
 export interface Patient extends User {
     role: UserRole.PATIENT;
     doctor?: Doctor;
-    nurses?: Nurse[];
+    nurses: Nurse[];
     family?: Family[];
     medicalRecord: string;
 }

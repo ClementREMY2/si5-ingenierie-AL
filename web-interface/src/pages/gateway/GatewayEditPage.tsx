@@ -1,12 +1,22 @@
-import {Card, CardContent, CardHeader, Grid2, Stack, TextField, Checkbox, FormControlLabel, Typography} from "@mui/material";
-import {ChangeEvent, useEffect, useState, useCallback} from "react";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    Checkbox,
+    FormControlLabel,
+    Grid2,
+    Stack,
+    TextField,
+    Typography
+} from "@mui/material";
+import {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {generatePath, useNavigate, useParams} from "react-router-dom";
 import {toast} from "react-toastify";
 import EditActionsGeneric from "../../components/generics/editPage/EditActionsGeneric.tsx";
 import EditViewGeneric from "../../components/generics/editPage/EditViewGeneric.tsx";
-import {Gateway} from "../../interfaces/Device.ts";
+import {Gateway} from "../../interfaces/model/Device.ts";
 import {emptyGateway} from "../../mocks/Device.ts";
-import {getGatewayById} from "../../services/GatewayService.tsx";
+import {getGatewayById} from "../../services/GatewayService.ts";
 import {privateFullRoutes} from "../../utils/Routes.ts";
 
 interface GatewayEditPageProps {
@@ -69,19 +79,20 @@ export default function GatewayEditPage({edit}: Readonly<GatewayEditPageProps>) 
                             </EditViewGeneric>
                         </Grid2>
 
-                        <Grid2 size={{xs: 12 }}>
+                        <Grid2 size={{xs: 12}}>
                             <Typography variant="h6">Paramètres</Typography>
                             <Grid2 container spacing={2}>
                                 <Grid2 size={{xs: 12, md: 6, xl: 4}}>
-                                    <EditViewGeneric edit={edit} viewText={`Reatime enabled: ${gateway.realtimeEnabled}`}>
+                                    <EditViewGeneric edit={edit}
+                                                     viewText={`Reatime enabled: ${gateway.realtimeEnabled}`}>
                                         <FormControlLabel
                                             control={
-                                            <Checkbox
-                                                checked={gateway.realtimeEnabled}
-                                                onChange={onChange}
-                                                name="realtimeEnabled"
-                                                color="primary"
-                                            />
+                                                <Checkbox
+                                                    checked={gateway.realtimeEnabled}
+                                                    onChange={onChange}
+                                                    name="realtimeEnabled"
+                                                    color="primary"
+                                                />
                                             }
                                             label="Realtime"
                                         />

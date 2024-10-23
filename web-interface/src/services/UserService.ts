@@ -1,12 +1,32 @@
-import {User, UserLogin, UserRegister, UserRole} from "../interfaces/User.ts";
-import {users} from "../mocks/User.ts";
+import {User, UserLogin, UserRegister, UserRole} from "../interfaces/model/User.ts";
+import {emptyUserLogin, emptyUserRegister, users} from "../mocks/User.ts";
 import {isValidEmail, isValidPassword, isValidPhoneNumber, isValidString} from "../utils/Services.ts";
+
+export const getUserName = (user?: User, defaultValue: string = ""): string =>
+    user ? `${user.firstname} ${user.lastname}` : defaultValue;
+
+export const checkLoginUser = (loginData: UserLogin) => {
+    let isValid = true;
+    let error: UserLogin = {...emptyUserLogin};
+
+    if (loginData.email.length === 0) {
+        error.email = "Email is required.";
+        isValid = false;
+    }
+
+    if (loginData.password.length === 0) {
+        error.password = "Password is required.";
+        isValid = false;
+    }
+
+    if (!isValid) return {error};
+};
 
 const getRegisterErrorMessage = (label: string): string => `Please enter a valid ${label}.`;
 
-export const registerUser = (registerData: UserRegister) => {
+export const checkRegisterUser = (registerData: UserRegister) => {
     let isValid = true;
-    const error: UserRegister = {};
+    let error: UserRegister = {...emptyUserRegister};
 
     if (!isValidString(registerData.firstname)) {
         error.firstname = getRegisterErrorMessage("first name");
@@ -33,43 +53,12 @@ export const registerUser = (registerData: UserRegister) => {
         isValid = false;
     }
 
-    if (!registerData.confirmPassword || registerData.confirmPassword !== registerData.password) {
+    if (registerData.confirmPassword !== registerData.password) {
         error.confirmPassword = "Passwords do not match";
         isValid = false;
     }
 
-    if (isValid) return {
-        user: {
-            id: 0,
-            firstname: registerData.firstname,
-            lastname: registerData.lastname,
-            phone: registerData.phone,
-            email: registerData.email,
-            role: UserRole.FAMILY
-        } as User
-    };
-    else return {error};
-};
-
-export const getUserByLogin = (loginData: UserLogin) => {
-    const user = users.find(user => user.email === loginData.email);
-
-    if (!user) {
-        return {error: {email: "Cannot find user by email."} as UserLogin};
-    }
-    if (user.password !== loginData.password) {
-        return {error: {password: "Wrong credentials."} as UserLogin};
-    }
-    return {
-        user: {
-            id: user.id,
-            firstname: user.firstname,
-            lastname: user.lastname,
-            phone: user.phone,
-            email: user.email,
-            role: user.role
-        } as User
-    };
+    if (!isValid) return {error};
 };
 
 export const getUsersWithRole = (role: UserRole) => {

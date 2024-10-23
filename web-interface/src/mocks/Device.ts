@@ -1,4 +1,4 @@
-import {Gateway} from "../interfaces/Device.ts";
+import {Gateway} from "../interfaces/model/Device.ts";
 
 export const emptyGateway: Gateway = {
     id: 0,

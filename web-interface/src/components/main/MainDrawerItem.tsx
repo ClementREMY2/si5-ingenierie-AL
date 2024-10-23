@@ -2,7 +2,7 @@ import {ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/materia
 import {ReactNode} from "react";
 import {To, useMatch, useNavigate} from "react-router-dom";
 import {useAuth} from "../../context/Auth.tsx";
-import {UserRole} from "../../interfaces/User.ts";
+import {UserRole} from "../../interfaces/model/User.ts";
 import WithTooltipGeneric from "../generics/WithTooltipGeneric.tsx";
 
 interface DrawerItemProps {
