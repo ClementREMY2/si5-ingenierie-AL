@@ -1,4 +1,5 @@
-version: '3'
+version: '3.8'
+
 services:
   influxdb-cloud:
     image: influxdb:latest
@@ -17,7 +18,7 @@ services:
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=alm_token_cloud
     restart: unless-stopped
 
-persister_mqtt_influxdb:
+  persister_mqtt_influxdb:
     build: .
     container_name: persister_mqtt_influxdb
     depends_on:
@@ -29,8 +30,21 @@ persister_mqtt_influxdb:
     working_dir: /app
     entrypoint: ["./wait-for-it.sh", "influxdb-cloud:8087", "--", "python", "data_persister.py"]
     environment:
-      - INFLUXDB_URL=http://influxdb-cloud:8087
+      - INFLUXDB_URL=http://influxdb-cloud:8086
       - INFLUXDB_TOKEN=alm_token_cloud
       - INFLUXDB_ORG=alm-org
       - INFLUXDB_BUCKET=alm-sensors
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     restart: unless-stopped

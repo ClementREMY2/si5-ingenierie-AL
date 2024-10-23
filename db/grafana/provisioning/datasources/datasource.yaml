@@ -1,0 +1,19 @@
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB
+    type: influxdb
+    access: proxy
+    orgId: 1
+    url: http://influxdb-cloud:8087
+    isDefault: true
+    database: alm-sensors
+    user: admin
+    password: adminpassword
+    jsonData:
+      version: Flux
+      organization: alm-org
+      defaultBucket: alm-sensors
+    secureJsonData:
+      token: alm_token_cloud
+    readOnly: false
