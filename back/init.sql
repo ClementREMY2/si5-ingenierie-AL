@@ -29,7 +29,7 @@ CREATE TABLE nurses (
 
 -- Creating patients
 CREATE TABLE patients (
-    user_id INTEGER NOT NULL UNIQUE REFERENCES users(id),
+    user_id INTEGER PRIMARY KEY REFERENCES users(id),
     doctor_id INTEGER REFERENCES doctors(user_id),
     medical_record TEXT
 );
@@ -43,7 +43,7 @@ CREATE TABLE nurses_patients (
 
 -- Creating relatives
 CREATE TABLE relatives (
-    user_id INTEGER NOT NULL UNIQUE REFERENCES users(id),
+    user_id INTEGER PRIMARY KEY REFERENCES users(id),
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     contact VARCHAR(100)
