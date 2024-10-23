@@ -10,7 +10,7 @@ const pool = new Pool({
 
 const getAllUsersQuery = `
     SELECT 
-        u.id AS user_id,
+        u.id,
         u.email,
         u.last_name,
         u.first_name,
@@ -33,7 +33,7 @@ exports.getUserById = async (id) => {
   const result = await pool.query(
     `
     SELECT 
-        u.id AS user_id,
+        u.id,
         u.email,
         u.last_name,
         u.first_name,
