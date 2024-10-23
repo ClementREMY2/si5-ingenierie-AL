@@ -3,9 +3,6 @@ import paho.mqtt.client as mqtt
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
 from datetime import datetime
-import os
-import sys
-import threading
 
 # Paramètres MQTT
 BROKER = "localhost"
@@ -17,8 +14,6 @@ INFLUXDB_URL = "http://localhost:8087"
 INFLUXDB_TOKEN = "alm_token_cloud"
 INFLUXDB_ORG = "alm-org"
 INFLUXDB_BUCKET = "alm-sensors"
-INFLUXDB_USER = "admin"
-INFLUXDB_PASSWORD = "adminpassword"
 
 influx_client = InfluxDBClient(url=INFLUXDB_URL, token=INFLUXDB_TOKEN, org=INFLUXDB_ORG)
 write_api = influx_client.write_api(write_options=SYNCHRONOUS)
@@ -26,9 +21,6 @@ write_api = influx_client.write_api(write_options=SYNCHRONOUS)
 def on_connect(client, userdata, flags, rc):
     client.subscribe(TOPIC)
     print(f"Connecté au broker MQTT avec le code de retour {rc}")
-
-
-influxdb_connection = None
 
 def on_message(client, userdata, msg):
     try:
@@ -44,16 +36,13 @@ def on_message(client, userdata, msg):
             .tag("sensor_id", sensor_id)\
             .field("sensor_type", sensor_type)\
             .field("value", value)\
-            .field(datetime.fromisoformat(timestamp[:-1]), WritePrecision.S)
+            .time(datetime.fromisoformat(timestamp[:-1]), WritePrecision.S)
 
         write_api.write(bucket=INFLUXDB_BUCKET, org=INFLUXDB_ORG, record=point)
         print(f"Enregistrement de la donnée : sensor_id={sensor_id}, sensor_type={sensor_type}, value={value}, timestamp={timestamp}")
     
     except Exception as e:
         print(f"Erreur lors du traitement du message : {e}")
-
-
-
 
 client = mqtt.Client()
 

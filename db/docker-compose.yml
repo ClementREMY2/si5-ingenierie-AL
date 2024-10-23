@@ -1,10 +1,10 @@
 version: '3'
 services:
-  influxdb:
+  influxdb-cloud:
     image: influxdb:latest
-    container_name: influxdb
+    container_name: influxdb-cloud
     ports:
-      - "8086:8086"
+      - "8087:8086"
     volumes:
       - ./influxdb:/var/lib/influxdb2
     environment:
@@ -13,18 +13,24 @@ services:
       - DOCKER_INFLUXDB_INIT_PASSWORD=adminpassword
       - DOCKER_INFLUXDB_INIT_ORG=alm-org
       - DOCKER_INFLUXDB_INIT_BUCKET=alm-sensors
-      - DOCKER_INFLUXDB_INIT_RETENTION=2h
+      - DOCKER_INFLUXDB_INIT_RETENTION=168h
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=alm_token_cloud
     restart: unless-stopped
 
-  telegraf:
-    image: telegraf:latest
-    container_name: telegraf
+persister_mqtt_influxdb:
+    build: .
+    container_name: persister_mqtt_influxdb
     depends_on:
-      - influxdb
+      - influxdb-cloud
+    links:
+      - influxdb-cloud
     volumes:
-      - ./telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - ./app:/app
+    working_dir: /app
+    entrypoint: ["./wait-for-it.sh", "influxdb-cloud:8087", "--", "python", "data_persister.py"]
     environment:
-      - HOSTNAME=telegraf
+      - INFLUXDB_URL=http://influxdb-cloud:8087
+      - INFLUXDB_TOKEN=alm_token_cloud
+      - INFLUXDB_ORG=alm-org
+      - INFLUXDB_BUCKET=alm-sensors
     restart: unless-stopped
-
-  
