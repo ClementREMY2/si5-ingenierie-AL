@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  influxdbcloud:
+    image: influxdb:2.7.10
+    container_name: influxdbcloud
+    ports:
+      - "8087:8086"
+    environment:
+      # - INFLUXDB_INIT_MODE=setup
+      # - INFLUXDB_DB=
+      # - INFLUXDB_ADMIN_USER=admin
+      # - INFLUXDB_ADMIN_PASSWORD=adminpassword
+      # - INFLUXDB_HTTP_AUTH_ENABLED=true
+      # - INFLUXDB_BUCKET=alm-sensors
+      # - INFLUXDB_ORG=alm-org
+      # - INFLUXDB_TOKEN=alm_gateway_local_token
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=admin
+      - DOCKER_INFLUXDB_INIT_PASSWORD=adminpassword
+      - DOCKER_INFLUXDB_INIT_ORG=alm-org
+      - DOCKER_INFLUXDB_INIT_BUCKET=alm-sensors
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=alm_gateway_local_token
+    # volumes:
+    #   - ./influxdb/data:/var/lib/influxdb
+    volumes:
+      - influxdb_data:/var/lib/influxdb
+    # networks:
+    #   - telegraf_network
+
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf
+    depends_on:
+      - influxdbcloud
+    volumes:
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
+    # networks:
+    #   - telegraf_network
+
+  grafana:
+    image: grafana/grafana:10.0.0
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - influxdbcloud
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana/data:/var/lib/grafana
+    # networks:
+#       - telegraf_network
+
+# networks:
+#   telegraf_network:
+#     driver: bridge
+
+volumes:
+  influxdb_data:
