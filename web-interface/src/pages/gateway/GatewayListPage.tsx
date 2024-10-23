@@ -4,23 +4,22 @@ import {useEffect, useState} from "react";
 import {generatePath, useNavigate} from "react-router-dom";
 import {toast} from "react-toastify";
 import ListPageGeneric from "../../components/generics/ListPageGeneric.tsx";
+import {Gateway} from "../../interfaces/Device.ts";
 import {TableHeadCell} from "../../interfaces/Generics.ts";
-import {Doctor} from "../../interfaces/model/User.ts";
-import {getDoctors} from "../../services/DoctorService.ts";
-import {getUserName} from "../../services/UserService.ts";
+import {getGateways} from "../../services/GatewayService.ts";
 import {privateFullRoutes} from "../../utils/Routes.ts";
 
-export default function DoctorListPage() {
+export default function GatewayListPage() {
     const navigate = useNavigate();
-    const [doctors, setDoctors] = useState<Doctor[]>([]);
+    const [gateways, setGateways] = useState<Gateway[]>([]);
 
     useEffect(() => {
-        setDoctors(getDoctors);
+        setGateways(getGateways);
     }, []);
 
-    const handleView = (id: number) => navigate(generatePath(privateFullRoutes.doctors.view, {id}));
-    const handleEdit = (id: number) => navigate(generatePath(privateFullRoutes.doctors.edit, {id}));
-    const handleDelete = (id: number) => toast.success(`Doctor ${id} deleted`);
+    const handleView = (id: number) => navigate(generatePath(privateFullRoutes.gateways.view, {id}));
+    const handleEdit = (id: number) => navigate(generatePath(privateFullRoutes.gateways.edit, {id}));
+    const handleDelete = (id: number) => toast.success(`Gateway ${id} deleted`);
 
     const tableHeadCells: TableHeadCell[] = [
         {
@@ -32,16 +31,8 @@ export default function DoctorListPage() {
             content: "Name"
         },
         {
-            id: "email",
-            content: "Email"
-        },
-        {
-            id: "phone",
-            content: "Phone number"
-        },
-        {
-            id: "specialty",
-            content: "Specialty"
+            id: "realtimeEnabled",
+            content: "Temps réel"
         },
         {
             id: "actions",
@@ -49,13 +40,11 @@ export default function DoctorListPage() {
         }
     ];
 
-    const renderTableRow = (row: Doctor) => (
+    const renderTableRow = (row: Gateway) => (
         <TableRow key={row.id}>
             <TableCell>{row.id}</TableCell>
-            <TableCell>{getUserName(row)}</TableCell>
-            <TableCell>{row.email}</TableCell>
-            <TableCell>{row.phone}</TableCell>
-            <TableCell>{row.specialty}</TableCell>
+            <TableCell>{row.name}</TableCell>
+            <TableCell>{row.realtimeEnabled ? "Activé" : "Désactivé"}</TableCell>
             <TableCell><Stack direction={"row"} spacing={1}>
                 <IconButton color={"success"} onClick={() => handleView(row.id)}><Visibility/></IconButton>
                 <IconButton color={"info"} onClick={() => handleEdit(row.id)}><Edit/></IconButton>
@@ -65,9 +54,9 @@ export default function DoctorListPage() {
     );
 
     return <ListPageGeneric
-        title={"Doctor list page"}
-        addLabel={"Add doctor"}
-        addRoute={privateFullRoutes.doctors.create}
-        tableHeadCells={tableHeadCells} rows={doctors} renderTableRow={renderTableRow}
+        title={"Gateway list page"}
+        addLabel={"Add gateway"}
+        addRoute={privateFullRoutes.gateways.create}
+        tableHeadCells={tableHeadCells} rows={gateways} renderTableRow={renderTableRow}
     />;
 }

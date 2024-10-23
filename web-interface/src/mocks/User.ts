@@ -25,6 +25,17 @@ export const emptyDoctor: Doctor = {
     specialty: ""
 };
 
+export const emptyPatient: Patient = {
+    id: 0,
+    firstname: "",
+    lastname: "",
+    phone: "",
+    email: "",
+    role: UserRole.PATIENT,
+    nurses: [],
+    medicalRecord: ""
+};
+
 export const users = [
     {
         id: 1,
@@ -34,7 +45,7 @@ export const users = [
         email: "admin@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    } as Admin & UserRegister,
+    } as Admin & UserLogin,
     {
         id: 2,
         firstname: "Doctor",
@@ -44,7 +55,7 @@ export const users = [
         password: "Password123",
         role: UserRole.DOCTOR,
         specialty: "Specialty"
-    } as Doctor & UserRegister,
+    } as Doctor & UserLogin,
     {
         id: 3,
         firstname: "Nurse",
@@ -54,7 +65,7 @@ export const users = [
         password: "Password123",
         role: UserRole.NURSE,
         specialty: "Specialty"
-    } as Nurse & UserRegister,
+    } as Nurse & UserLogin,
     {
         id: 4,
         firstname: "Patient",
@@ -63,8 +74,9 @@ export const users = [
         email: "patient@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
-    } as Patient & UserRegister,
+    } as Patient & UserLogin,
     {
         id: 5,
         firstname: "Family",
@@ -73,7 +85,7 @@ export const users = [
         email: "family@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    } as Family & UserRegister,
+    } as Family & UserLogin,
     {
         id: 6,
         firstname: "Admin2",
@@ -82,7 +94,7 @@ export const users = [
         email: "admin2@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    } as Admin & UserRegister,
+    } as Admin & UserLogin,
     {
         id: 7,
         firstname: "Doctor2",
@@ -92,7 +104,7 @@ export const users = [
         password: "Password123",
         role: UserRole.DOCTOR,
         specialty: "Specialty"
-    } as Doctor & UserRegister,
+    } as Doctor & UserLogin,
     {
         id: 8,
         firstname: "Nurse2",
@@ -102,7 +114,7 @@ export const users = [
         password: "Password123",
         role: UserRole.NURSE,
         specialty: "Specialty"
-    } as Nurse & UserRegister,
+    } as Nurse & UserLogin,
     {
         id: 9,
         firstname: "Patient2",
@@ -111,8 +123,9 @@ export const users = [
         email: "patient2@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
-    } as Patient & UserRegister,
+    } as Patient & UserLogin,
     {
         id: 10,
         firstname: "Family2",
@@ -121,7 +134,7 @@ export const users = [
         email: "family2@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    } as Family & UserRegister,
+    } as Family & UserLogin,
     {
         id: 11,
         firstname: "Admin3",
@@ -130,7 +143,7 @@ export const users = [
         email: "admin3@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    } as Admin & UserRegister,
+    } as Admin & UserLogin,
     {
         id: 12,
         firstname: "Doctor3",
@@ -140,7 +153,7 @@ export const users = [
         password: "Password123",
         role: UserRole.DOCTOR,
         specialty: "Specialty"
-    } as Doctor & UserRegister,
+    } as Doctor & UserLogin,
     {
         id: 13,
         firstname: "Nurse3",
@@ -150,7 +163,7 @@ export const users = [
         password: "Password123",
         role: UserRole.NURSE,
         specialty: "Specialty"
-    } as Nurse & UserRegister,
+    } as Nurse & UserLogin,
     {
         id: 14,
         firstname: "Patient3",
@@ -159,8 +172,9 @@ export const users = [
         email: "patient3@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
-    } as Patient & UserRegister,
+    } as Patient & UserLogin,
     {
         id: 15,
         firstname: "Family3",
@@ -169,7 +183,7 @@ export const users = [
         email: "family3@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    } as Family & UserRegister,
+    } as Family & UserLogin,
     {
         id: 16,
         firstname: "Admin4",
@@ -178,7 +192,7 @@ export const users = [
         email: "admin4@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    } as Admin & UserRegister,
+    } as Admin & UserLogin,
     {
         id: 17,
         firstname: "Doctor4",
@@ -188,7 +202,7 @@ export const users = [
         password: "Password123",
         role: UserRole.DOCTOR,
         specialty: "Specialty"
-    } as Doctor & UserRegister,
+    } as Doctor & UserLogin,
     {
         id: 18,
         firstname: "Nurse4",
@@ -198,7 +212,7 @@ export const users = [
         password: "Password123",
         role: UserRole.NURSE,
         specialty: "Specialty"
-    } as Nurse & UserRegister,
+    } as Nurse & UserLogin,
     {
         id: 19,
         firstname: "Patient4",
@@ -207,8 +221,9 @@ export const users = [
         email: "patient4@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
-    } as Patient & UserRegister,
+    } as Patient & UserLogin,
     {
         id: 20,
         firstname: "Family4",
@@ -217,7 +232,7 @@ export const users = [
         email: "family4@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    } as Family & UserRegister,
+    } as Family & UserLogin,
     {
         id: 21,
         firstname: "Admin5",
@@ -226,7 +241,7 @@ export const users = [
         email: "admin5@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    } as Admin & UserRegister,
+    } as Admin & UserLogin,
     {
         id: 22,
         firstname: "Doctor5",
@@ -236,7 +251,7 @@ export const users = [
         password: "Password123",
         role: UserRole.DOCTOR,
         specialty: "Specialty"
-    } as Doctor & UserRegister,
+    } as Doctor & UserLogin,
     {
         id: 23,
         firstname: "Nurse5",
@@ -246,7 +261,7 @@ export const users = [
         password: "Password123",
         role: UserRole.NURSE,
         specialty: "Specialty"
-    } as Nurse & UserRegister,
+    } as Nurse & UserLogin,
     {
         id: 24,
         firstname: "Patient5",
@@ -255,8 +270,9 @@ export const users = [
         email: "patient5@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
-    } as Patient & UserRegister,
+    } as Patient & UserLogin,
     {
         id: 25,
         firstname: "Family5",
@@ -265,7 +281,7 @@ export const users = [
         email: "family5@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    } as Family & UserRegister,
+    } as Family & UserLogin,
     {
         id: 26,
         firstname: "Admin6",
@@ -274,7 +290,7 @@ export const users = [
         email: "admin6@example.com",
         password: "Password123",
         role: UserRole.ADMIN
-    } as Admin & UserRegister,
+    } as Admin & UserLogin,
     {
         id: 27,
         firstname: "Doctor6",
@@ -284,7 +300,7 @@ export const users = [
         password: "Password123",
         role: UserRole.DOCTOR,
         specialty: "Specialty"
-    } as Doctor & UserRegister,
+    } as Doctor & UserLogin,
     {
         id: 28,
         firstname: "Nurse6",
@@ -294,7 +310,7 @@ export const users = [
         password: "Password123",
         role: UserRole.NURSE,
         specialty: "Specialty"
-    } as Nurse & UserRegister,
+    } as Nurse & UserLogin,
     {
         id: 29,
         firstname: "Patient6",
@@ -303,8 +319,9 @@ export const users = [
         email: "patient6@example.com",
         password: "Password123",
         role: UserRole.PATIENT,
+        nurses: [],
         medicalRecord: "MedicalRecord"
-    } as Patient & UserRegister,
+    } as Patient & UserLogin,
     {
         id: 30,
         firstname: "Family6",
@@ -313,5 +330,5 @@ export const users = [
         email: "family6@example.com",
         password: "Password123",
         role: UserRole.FAMILY
-    } as Family & UserRegister
+    } as Family & UserLogin
 ];

@@ -47,7 +47,7 @@ export interface Nurse extends User {
 export interface Patient extends User {
     role: UserRole.PATIENT;
     doctor?: Doctor;
-    nurses?: Nurse[];
+    nurses: Nurse[];
     family?: Family[];
     medicalRecord: string;
 }

@@ -2,6 +2,9 @@ import {User, UserLogin, UserRegister, UserRole} from "../interfaces/model/User.
 import {emptyUserLogin, emptyUserRegister, users} from "../mocks/User.ts";
 import {isValidEmail, isValidPassword, isValidPhoneNumber, isValidString} from "../utils/Services.ts";
 
+export const getUserName = (user?: User, defaultValue: string = ""): string =>
+    user ? `${user.firstname} ${user.lastname}` : defaultValue;
+
 export const checkLoginUser = (loginData: UserLogin) => {
     let isValid = true;
     let error: UserLogin = {...emptyUserLogin};
