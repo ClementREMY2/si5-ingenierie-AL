@@ -1,0 +1,49 @@
+{
+        "annotations": {
+          "list": []
+        },
+        "panels": [
+          {
+            "datasource": "InfluxDB",
+            "id": 1,
+            "type": "graph",
+            "title": "Example Panel",
+            "targets": [
+              {
+                "measurement": "your_measurement_name",
+                "groupBy": [
+                  {
+                    "type": "time",
+                    "params": ["10s"],
+                    "timeInterval": "10s",
+                    "alias": "time"
+                  }
+                ],
+                "select": [
+                  [
+                    {
+                      "type": "mean",
+                      "params": ["value"]
+                    }
+                  ]
+                ]
+              }
+            ],
+            "xaxis": {
+              "mode": "time"
+            },
+            "yaxes": [
+              {
+                "format": "short"
+              },
+              {
+                "format": "short"
+              }
+            ]
+          }
+        ],
+        "schemaVersion": 27,
+        "version": 1,
+        "title": "My Dashboard"
+      }
+      
