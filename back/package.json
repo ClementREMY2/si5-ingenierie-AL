@@ -13,10 +13,12 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "lerna": "^8.1.8"
+    "lerna": "^8.1.8",
+    "sequelize-cli": "^6.6.2"
   },
   "workspaces": [
-    "services/*"
+    "services/*",
+    "packages/orm"
   ],
   "dependencies": {
     "@hapi/boom": "^10.0.1",
@@ -24,6 +26,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.13.0"
+    "pg": "^8.13.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.4"
   }
 }

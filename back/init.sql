@@ -17,33 +17,33 @@ CREATE TABLE users (
 
 -- Creating doctors (specific)
 CREATE TABLE doctors (
-    user_id INTEGER PRIMARY KEY REFERENCES users(id),
+    id INTEGER PRIMARY KEY REFERENCES users(id),
     specialty VARCHAR(100)
 );
 
 -- Creating nurses (specific)
 CREATE TABLE nurses (
-    user_id INTEGER PRIMARY KEY REFERENCES users(id),
+    id INTEGER PRIMARY KEY REFERENCES users(id),
     specialty VARCHAR(100)
 );
 
 -- Creating patients
 CREATE TABLE patients (
-    user_id INTEGER PRIMARY KEY REFERENCES users(id),
-    doctor_id INTEGER REFERENCES doctors(user_id),
+    id INTEGER PRIMARY KEY REFERENCES users(id),
+    doctor_id INTEGER REFERENCES doctors(id),
     medical_record TEXT
 );
 
 -- Many-to-Many relationship between nurses and patients
 CREATE TABLE nurses_patients (
-    nurse_id INTEGER REFERENCES nurses(user_id),
-    patient_id INTEGER REFERENCES patients(user_id),
+    nurse_id INTEGER REFERENCES nurses(id),
+    patient_id INTEGER REFERENCES patients(id),
     PRIMARY KEY (nurse_id, patient_id)
 );
 
 -- Creating relatives
 CREATE TABLE relatives (
-    user_id INTEGER PRIMARY KEY REFERENCES users(id),
+    id INTEGER PRIMARY KEY REFERENCES users(id),
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     contact VARCHAR(100)
@@ -51,15 +51,15 @@ CREATE TABLE relatives (
 
 -- Many-to-Many relationship between relatives and patients
 CREATE TABLE relatives_patients (
-    relative_id INTEGER REFERENCES relatives(user_id),
-    patient_id INTEGER REFERENCES patients(user_id),
+    relative_id INTEGER REFERENCES relatives(id),
+    patient_id INTEGER REFERENCES patients(id),
     PRIMARY KEY (relative_id, patient_id)
 );
 
 -- Creating medical reports
 CREATE TABLE reports (
     id SERIAL PRIMARY KEY,
-    patient_id INTEGER REFERENCES patients(user_id),
+    patient_id INTEGER REFERENCES patients(id),
     global_observation TEXT
 );
 
@@ -93,7 +93,7 @@ CREATE TABLE reports_devices (
 );
 -- Many-to-Many relationship between patients and equipment
 CREATE TABLE patients_device (
-    patient_id INTEGER REFERENCES patients(user_id),
+    patient_id INTEGER REFERENCES patients(id),
     device_id INTEGER UNIQUE REFERENCES devices(id),
     PRIMARY KEY (patient_id, device_id),
     start_date DATE,
@@ -110,15 +110,15 @@ CREATE TABLE notifications (
 
 -- Creating notification preferences
 CREATE TABLE notification_preferences (
-    user_id INTEGER REFERENCES users(id),
+    id INTEGER REFERENCES users(id),
     notifications_enabled BOOLEAN DEFAULT TRUE,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (id)
 );
 
 -- Creating feedbacks
 CREATE TABLE feedbacks (
     id SERIAL PRIMARY KEY,
-    patient_id INTEGER REFERENCES patients(user_id),
+    patient_id INTEGER REFERENCES patients(id),
     feedback_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     global_observation TEXT
 );
@@ -145,15 +145,15 @@ VALUES ('john.smith@example.com', '$2b$10$mkrzekg7GWayR6EBZYw0.uAIaD72LkH484cMkA
        ('paul.brown@example.com', '$2b$10$z6rh9W23toLnCIIp4uPrzewJVvW4ZDL9TTd6GJsY4ptCb7VmPnkSi', 'Brown', 'Paul', 4, '+33753784926');
 
 -- Inserting test data for doctors
-INSERT INTO doctors (user_id, specialty) 
+INSERT INTO doctors (id, specialty) 
 VALUES (1, 'Cardiology');
 
 -- Inserting test data for patients
-INSERT INTO patients (user_id, doctor_id, medical_record) 
+INSERT INTO patients (id, doctor_id, medical_record) 
 VALUES (3, 1, 'Complete medical record');
 
 -- Inserting test data for nurses
-INSERT INTO nurses (user_id, specialty) 
+INSERT INTO nurses (id, specialty) 
 VALUES (2, 'Cardiology (nurse)');
 
 -- Devices models
@@ -170,9 +170,9 @@ INSERT INTO gateway_devices (device_id, realtime_enabled) VALUES (1, FALSE);
 
 
 -- Inserting test data for notifications
-INSERT INTO notifications (user_id, message) 
+INSERT INTO notifications (id, message) 
 VALUES (1, 'Important new message'), (2, 'Scheduled appointment');
 
 -- Inserting test data for feedbacks
 INSERT INTO feedbacks (patient_id, global_observation) 
-VALUES (1, 'The patient is feeling better after the treatment');
+VALUES (3, 'The patient is feeling better after the treatment');
