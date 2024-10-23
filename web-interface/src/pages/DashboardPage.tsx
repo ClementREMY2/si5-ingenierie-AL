@@ -3,20 +3,32 @@ import React from 'react';
 
 const DashboardPage = () => {
     // TODO : update with correct ID
-    const grafanaUrl = "http://localhost:3000/d/your_dashboard_id?orgId=1";
+    const [dashboards, setDashboards] = useState([]);
+
+    useEffect(() => {
+      const fetchDashboards = async () => {
+        const response = await fetch('http://localhost:3000/api/search', {
+          headers: {
+            'Authorization': `Bearer YOUR_API_KEY`,
+          },
+        });
+        const data = await response.json();
+        setDashboards(data);
+      };
+  
+      fetchDashboards();
+    }, []);
   
     return (
-      <div style={{ width: '100%', height: '600px' }}>
-        <iframe 
-          src={grafanaUrl}
-          width="100%"
-          height="100%"
-          frameBorder="0"
-          style={{ overflow: 'hidden' }}
-          title="Grafana Dashboard"
-        />
+      <div>
+        <h1>Tableaux de Bord Grafana</h1>
+        <ul>
+          {dashboards.map(dashboard => (
+            <li key={dashboard.uid}>{dashboard.title}</li>
+          ))}
+        </ul>
       </div>
     );
   };
-  
+
   export default DashboardPage;

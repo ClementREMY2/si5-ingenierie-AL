@@ -18,22 +18,18 @@ services:
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=alm_token_cloud
     restart: unless-stopped
 
-  persister_mqtt_influxdb:
-    build: .
-    container_name: persister_mqtt_influxdb
-    depends_on:
-      - influxdb-cloud
-    links:
-      - influxdb-cloud
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf
     volumes:
-      - ./app:/app
-    working_dir: /app
-    entrypoint: ["./wait-for-it.sh", "influxdb-cloud:8087", "--", "python", "data_persister.py"]
+      - ./telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
     environment:
-      - INFLUXDB_URL=http://influxdb-cloud:8086
+      - INFLUXDB_URL=http://influxdb-cloud:8087
       - INFLUXDB_TOKEN=alm_token_cloud
       - INFLUXDB_ORG=alm-org
       - INFLUXDB_BUCKET=alm-sensors
+    depends_on:
+      - influxdb-cloud
     restart: unless-stopped
 
   grafana:
@@ -48,3 +44,14 @@ services:
       - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/dashboards:/var/lib/grafana/dashboards
     restart: unless-stopped
+
+  create_api_key:
+    image: curlimages/curl:latest
+    container_name: create_api_key
+    depends_on:
+      - influxdb-cloud
+      - grafana
+    volumes:
+      - ./create_api_key.sh:/create_api_key.sh
+    entrypoint: ["sh", "/create_api_key.sh"]
+    restart: "no"
