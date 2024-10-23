@@ -46,7 +46,7 @@ export default function MainDrawer({open}: Readonly<DrawerProps>) {
                     title={"Patient list"}
                     icon={<Elderly/>}
                     to={privateFullRoutes.patients.list}
-                    roles={[UserRole.ADMIN]}
+                    roles={[UserRole.DOCTOR]}
                     open={open}
                     baseRoute={privateFullRoutes.patients.base}/>
                 {/*

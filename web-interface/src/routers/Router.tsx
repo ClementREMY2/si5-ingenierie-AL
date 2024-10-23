@@ -94,7 +94,7 @@ export const router = createBrowserRouter([
                     // Patients
                     {
                         path: privateRoutes.patients.base,
-                        element: <PrivateRoutes roles={[UserRole.ADMIN]}/>,
+                        element: <PrivateRoutes roles={[UserRole.DOCTOR]}/>,
                         children: [
                             {
                                 path: privateRoutes.patients.list,
