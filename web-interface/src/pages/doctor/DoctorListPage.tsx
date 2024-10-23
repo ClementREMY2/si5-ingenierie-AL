@@ -6,7 +6,8 @@ import {toast} from "react-toastify";
 import ListPageGeneric from "../../components/generics/ListPageGeneric.tsx";
 import {TableHeadCell} from "../../interfaces/Generics.ts";
 import {Doctor} from "../../interfaces/User.ts";
-import {getDoctors} from "../../services/DoctorService.tsx";
+import {getDoctors} from "../../services/DoctorService.ts";
+import {getUserName} from "../../services/UserService.ts";
 import {privateFullRoutes} from "../../utils/Routes.ts";
 
 export default function DoctorListPage() {
@@ -51,7 +52,7 @@ export default function DoctorListPage() {
     const renderTableRow = (row: Doctor) => (
         <TableRow key={row.id}>
             <TableCell>{row.id}</TableCell>
-            <TableCell>{row.firstname} {row.lastname}</TableCell>
+            <TableCell>{getUserName(row)}</TableCell>
             <TableCell>{row.email}</TableCell>
             <TableCell>{row.phone}</TableCell>
             <TableCell>{row.specialty}</TableCell>
