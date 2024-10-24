@@ -23,6 +23,10 @@ services:
     env_file:
       - .env
     container_name: users-service
+    volumes:
+      - ./packages/orm:/usr/src/app/node_modules/orm
+    depends_on:
+      - postgres-db
     networks:
       - app-network
 

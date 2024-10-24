@@ -1,51 +1,40 @@
-const { Pool } = require('pg');
-
-const pool = new Pool({
-  user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DB,
-  password: process.env.POSTGRES_PASSWORD,
-  port: process.env.POSTGRES_PORT,
-});
-
-const getAllUsersQuery = `
-    SELECT 
-        u.id,
-        u.email,
-        u.last_name,
-        u.first_name,
-        u.phone,
-        r.name AS role
-
-    FROM 
-        users u
-    LEFT JOIN role r ON u.role_id = r.id
-    ORDER BY u.id;
-`;
-
+const { User, Role } = require("orm");
+// services/usersService.js
 
 exports.getAllUsers = async () => {
-  const result = await pool.query(getAllUsersQuery);
-  return result.rows;
+  try {
+    const users = await User.findAll({
+      include: [
+        {
+          model: Role,
+          as: "role",
+          attributes: ["name"],
+        },
+      ],
+      order: [["id", "ASC"]],
+    });
+    return users;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des utilisateurs :", error);
+    throw error;
+  }
 };
 
 exports.getUserById = async (id) => {
-  const result = await pool.query(
-    `
-    SELECT 
-        u.id,
-        u.email,
-        u.last_name,
-        u.first_name,
-        u.phone,
-        r.name AS role
-
-    FROM 
-        users u
-    LEFT JOIN role r ON u.role_id = r.id
-    WHERE u.id = $1;
-    `,
-    [id]
-  );
-  return result.rows[0];
-} 
+  try {
+    const user = await User.findOne({
+      where: { id },
+      include: [
+        {
+          model: Role,
+          as: "role",
+          attributes: ["name"],
+        },
+      ],
+    });
+    return user;
+  } catch (error) {
+    console.error("Erreur lors de la récupération de l'utilisateur :", error);
+    throw error;
+  }
+};

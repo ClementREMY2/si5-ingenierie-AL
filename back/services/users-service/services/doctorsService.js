@@ -1,48 +1,101 @@
-const { Pool } = require('pg');
-
-const pool = new Pool({
-  user: process.env.POSTGRES_USER,
-  host: process.env.POSTGRES_HOST,
-  database: process.env.POSTGRES_DB,
-  password: process.env.POSTGRES_PASSWORD,
-  port: process.env.POSTGRES_PORT,
-});
+// services/doctorsService.js
+const { raw } = require("express");
+const { User, Doctor, Patient } = require("orm");
 
 exports.getDoctorById = async (id) => {
-    const doctor = await pool.query(
-        `
-        SELECT 
-            u.id AS doctor_id,
-            u.last_name,
-            u.first_name,
-            u.phone,
-            u.email,
-            d.specialty
-        FROM 
-            users u
-        LEFT JOIN doctors d ON d.user_id = u.id
-        WHERE u.id = $1;
-        `,
-        [id]
-    );
-    if(doctor.rows.length === 0) {
-        return null;
+  try {
+    const doctor = await User.findOne({
+      where: { id },
+      include: [
+        {
+          model: Doctor,
+          as: "doctor",
+          attributes: ["specialty"],
+        },
+      ],
+      attributes: { exclude: ["password"] },
+    });
+    const formattedDoctor = {
+      id: doctor.id,
+      first_name: doctor.first_name,
+      last_name: doctor.last_name,
+      email: doctor.email,
+      phone: doctor.phone,
+      specialty: doctor.doctor.specialty,
+    };
+    return formattedDoctor;
+  } catch (error) {
+    console.error("Erreur lors de la récupération du docteur :", error);
+    throw error;
+  }
+};
+
+// payload example: { specialty: "Cardiologue" }
+exports.putDoctorId = async (id, payload) => {
+  const transaction = await User.sequelize.transaction();
+  try {
+    const user = await User.findOne({ where: { id } });
+    if (!user) {
+      throw new Error("Utilisateur non trouvé");
     }
-    const patients = await pool.query(
-        `
-        SELECT 
-            u.id AS patient_id,
-            u.last_name,
-            u.first_name,
-            u.phone,
-            u.email
-        FROM 
-            users u
-        JOIN patients p ON p.user_id = u.id
-        WHERE p.doctor_id = $1;
-        `,
-        [id]
-    );
-    doctor.rows[0].patients = patients.rows;
-    return doctor.rows[0];
+    await User.update(payload, { where: { id }, transaction });
+    if (payload.specialty) {
+      await Doctor.update(payload, {
+        where: { id },
+        transaction,
+      });
     }
+
+    const res = await User.findOne({
+      where: { id },
+      attributes: { exclude: ["password"] },
+      include: [
+        {
+          model: Doctor,
+          as: "doctor",
+          attributes: ["specialty"],
+        },
+      ],
+      transaction,
+    });
+    await transaction.commit();
+    const formattedDoctor = {
+      id: res.id,
+      first_name: res.first_name,
+      last_name: res.last_name,
+      email: res.email,
+      phone: res.phone,
+      specialty: res.doctor.specialty,
+    };
+    return formattedDoctor;
+  } catch (error) {
+    await transaction.rollback();
+    console.error("Erreur lors de la mise à jour du docteur :", error);
+    throw error;
+  }
+};
+
+exports.getDoctorPatients = async (id) => {
+  try {
+    const patients = await Patient.findAll({
+      where: { doctor_id: id }, // Récupère tous les patients d'un docteur donné
+      include: [
+        {
+          model: User,
+          as: "user", // Alias pour le patient lui-même
+          attributes: ["first_name", "last_name", "email", "phone"], // Récupère les informations utilisateur
+          required: true, // Cette jointure est obligatoire
+        },
+      ],
+      raw: true, // Mode raw pour avoir les données aplaties
+    });
+
+    return patients;
+  } catch (error) {
+    console.error(
+      "Erreur lors de la récupération des patients du docteur :",
+      error
+    );
+    throw error;
+  }
+};
